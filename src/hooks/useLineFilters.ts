@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import type { LineStatus, RailwayLine } from "../types";
-import { ALL_STATUSES } from "../utils/status";
 import { getAllStations, type StationEntry } from "../utils/stations";
 
 export interface FilterState {
@@ -9,8 +8,11 @@ export interface FilterState {
   hasTendersOnly: boolean;
 }
 
+// An empty status set means "no status filter active" (show every status);
+// selecting one or more status chips narrows the map to lines matching any
+// of them, rather than starting from everything selected and deselecting.
 export function defaultFilterState(): FilterState {
-  return { statuses: new Set(ALL_STATUSES), electrifiedOnly: false, hasTendersOnly: false };
+  return { statuses: new Set(), electrifiedOnly: false, hasTendersOnly: false };
 }
 
 function normalize(s: string) {
@@ -29,7 +31,7 @@ export function useLineFilters(lines: RailwayLine[]) {
   const statusFilteredLines = useMemo(
     () =>
       lines.filter((line) => {
-        if (!filters.statuses.has(line.status)) return false;
+        if (filters.statuses.size > 0 && !filters.statuses.has(line.status)) return false;
         if (filters.electrifiedOnly && !line.electrified) return false;
         if (filters.hasTendersOnly && !line.tenders.some((t) => t.status === "open")) return false;
         return true;
