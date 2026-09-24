@@ -88,7 +88,7 @@ export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedL
       zoom: 7.1,
       attributionControl: { compact: true },
     });
-    map.addControl(new NavigationControl({ showCompass: false }), "top-right");
+    map.addControl(new NavigationControl({ showCompass: false }), "top-left");
     mapRef.current = map;
 
     // The container can settle its final size (e.g. details panel opening/
