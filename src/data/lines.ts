@@ -7,19 +7,37 @@ import geo285 from "./geometry/285.json";
 import geo292 from "./geometry/292.json";
 import geo316 from "./geometry/316.json";
 import geo311 from "./geometry/311.json";
+import geo271 from "./geometry/271.json";
+import geo276 from "./geometry/276.json";
+import geo286 from "./geometry/286.json";
+import geo309 from "./geometry/309.json";
+import geo322 from "./geometry/322.json";
+import geo326 from "./geometry/326.json";
+import geo340 from "./geometry/340.json";
+import geo283 from "./geometry/283.json";
+import geo284 from "./geometry/284.json";
 
 /**
- * Line geometry for 274, 275, 137, 273, 285, 292, 316 and 311 is real
- * OpenStreetMap data (© OpenStreetMap contributors, ODbL) — stitched from
- * each line's `route=railway` relation (or, for closed/disused lines, from
- * ways tagged railway=disused with a matching `ref`) and clipped to the
- * Dolnośląskie voivodeship. It is not surveyed-grade and in one case (137)
- * is only a partial in-region fragment because that relation is too
- * disconnected to reassemble fully — see the per-line comments below.
- * Lines 293 and 321 could not be matched to real Dolnośląskie OSM data
- * (293's ref belongs to an unrelated line entirely in Opolskie; 321's
- * fallback query matched an unrelated disused way near Nysa) and keep
- * hand-drawn straight-line sample geometry instead.
+ * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
+ * 309, 322, 326, 340, 283 and 284 is real OpenStreetMap data (©
+ * OpenStreetMap contributors, ODbL) — stitched from each line's
+ * `route=railway` relation (or, for closed/disused lines, from ways tagged
+ * railway=disused with a matching `ref`) and clipped to the Dolnośląskie
+ * voivodeship. It is not surveyed-grade: 137 is only a partial in-region
+ * fragment (its relation is too disconnected to reassemble fully) and 271
+ * is a best-effort reconstruction stitched from several separate in-region
+ * fragments of a line that mostly runs through Wielkopolskie — see the
+ * per-line comments below for both. Lines 293 and 321 could not be matched
+ * to real Dolnośląskie OSM data (293's ref belongs to an unrelated line
+ * entirely in Opolskie; 321's fallback query matched an unrelated disused
+ * way near Nysa) and keep hand-drawn straight-line sample geometry instead.
+ *
+ * Real intermediate stations are matched by proximity to each line's path
+ * from a region-wide query of OSM `railway=station`/`halt` nodes (plus
+ * `construction:railway`/`disused:railway` for stations mid-renovation on
+ * newly reactivated lines, e.g. Zlotoryja on 284), keyed by each station's
+ * OSM node id so a station served by multiple lines lists all of them.
+ *
  * This file otherwise stands in for the Notion-backed sync job described
  * in the technical spec ("How an answer is made" / overnight import job).
  */
@@ -548,6 +566,362 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-07-15" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    // Real OSM identity: Wroclaw Glowny - Poznan Glowny. Runs mostly through
+    // Wielkopolskie; the relation's real in-region portion was scattered
+    // across many small fragments near the region edge (Zmigrod/Oborniki
+    // Slaskie corridor) rather than one clean chain, so this geometry is a
+    // best-effort reconstruction, not a pixel-perfect alignment.
+    id: "271",
+    number: "271",
+    name: "Wrocław Główny – Poznań Główny",
+    status: "active_passenger",
+    electrified: true,
+    lengthKm: 54.1,
+    tracks: 2,
+    maxSpeedKmh: 100,
+    operators: ["PKP PLK"],
+    passengerServices: ["PKP Intercity", "Koleje Dolnośląskie"],
+    endStations: ["Wrocław Główny", "Poznań Główny"],
+    stations: [
+      { id: "osm-1278381123", name: "Korzeńsko", coordinates: [16.87224, 51.5446] },
+      { id: "osm-1278381140", name: "Garbce", coordinates: [16.89026, 51.51256] },
+      { id: "osm-660810005", name: "Żmigród", coordinates: [16.90187, 51.47533] },
+      { id: "osm-1154540415", name: "Skokowa", coordinates: [16.84894, 51.38708] },
+      { id: "osm-302219048", name: "Osola", coordinates: [16.86563, 51.33833] },
+      { id: "osm-302221812", name: "Oborniki Śląskie", coordinates: [16.90733, 51.29961] },
+      { id: "osm-1947166706", name: "Pęgów", coordinates: [16.92712, 51.24719] },
+      { id: "osm-302207573", name: "Szewce", coordinates: [16.95408, 51.21614] },
+    ],
+    geometry: geo271 as [number, number][],
+    history: {
+      timeline: [{ year: 1856, label: "Otwarcie magistrali Wrocław – Poznań" }],
+      narrative:
+        "Ważna magistrala łącząca Wrocław z Poznaniem przez Żmigród i Rawicz, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "276",
+    number: "276",
+    name: "Wrocław Główny – Międzylesie",
+    status: "active_passenger",
+    electrified: true,
+    lengthKm: 129.5,
+    tracks: 1,
+    maxSpeedKmh: 90,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Wrocław Główny", "Międzylesie"],
+    stations: [
+      { id: "osm-1854224907", name: "Kłodzko Miasto", coordinates: [16.65824, 50.4346] },
+      { id: "osm-1854218754", name: "Kłodzko Główne", coordinates: [16.65677, 50.45133] },
+      { id: "osm-746759958", name: "Ławica", coordinates: [16.67087, 50.47767] },
+      { id: "osm-746758106", name: "Bardo Śląskie", coordinates: [16.73408, 50.50485] },
+      { id: "osm-746758076", name: "Bardo Przyłęk", coordinates: [16.75796, 50.50952] },
+      { id: "osm-248216848", name: "Suszka", coordinates: [16.82437, 50.53084] },
+      { id: "osm-10977746452", name: "Kamieniec Ząbkowicki", coordinates: [16.89898, 50.53614] },
+      { id: "osm-496869965", name: "Starczów", coordinates: [16.94676, 50.56344] },
+      { id: "osm-248216807", name: "Ziębice", coordinates: [17.03389, 50.60865] },
+      { id: "osm-487097036", name: "Henryków", coordinates: [17.03014, 50.66308] },
+      { id: "osm-487092286", name: "Biały Kościół", coordinates: [17.02995, 50.72846] },
+      { id: "osm-746756710", name: "Warkocz", coordinates: [17.04622, 50.8296] },
+      { id: "osm-413567246", name: "Żórawina", coordinates: [17.04958, 50.98342] },
+      { id: "osm-510885402", name: "Smardzów Wrocławski", coordinates: [17.06613, 51.03069] },
+      { id: "osm-9221292010", name: "Iwiny", coordinates: [17.06881, 51.05467] },
+      { id: "osm-413351232", name: "Węgry", coordinates: [17.03282, 50.92579] },
+      { id: "osm-746756709", name: "Boreczek", coordinates: [17.02458, 50.87893] },
+      { id: "osm-413398658", name: "Strzelin", coordinates: [17.06024, 50.78421] },
+    ],
+    geometry: geo276 as [number, number][],
+    history: {
+      timeline: [{ year: 1874, label: "Otwarcie linii Wrocław – Kłodzko – Międzylesie" }],
+      narrative:
+        "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    // 286 has a minor cosmetic stitching artifact (a small loop near one
+    // junction, from double-track duplication) -- still directionally
+    // correct overall.
+    id: "286",
+    number: "286",
+    name: "Kłodzko Główne – Wałbrzych Główny",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 53.4,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Kłodzko Główne", "Wałbrzych Główny"],
+    stations: [
+      { id: "osm-1854218754", name: "Kłodzko Główne", coordinates: [16.65677, 50.45133] },
+      { id: "osm-2075243777", name: "Bierkowice", coordinates: [16.60505, 50.47554] },
+      { id: "osm-410273634", name: "Gorzuchów Kłodzki", coordinates: [16.57179, 50.48974] },
+      { id: "osm-1280940818", name: "Ścinawka Średnia", coordinates: [16.50544, 50.52636] },
+      { id: "osm-12082777801", name: "Nowa Ruda Przedmieście", coordinates: [16.51604, 50.58842] },
+      { id: "osm-12082778097", name: "Nowa Ruda", coordinates: [16.49681, 50.5773] },
+    ],
+    geometry: geo286 as [number, number][],
+    history: {
+      timeline: [{ year: 1880, label: "Otwarcie linii przez Nową Rudę" }],
+      narrative:
+        "Regionalna linia łącząca Kłodzko z Wałbrzychem przez Nową Rudę i Ścinawkę Średnią, obsługująca dojazdy mieszkańców Kotliny Kłodzkiej i Gór Sowich.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "309",
+    number: "309",
+    name: "Kłodzko Nowe – Kudowa-Zdrój",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 40.0,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Kłodzko Nowe", "Kudowa-Zdrój"],
+    stations: [
+      { id: "osm-248216912", name: "Kłodzko Książek", coordinates: [16.64092, 50.4157] },
+      { id: "osm-2334430783", name: "Kłodzko Zagórze", coordinates: [16.61294, 50.41503] },
+      { id: "osm-248216924", name: "Stary Wielisław", coordinates: [16.57627, 50.40518] },
+      { id: "osm-5600204728", name: "Polanica-Zdrój", coordinates: [16.51441, 50.39759] },
+      { id: "osm-3411151874", name: "Szczytna", coordinates: [16.44979, 50.40837] },
+      { id: "osm-873825601", name: "Duszniki-Zdrój", coordinates: [16.38581, 50.40903] },
+      { id: "osm-1280966256", name: "Kulin Kłodzki", coordinates: [16.32549, 50.41937] },
+      { id: "osm-1864491167", name: "Lewin Kłodzki", coordinates: [16.27469, 50.40554] },
+      { id: "osm-637065353", name: "Kudowa-Zdrój", coordinates: [16.2441, 50.4298] },
+    ],
+    geometry: geo309 as [number, number][],
+    history: {
+      timeline: [{ year: 1890, label: "Otwarcie linii do uzdrowiska Kudowa-Zdrój" }],
+      narrative:
+        "Turystyczna linia jednotorowa prowadząca z Kłodzka przez Polanicę-Zdrój i Duszniki-Zdrój do uzdrowiska Kudowa-Zdrój.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "322",
+    number: "322",
+    name: "Kłodzko Nowe – Stronie Śląskie",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 27.3,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Kłodzko Nowe", "Stronie Śląskie"],
+    stations: [
+      { id: "osm-700897059", name: "Krosnowice Kłodzkie", coordinates: [16.63689, 50.39235] },
+      { id: "osm-410273695", name: "Żelazno", coordinates: [16.66783, 50.37101] },
+      { id: "osm-1809455402", name: "Ołdrzychowice Kłodzkie", coordinates: [16.7079, 50.35864] },
+      { id: "osm-11735251349", name: "Trzebieszowice", coordinates: [16.77669, 50.34358] },
+      { id: "osm-13745823223", name: "Radochów", coordinates: [16.82062, 50.3389] },
+      { id: "osm-11735251352", name: "Lądek Zdrój", coordinates: [16.85891, 50.34186] },
+      { id: "osm-11735251350", name: "Lądek Stójków", coordinates: [16.87417, 50.32653] },
+      { id: "osm-13645641419", name: "Stronie Śląskie", coordinates: [16.87394, 50.30075] },
+    ],
+    geometry: geo322 as [number, number][],
+    history: {
+      timeline: [{ year: 1897, label: "Otwarcie linii w kierunku Lądka-Zdroju" }],
+      narrative:
+        "Linia biegnąca doliną Białej Lądeckiej przez uzdrowisko Lądek-Zdrój do Stronia Śląskiego u podnóża Masywu Śnieżnika.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "326",
+    number: "326",
+    name: "Wrocław Psie Pole – Trzebnica",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 20.5,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Wrocław Psie Pole", "Trzebnica"],
+    stations: [
+      { id: "osm-1401192473", name: "Wrocław Psie Pole", coordinates: [17.11854, 51.15045] },
+      { id: "osm-3623849395", name: "Wrocław Zakrzów", coordinates: [17.12219, 51.15874] },
+      { id: "osm-358344842", name: "Wrocław Pawłowice", coordinates: [17.10838, 51.16878] },
+      { id: "osm-3561494614", name: "Ramiszów", coordinates: [17.09834, 51.1932] },
+      { id: "osm-10308843703", name: "Pasikurowice", coordinates: [17.10961, 51.20889] },
+      { id: "osm-1803599530", name: "Siedlec Trzebnicki", coordinates: [17.11882, 51.23365] },
+      { id: "osm-1272881984", name: "Pierwoszów Miłocin", coordinates: [17.09891, 51.25522] },
+      { id: "osm-1112631418", name: "Brochocin Trzebnicki", coordinates: [17.09413, 51.27603] },
+      { id: "osm-10308843617", name: "Trzebnica", coordinates: [17.06329, 51.30404] },
+    ],
+    geometry: geo326 as [number, number][],
+    history: {
+      timeline: [{ year: 1887, label: "Otwarcie linii Wrocław – Trzebnica" }],
+      narrative:
+        "Popularna linia podmiejska łącząca wrocławskie osiedle Psie Pole z Trzebnicą, obsługiwana szynobusami Kolei Dolnośląskich.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "340",
+    number: "340",
+    name: "Mysłakowice – Karpacz",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 7.2,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Mysłakowice", "Karpacz"],
+    stations: [
+      { id: "osm-11380011571", name: "Mysłakowice", coordinates: [15.78802, 50.83533] },
+      { id: "osm-12871928025", name: "Mysłakowice Orzeł", coordinates: [15.78641, 50.82508] },
+      { id: "osm-11831904332", name: "Miłków", coordinates: [15.76389, 50.80985] },
+      { id: "osm-2136783800", name: "Karpacz", coordinates: [15.76165, 50.7825] },
+    ],
+    geometry: geo340 as [number, number][],
+    history: {
+      timeline: [
+        { year: 1895, label: "Otwarcie linii do Karpacza" },
+        { year: 2022, label: "Reaktywacja ruchu pasażerskiego dla turystów" },
+      ],
+      narrative:
+        "Krótka górska linia do popularnego kurortu narciarskiego Karpacz u podnóża Śnieżki, po latach zawieszenia przywrócona do ruchu sezonowego dla turystów.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "283",
+    number: "283",
+    name: "Jelenia Góra – Żagań",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 104.7,
+    tracks: 1,
+    maxSpeedKmh: 70,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Jelenia Góra", "Żagań"],
+    stations: [
+      { id: "osm-1642733781", name: "Jelenia Góra", coordinates: [15.75599, 50.90259] },
+      { id: "osm-4019276630", name: "Jelenia Góra Zabobrze", coordinates: [15.7431, 50.9099] },
+      { id: "osm-687571373", name: "Jeżów Sudecki", coordinates: [15.73518, 50.92707] },
+      { id: "osm-687472158", name: "Siedlęcin", coordinates: [15.68979, 50.94379] },
+      { id: "osm-687469346", name: "Pilchowice Zapora", coordinates: [15.65431, 50.96871] },
+      { id: "osm-684304509", name: "Pilchowice Nielestno", coordinates: [15.66146, 50.99184] },
+      { id: "osm-4076629966", name: "Wleń", coordinates: [15.66893, 51.01594] },
+      { id: "osm-2090528667", name: "Marczów", coordinates: [15.66468, 51.05094] },
+      { id: "osm-1659116723", name: "Dębowy Gaj", coordinates: [15.64365, 51.07979] },
+      { id: "osm-4038179767", name: "Lwówek Śląski", coordinates: [15.59353, 51.10995] },
+      { id: "osm-4774182653", name: "Rakowice Wielkie", coordinates: [15.56293, 51.12682] },
+      { id: "osm-1870523190", name: "Gościszów", coordinates: [15.44608, 51.15916] },
+      { id: "osm-1870523193", name: "Nowogrodziec", coordinates: [15.39238, 51.19098] },
+      { id: "osm-484742029", name: "Zebrzydowa", coordinates: [15.38917, 51.25468] },
+      { id: "osm-4078166095", name: "Osiecznica Kliczków", coordinates: [15.41992, 51.33137] },
+      { id: "osm-4082556431", name: "Luboszów", coordinates: [15.39007, 51.42566] },
+      { id: "osm-4082597646", name: "Dobre nad Kwisą", coordinates: [15.36894, 51.52608] },
+      { id: "osm-4082614260", name: "Trzebów", coordinates: [15.38402, 51.54573] },
+      { id: "osm-2051142766", name: "Żagań", coordinates: [15.31542, 51.60376] },
+    ],
+    geometry: geo283 as [number, number][],
+    history: {
+      timeline: [{ year: 1865, label: "Otwarcie linii Jelenia Góra – Żagań" }],
+      narrative:
+        "Długa linia regionalna łącząca Kotlinę Jeleniogórską z Żaganiem przez Wleń, Lwówek Śląski i Nowogrodziec, obsługiwana szynobusami Kolei Dolnośląskich.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "284",
+    number: "284",
+    name: "Legnica – Lwówek Śląski",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 48.5,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Legnica", "Lwówek Śląski"],
+    stations: [
+      { id: "osm-4027715808", name: "Legnica Północna", coordinates: [16.1705, 51.21626] },
+      { id: "osm-2627870779", name: "Legnica", coordinates: [16.16965, 51.21409] },
+      { id: "osm-1733534431", name: "Pawłowice Małe", coordinates: [16.08514, 51.18142] },
+      { id: "osm-9177093218", name: "Wilczyce", coordinates: [16.03417, 51.16515] },
+      { id: "osm-9177093219", name: "Kozów", coordinates: [15.97367, 51.14311] },
+      { id: "osm-1232406706", name: "Złotoryja", coordinates: [15.91374, 51.12896] },
+      { id: "osm-2040352416", name: "Jerzmanice-Zdrój", coordinates: [15.89018, 51.11283] },
+      { id: "osm-9208628876", name: "Pielgrzymka", coordinates: [15.81703, 51.11828] },
+      { id: "osm-9212698207", name: "Nowa Wieś Grodziska", coordinates: [15.7333, 51.142] },
+      { id: "osm-2043795916", name: "Skorzynice", coordinates: [15.68349, 51.13616] },
+      { id: "osm-9558418677", name: "Płakowice", coordinates: [15.61514, 51.1189] },
+      { id: "osm-4038179767", name: "Lwówek Śląski", coordinates: [15.59353, 51.10995] },
+    ],
+    geometry: geo284 as [number, number][],
+    history: {
+      timeline: [{ year: 1885, label: "Otwarcie linii Legnica – Lwówek Śląski" }],
+      narrative:
+        "Linia łącząca Legnicę ze Złotoryją i Lwówkiem Śląskim, w ostatnich latach zrewitalizowana wraz z przywróceniem regularnego ruchu pasażerskiego.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
       { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
