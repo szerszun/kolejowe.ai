@@ -6,6 +6,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/line/:number" element={<HomePage />} />
+      <Route path="/station/:stationId" element={<HomePage />} />
     </Routes>
   );
 }

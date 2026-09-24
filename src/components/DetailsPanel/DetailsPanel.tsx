@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine } from "../../types";
-import { STATUS_COLORS, STATUS_LABEL_KEY } from "../../utils/status";
+import { STATUS_LABEL_KEY } from "../../utils/status";
+import { getLineColor } from "../../utils/lineColors";
 import { OverviewTab } from "./OverviewTab";
 import { HistoryTab } from "./HistoryTab";
 import { TendersTab } from "./TendersTab";
@@ -12,9 +13,10 @@ interface DetailsPanelProps {
   line: RailwayLine;
   onClose: () => void;
   onAskAboutLine: () => void;
+  onSelectStation: (id: string) => void;
 }
 
-export function DetailsPanel({ line, onClose, onAskAboutLine }: DetailsPanelProps) {
+export function DetailsPanel({ line, onClose, onAskAboutLine, onSelectStation }: DetailsPanelProps) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("overview");
 
@@ -22,7 +24,7 @@ export function DetailsPanel({ line, onClose, onAskAboutLine }: DetailsPanelProp
     <aside className="details-panel" aria-label={`${line.number} ${line.name}`}>
       <header className="details-panel-header">
         <div>
-          <span className="line-badge" style={{ backgroundColor: STATUS_COLORS[line.status] }}>
+          <span className="line-badge" style={{ backgroundColor: getLineColor(line.id) }}>
             {line.number}
           </span>
           <h2>{line.name}</h2>
@@ -49,7 +51,7 @@ export function DetailsPanel({ line, onClose, onAskAboutLine }: DetailsPanelProp
       </div>
 
       <div className="details-panel-body">
-        {tab === "overview" && <OverviewTab line={line} />}
+        {tab === "overview" && <OverviewTab line={line} onSelectStation={onSelectStation} />}
         {tab === "history" && <HistoryTab line={line} />}
         {tab === "tenders" && <TendersTab line={line} />}
       </div>

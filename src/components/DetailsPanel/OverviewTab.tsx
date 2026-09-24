@@ -2,7 +2,12 @@ import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine } from "../../types";
 import { SourceFooter } from "./SourceFooter";
 
-export function OverviewTab({ line }: { line: RailwayLine }) {
+interface OverviewTabProps {
+  line: RailwayLine;
+  onSelectStation: (id: string) => void;
+}
+
+export function OverviewTab({ line, onSelectStation }: OverviewTabProps) {
   const { t } = useI18n();
   const source = line.sources.find((s) => s.section === "overview");
 
@@ -45,7 +50,11 @@ export function OverviewTab({ line }: { line: RailwayLine }) {
       <h3>{t("stations")}</h3>
       <ol className="station-list">
         {line.stations.map((s) => (
-          <li key={s.id}>{s.name}</li>
+          <li key={s.id}>
+            <button type="button" className="station-list-link" onClick={() => onSelectStation(s.id)}>
+              {s.name}
+            </button>
+          </li>
         ))}
       </ol>
 
