@@ -26,14 +26,20 @@ npm run dev
 
 ## What's implemented (draft scope)
 
-- Interactive map of 10 sample lines across Lower Silesia, colour-coded by
-  status (active passenger / freight only / planned / closed), with a
-  legend, hover tooltips, click-to-select + zoom-to-fit, and open-tender
-  badges
-- Deep-linkable line selection (`/line/274`) via the URL
-- Search by line number / station / town, plus status / electrified / has
-  open tenders filters — also usable as a fully keyboard/screen-reader
-  accessible list, not just via the map
+- Interactive map of 10 lines across Lower Silesia, most with **real
+  OpenStreetMap-derived alignments** (see Data below), each with its own
+  distinguishable colour; status (active passenger / freight only / planned /
+  closed) is conveyed by line style (solid / dashed / dotted) plus a legend,
+  with hover tooltips, click-to-select + zoom-to-fit, and open-tender badges
+- Deep-linkable line selection (`/line/274`) and station selection
+  (`/station/<id>`) via the URL — clicking a station on the map, or a station
+  name inside a line's Overview tab, opens a dedicated station panel listing
+  which lines serve it (station-level data beyond that is a placeholder for now)
+- Search by line number/name or station name (once real station data was
+  in place, town-only matches were dropped in favour of matching real
+  stations directly), shown as separate Lines/Stations result sections,
+  plus status / electrified / has open tenders filters — also usable as a
+  fully keyboard/screen-reader accessible list, not just via the map
 - Details panel with Overview / History / Tenders tabs, source + last
   updated on every section, and a proper empty state for tenders
 - Floating AI chat: streams in answers, always cites a source, refuses
@@ -46,10 +52,32 @@ npm run dev
 
 ## Explicitly stubbed / not yet real
 
-- **Data**: `src/data/lines.ts` is hand-written sample data with simplified
-  straight-line geometry between real towns — not surveyed track alignment,
-  not synced from Notion. The region border in `src/data/regionBorder.ts` is
-  a rough hand-drawn outline, not an official boundary.
+- **Line geometry**: `src/data/geometry/*.json` holds real alignments for 8 of
+  the 10 lines (274, 275, 137, 273, 285, 292, 316, 311), stitched from
+  OpenStreetMap `route=railway` relations (© OpenStreetMap contributors,
+  ODbL) and clipped to Lower Silesia — see the comments at the top of
+  `src/data/lines.ts` for how, and its caveats (137 is only a partial
+  ~39km in-region fragment because that OSM relation is too fragmented to
+  reassemble fully; lines that continue beyond the region, like 273 and
+  275, are simply cut off at the border). **Lines 293 and 321 could not be
+  matched to real Dolnośląskie OSM data** (293's ref number belongs to an
+  unrelated line entirely in Opolskie; 321's only OSM match was an unrelated
+  disused way near Nysa) and still use hand-drawn straight-line sample
+  geometry. The 8 lines with real geometry also have real intermediate
+  stations now — matched by proximity to each line's path from a single
+  region-wide query of OSM `railway=station`/`halt` nodes, using each
+  station's real OSM node id as a canonical id shared across lines (so a
+  station served by several lines, e.g. Wrocław Główny, correctly lists all
+  of them instead of just one). Lines 293 and 321 still only have their two
+  fictional endpoint stations. All other data (history, tenders, sources)
+  is still hand-authored sample content —
+  not synced from Notion — and several lines' real OSM identity (name,
+  endpoints) differs from what the original fictional sample assumed; where
+  that happened the `name`/`endStations` were corrected to match reality
+  (see the per-line comments in `lines.ts`), but history narratives were only
+  touched where they specifically contradicted the correction. The region
+  border in `src/data/regionBorder.ts` is a rough hand-drawn outline, not an
+  official boundary.
 - **AI assistant**: `mockAssistant.ts` answers via keyword matching against
   the same sample data. No real retrieval, no LLM call, no protection
   against prompt injection yet — all of that needs the real backend.
@@ -73,4 +101,16 @@ npm run dev
 2. Wire the Notion sync job for line overview/history/tenders
 3. Replace `mockAssistant.ts` with real retrieval (pgvector) + an LLM call
    behind the backend (key never in the frontend)
-4. Replace sample geometry with real PKP PLK / OSM line alignments
+4. Track down the correct real OSM refs (or another source) for lines 293
+   and 321
+5. **Expand line coverage.** The app only has 10 of the real lines that run
+   through Dolnośląskie. Querying OSM for every `route=railway` relation
+   touching the region returns ~175 relations; after excluding foreign
+   (Czech/German) lines, cross-border stub duplicates, and intra-yard/depot
+   micro-segments (dozens of very short technical connectors inside
+   Wrocław/Legnica/Węgliniec yards), a realistic estimate is **~40-70
+   genuine additional regional lines** — several times the effort already
+   spent on the first 10, since the same fetch/stitch/clip pipeline applies
+   per line and the public Overpass API is slow/rate-limited. Confirmed
+   real refs worth prioritizing: **271** (Wrocław Główny – Poznań Główny,
+   likely via Żmigród) and **286** (Kłodzko Główne – Wałbrzych Główny).

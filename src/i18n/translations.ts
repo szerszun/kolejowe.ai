@@ -18,6 +18,7 @@ export const translations = {
     statusPlanned: "Planowana",
     statusClosed: "Nieczynna",
     legend: "Legenda",
+    legendColorHint: "Każda linia ma własny kolor — status pokazuje styl linii",
     tabOverview: "Informacje",
     tabHistory: "Historia",
     tabTenders: "Przetargi",
@@ -67,7 +68,12 @@ export const translations = {
     chatDisclaimer: "Odpowiedzi mockowane na potrzeby wersji roboczej — docelowo obsługiwane przez backend + LLM.",
     langToggle: "EN",
     noStationsSearchResult: "Brak wyników",
-    resultsCount: "Znaleziono linii: {count}",
+    resultsCountLines: "Znaleziono linii: {count}",
+    resultsCountStations: "Znaleziono stacji: {count}",
+    stationsSectionTitle: "Stacje",
+    stationPanelLinesTitle: "Linie obsługujące ten przystanek",
+    stationPanelNoData:
+      "Szczegółowe informacje o przystanku (perony, dostępność, adres) będą dostępne w kolejnej wersji.",
   },
   en: {
     appTitle: "kolejowe.ai",
@@ -87,6 +93,7 @@ export const translations = {
     statusPlanned: "Planned",
     statusClosed: "Closed",
     legend: "Legend",
+    legendColorHint: "Each line has its own colour — status is shown by line style",
     tabOverview: "Overview",
     tabHistory: "History",
     tabTenders: "Tenders",
@@ -136,7 +143,11 @@ export const translations = {
     chatDisclaimer: "Answers are mocked for this draft — a real backend + LLM will replace this later.",
     langToggle: "PL",
     noStationsSearchResult: "No results",
-    resultsCount: "{count} lines found",
+    resultsCountLines: "{count} lines found",
+    resultsCountStations: "{count} stations found",
+    stationsSectionTitle: "Stations",
+    stationPanelLinesTitle: "Lines serving this station",
+    stationPanelNoData: "Detailed station info (platforms, accessibility, address) will be available in a future version.",
   },
 } as const;
 

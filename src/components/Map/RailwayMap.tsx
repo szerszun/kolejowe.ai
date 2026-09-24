@@ -1,26 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { MapLibreMap, NavigationControl, type GeoJSONSource, type MapLayerMouseEvent } from "maplibre-gl";
+import { MapLibreMap, NavigationControl, type GeoJSONSource } from "maplibre-gl";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import type { RailwayLine } from "../../types";
-import { STATUS_COLORS } from "../../utils/status";
+import { getLineColor } from "../../utils/lineColors";
 import { boundsForCoordinates } from "../../utils/geo";
 import { regionBorder } from "../../data/regionBorder";
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
-interface HoverInfo {
-  x: number;
-  y: number;
-  number: string;
-  endStations: [string, string];
-}
+type HoverInfo =
+  | { kind: "line"; x: number; y: number; number: string; endStations: [string, string] }
+  | { kind: "station"; x: number; y: number; name: string };
 
 interface RailwayMapProps {
   lines: RailwayLine[];
   visibleLineIds: Set<string>;
   selectedLineId: string | null;
   highlightedLineIds: string[];
+  selectedStationId: string | null;
   onSelectLine: (id: string) => void;
+  onSelectStation: (id: string) => void;
 }
 
 function linesToGeoJSON(lines: RailwayLine[]): FeatureCollection<LineString> {
@@ -32,6 +31,7 @@ function linesToGeoJSON(lines: RailwayLine[]): FeatureCollection<LineString> {
         id: line.id,
         number: line.number,
         status: line.status,
+        color: getLineColor(line.id),
         endStationA: line.endStations[0],
         endStationB: line.endStations[1],
         hasTenders: line.tenders.some((t) => t.status === "open") ? 1 : 0,
@@ -50,7 +50,7 @@ function stationsToGeoJSON(lines: RailwayLine[]): FeatureCollection<Point> {
       seen.add(station.id);
       features.push({
         type: "Feature",
-        properties: { name: station.name },
+        properties: { id: station.id, name: station.name },
         geometry: { type: "Point", coordinates: station.coordinates },
       });
     }
@@ -72,7 +72,15 @@ function tenderBadgesToGeoJSON(lines: RailwayLine[]): FeatureCollection<Point> {
   return { type: "FeatureCollection", features };
 }
 
-export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedLineIds, onSelectLine }: RailwayMapProps) {
+export function RailwayMap({
+  lines,
+  visibleLineIds,
+  selectedLineId,
+  highlightedLineIds,
+  selectedStationId,
+  onSelectLine,
+  onSelectStation,
+}: RailwayMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [ready, setReady] = useState(false);
@@ -122,21 +130,22 @@ export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedL
         source: "lines",
         layout: { "line-cap": "round", "line-join": "round" },
         paint: {
-          "line-color": [
+          // Colour identifies the individual line; dash pattern conveys its
+          // status, so two lines sharing a status remain distinguishable.
+          "line-color": ["get", "color"],
+          "line-width": 4,
+          "line-opacity": ["case", ["==", ["get", "status"], "closed"], 0.55, 1],
+          "line-dasharray": [
             "match",
             ["get", "status"],
-            "active_passenger",
-            STATUS_COLORS.active_passenger,
-            "freight_only",
-            STATUS_COLORS.freight_only,
             "planned",
-            STATUS_COLORS.planned,
+            ["literal", [1, 1.6]],
+            "freight_only",
+            ["literal", [4, 2]],
             "closed",
-            STATUS_COLORS.closed,
-            "#000000",
+            ["literal", [2, 2]],
+            ["literal", [1, 0]],
           ],
-          "line-width": 4,
-          "line-dasharray": ["case", ["==", ["get", "status"], "planned"], ["literal", [2, 1.5]], ["literal", [1, 0]]],
         },
       });
       map.addLayer({
@@ -175,6 +184,19 @@ export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedL
         },
       });
       map.addLayer({
+        id: "stations-highlight",
+        type: "circle",
+        source: "stations",
+        minzoom: 10,
+        filter: ["==", ["get", "id"], "__none__"],
+        paint: {
+          "circle-radius": 8,
+          "circle-color": "transparent",
+          "circle-stroke-color": "#E91E63",
+          "circle-stroke-width": 2.5,
+        },
+      });
+      map.addLayer({
         id: "stations-label",
         type: "symbol",
         source: "stations",
@@ -188,24 +210,46 @@ export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedL
         paint: { "text-color": "#1B1F4B", "text-halo-color": "#ffffff", "text-halo-width": 1.4 },
       });
 
-      map.on("mousemove", "lines-layer", (e: MapLayerMouseEvent) => {
-        map.getCanvas().style.cursor = "pointer";
-        const f = e.features?.[0];
-        if (!f) return;
-        setHover({
-          x: e.point.x,
-          y: e.point.y,
-          number: f.properties?.number,
-          endStations: [f.properties?.endStationA, f.properties?.endStationB],
-        });
+      const interactiveLayers = ["stations-layer", "lines-layer"];
+      const pointBox = (p: { x: number; y: number }): [[number, number], [number, number]] => [
+        [p.x - 6, p.y - 6],
+        [p.x + 6, p.y + 6],
+      ];
+
+      map.on("mousemove", (e) => {
+        const feats = map.queryRenderedFeatures(pointBox(e.point), { layers: interactiveLayers });
+        const stationFeat = feats.find((f) => f.layer.id === "stations-layer");
+        const lineFeat = feats.find((f) => f.layer.id === "lines-layer");
+        if (stationFeat) {
+          map.getCanvas().style.cursor = "pointer";
+          setHover({ kind: "station", x: e.point.x, y: e.point.y, name: stationFeat.properties?.name });
+        } else if (lineFeat) {
+          map.getCanvas().style.cursor = "pointer";
+          setHover({
+            kind: "line",
+            x: e.point.x,
+            y: e.point.y,
+            number: lineFeat.properties?.number,
+            endStations: [lineFeat.properties?.endStationA, lineFeat.properties?.endStationB],
+          });
+        } else {
+          map.getCanvas().style.cursor = "";
+          setHover(null);
+        }
       });
-      map.on("mouseleave", "lines-layer", () => {
+      map.on("mouseout", () => {
         map.getCanvas().style.cursor = "";
         setHover(null);
       });
-      map.on("click", "lines-layer", (e: MapLayerMouseEvent) => {
-        const f = e.features?.[0];
-        if (f?.properties?.id) onSelectLine(f.properties.id);
+      map.on("click", (e) => {
+        const feats = map.queryRenderedFeatures(pointBox(e.point), { layers: interactiveLayers });
+        const stationFeat = feats.find((f) => f.layer.id === "stations-layer");
+        if (stationFeat?.properties?.id) {
+          onSelectStation(stationFeat.properties.id);
+          return;
+        }
+        const lineFeat = feats.find((f) => f.layer.id === "lines-layer");
+        if (lineFeat?.properties?.id) onSelectLine(lineFeat.properties.id);
       });
 
       setReady(true);
@@ -249,15 +293,41 @@ export function RailwayMap({ lines, visibleLineIds, selectedLineId, highlightedL
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLineId, ready]);
 
+  // Highlight the selected station
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    map.setFilter("stations-highlight", ["==", ["get", "id"], selectedStationId ?? "__none__"]);
+  }, [selectedStationId, ready]);
+
+  // Fly to the selected station
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !selectedStationId) return;
+    for (const line of lines) {
+      const station = line.stations.find((s) => s.id === selectedStationId);
+      if (station) {
+        map.flyTo({ center: station.coordinates, zoom: Math.max(map.getZoom(), 12), duration: 700 });
+        break;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedStationId, ready]);
+
   return (
     <div className="railway-map-wrap">
       <div ref={containerRef} className="railway-map" role="application" aria-label="Interactive map of Lower Silesia railway lines" />
-      {hover && (
+      {hover && hover.kind === "line" && (
         <div className="map-tooltip" style={{ left: hover.x + 12, top: hover.y + 12 }}>
           <strong>Linia {hover.number}</strong>
           <span>
             {hover.endStations[0]} – {hover.endStations[1]}
           </span>
+        </div>
+      )}
+      {hover && hover.kind === "station" && (
+        <div className="map-tooltip" style={{ left: hover.x + 12, top: hover.y + 12 }}>
+          <strong>{hover.name}</strong>
         </div>
       )}
     </div>

@@ -1,7 +1,10 @@
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine } from "../../types";
 import type { FilterState } from "../../hooks/useLineFilters";
+import type { StationEntry } from "../../utils/stations";
 import { ALL_STATUSES, STATUS_COLORS, STATUS_LABEL_KEY } from "../../utils/status";
+import { getLineColor } from "../../utils/lineColors";
+import { StationIcon } from "./StationIcon";
 
 interface ExplorerPanelProps {
   query: string;
@@ -9,8 +12,11 @@ interface ExplorerPanelProps {
   filters: FilterState;
   onFiltersChange: (f: FilterState) => void;
   filteredLines: RailwayLine[];
+  filteredStations: StationEntry[];
   selectedLineId: string | null;
+  selectedStationId: string | null;
   onSelectLine: (id: string) => void;
+  onSelectStation: (id: string) => void;
 }
 
 export function ExplorerPanel({
@@ -19,10 +25,14 @@ export function ExplorerPanel({
   filters,
   onFiltersChange,
   filteredLines,
+  filteredStations,
   selectedLineId,
+  selectedStationId,
   onSelectLine,
+  onSelectStation,
 }: ExplorerPanelProps) {
   const { t } = useI18n();
+  const isSearching = query.trim().length > 0;
 
   const toggleStatus = (status: (typeof ALL_STATUSES)[number]) => {
     const next = new Set(filters.statuses);
@@ -80,28 +90,59 @@ export function ExplorerPanel({
         </label>
       </fieldset>
 
-      <div className="line-list-header">{t("resultsCount", { count: filteredLines.length })}</div>
-      <ul className="line-list" role="listbox" aria-label={t("listViewToggle")}>
-        {filteredLines.map((line) => (
-          <li key={line.id}>
-            <button
-              type="button"
-              role="option"
-              aria-selected={line.id === selectedLineId}
-              className={`line-list-item ${line.id === selectedLineId ? "line-list-item--active" : ""}`}
-              onClick={() => onSelectLine(line.id)}
-            >
-              <span className="line-list-badge" style={{ backgroundColor: STATUS_COLORS[line.status] }}>
-                {line.number}
-              </span>
-              <span className="line-list-text">
-                <strong>{line.name}</strong>
-              </span>
-            </button>
-          </li>
-        ))}
-        {filteredLines.length === 0 && <li className="line-list-empty">{t("noStationsSearchResult")}</li>}
-      </ul>
+      <div className="results-scroll">
+        <div className="line-list-header">{t("resultsCountLines", { count: filteredLines.length })}</div>
+        <ul className="line-list" role="listbox" aria-label={t("listViewToggle")}>
+          {filteredLines.map((line) => (
+            <li key={line.id}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={line.id === selectedLineId}
+                className={`line-list-item ${line.id === selectedLineId ? "line-list-item--active" : ""}`}
+                onClick={() => onSelectLine(line.id)}
+              >
+                <span className="line-list-badge" style={{ backgroundColor: getLineColor(line.id) }}>
+                  {line.number}
+                </span>
+                <span className="line-list-text">
+                  <strong>{line.name}</strong>
+                </span>
+              </button>
+            </li>
+          ))}
+          {filteredLines.length === 0 && <li className="line-list-empty">{t("noStationsSearchResult")}</li>}
+        </ul>
+
+        {isSearching && (
+          <>
+            <div className="line-list-header line-list-header--stations">
+              {t("resultsCountStations", { count: filteredStations.length })}
+            </div>
+            <ul className="line-list" role="listbox" aria-label={t("stationsSectionTitle")}>
+              {filteredStations.map((station) => (
+                <li key={station.id}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={station.id === selectedStationId}
+                    className={`line-list-item ${station.id === selectedStationId ? "line-list-item--active" : ""}`}
+                    onClick={() => onSelectStation(station.id)}
+                  >
+                    <span className="station-list-badge">
+                      <StationIcon />
+                    </span>
+                    <span className="line-list-text">
+                      <strong>{station.name}</strong>
+                    </span>
+                  </button>
+                </li>
+              ))}
+              {filteredStations.length === 0 && <li className="line-list-empty">{t("noStationsSearchResult")}</li>}
+            </ul>
+          </>
+        )}
+      </div>
     </div>
   );
 }

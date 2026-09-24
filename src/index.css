@@ -65,7 +65,7 @@ a {
 
 .app-header-brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.6rem;
 }
 
@@ -183,6 +183,17 @@ a {
   font-size: 0.78rem;
   color: var(--color-text-muted);
 }
+.line-list-header--stations {
+  margin-top: 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.results-scroll {
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+}
 
 .line-list {
   list-style: none;
@@ -191,7 +202,18 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  overflow-y: auto;
+}
+
+.station-list-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  width: 2.2rem;
+}
+.station-list-icon {
+  flex-shrink: 0;
 }
 
 .line-list-item {
@@ -277,8 +299,14 @@ a {
 }
 .legend-title {
   display: block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.15rem;
   color: var(--color-navy);
+}
+.legend-hint {
+  margin: 0 0 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  max-width: 13rem;
 }
 .legend ul {
   list-style: none;
@@ -286,21 +314,35 @@ a {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 .legend-swatch {
   display: inline-block;
-  width: 18px;
-  height: 4px;
-  border-radius: 2px;
+  width: 20px;
+  height: 0;
   margin-right: 0.4rem;
   vertical-align: middle;
+  border-top: 3px solid var(--color-navy);
+}
+.legend-swatch--solid {
+  border-top-style: solid;
+}
+.legend-swatch--dashed {
+  border-top-style: dashed;
+}
+.legend-swatch--dotted {
+  border-top-style: dotted;
+}
+.legend-swatch--closed {
+  border-top-style: dashed;
+  opacity: 0.55;
 }
 .legend-swatch--dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--color-accent);
+  border-top: none;
 }
 
 /* Details panel */
@@ -518,6 +560,22 @@ a {
 }
 .station-list li:last-child {
   border-left-color: transparent;
+}
+.station-list-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.station-list-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 .timeline {
