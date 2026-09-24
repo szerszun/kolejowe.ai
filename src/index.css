@@ -96,9 +96,9 @@ a {
 .demo-banner {
   background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
   color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   text-align: center;
-  padding: 0.35rem;
+  padding: 0.2rem;
 }
 
 /* Body layout */
@@ -106,7 +106,7 @@ a {
   position: relative;
   flex: 1;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 260px 1fr;
   min-height: 0;
 }
 
@@ -269,8 +269,8 @@ a {
 
 .legend {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  top: 1rem;
+  right: 1rem;
   background: rgba(255, 255, 255, 0.95);
   border-radius: var(--radius);
   padding: 0.6rem 0.75rem;
