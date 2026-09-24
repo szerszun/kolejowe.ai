@@ -71,12 +71,12 @@ a {
 
 .app-header-logo {
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.875rem;
   color: var(--color-primary);
 }
 
 .app-header-subtitle {
-  font-size: 0.85rem;
+  font-size: 1.275rem;
   color: var(--color-text-muted);
 }
 
