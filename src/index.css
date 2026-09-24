@@ -230,10 +230,7 @@ a {
   flex-direction: column;
   font-size: 0.85rem;
   line-height: 1.25;
-}
-.line-list-sub {
-  color: var(--color-text-muted);
-  font-size: 0.75rem;
+  color: var(--color-text);
 }
 .line-list-empty {
   color: var(--color-text-muted);

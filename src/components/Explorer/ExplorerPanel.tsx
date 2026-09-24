@@ -96,9 +96,6 @@ export function ExplorerPanel({
               </span>
               <span className="line-list-text">
                 <strong>{line.name}</strong>
-                <span className="line-list-sub">
-                  {line.endStations[0]} – {line.endStations[1]}
-                </span>
               </span>
             </button>
           </li>
