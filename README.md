@@ -64,8 +64,17 @@ npm run dev
   its caveats (137 is only a partial ~39km in-region fragment because that
   OSM relation is too fragmented to reassemble fully; 271 is a best-effort
   reconstruction stitched from several separate in-region fragments of a
-  line that mostly runs through Wielkopolskie; 286 has a small cosmetic
-  stitching loop near one junction; lines that continue beyond the region,
+  line that mostly runs through Wielkopolskie; 286 originally had a serious
+  stitching bug — the raw OSM relation encodes several sections as duplicate
+  parallel/alternate-track chains, and the original clip/merge step
+  concatenated two of them back-to-back, producing a geometry that did a
+  U-turn partway to Wałbrzych and dropped every station past Nowa Ruda. It
+  was manually re-stitched by picking one consistent chain through each
+  duplicated section (confirmed against real station positions, including
+  Ludwikowice Kłodzkie, Głuszyca and Jedlina-Zdrój, which the buggy version
+  was missing entirely); a couple of short real gaps in the OSM way data are
+  bridged with straight segments, visible as small kinks rather than a
+  U-turn; lines that continue beyond the region,
   like 273, 275 and 271, are simply cut off at the border). **Lines 293 and
   321 could not be matched to real Dolnośląskie OSM data** (293's ref number
   belongs to an unrelated line entirely in Opolskie; 321's only OSM match
