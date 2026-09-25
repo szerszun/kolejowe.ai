@@ -50,10 +50,11 @@ export function useLineFilters(lines: RailwayLine[]) {
   const allStations = useMemo(() => getAllStations(lines), [lines]);
 
   // Only populated once the user starts typing -- an unfiltered list of
-  // every station would just be noise.
+  // every station would just be noise. Sorted alphabetically rather than
+  // left in the order stations happen to appear across the data file.
   const filteredStations = useMemo((): StationEntry[] => {
     if (!q) return [];
-    return allStations.filter((s) => normalize(s.name).includes(q));
+    return allStations.filter((s) => normalize(s.name).includes(q)).sort((a, b) => a.name.localeCompare(b.name, "pl"));
   }, [allStations, q]);
 
   // Map visibility: a line stays on the map if it matches by its own
