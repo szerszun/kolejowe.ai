@@ -24,6 +24,7 @@ import geo281 from "./geometry/281.json";
 import geo308 from "./geometry/308.json";
 import geo299 from "./geometry/299.json";
 import geo266 from "./geometry/266.json";
+import geo298 from "./geometry/298.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1207,6 +1208,43 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1880, label: "Otwarcie linii" }],
       narrative:
         "Linia łącząca Świdnicę Kraszowice (koniec linii 285) z Jedliną-Zdrój przez malownicze Góry Sowie, w pobliżu zamku Grodno w Zagórzu Śląskim — popularna wśród turystów odwiedzających region wałbrzyski.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+    ],
+  },
+  {
+    // Added after a user question about why 299 (Kamienna Gora - Lubawka)
+    // looked disconnected from the rest of the network: in reality it is --
+    // Kamienna Gora's only rail link to line 274 is this separate line, not
+    // a direct connection. The raw OSM way for this ref loops back most of
+    // the way to Sedzisław after reaching Kamienna Gora (a duplicate
+    // alternate-alignment return leg, same class of bug as 271/286/132/289);
+    // only the outbound Sedzisław -> Kamienna Gora leg is used here.
+    id: "298",
+    number: "298",
+    name: "Kamienna Góra – Sędzisław",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 6.5,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Kamienna Góra", "Sędzisław"],
+    stations: [
+      { id: "osm-4014398630", name: "Sędzisław", coordinates: [16.06985, 50.81342] },
+      { id: "osm-412258495", name: "Kamienna Góra", coordinates: [16.02282, 50.78525] },
+    ],
+    geometry: geo298 as [number, number][],
+    history: {
+      timeline: [{ year: 1867, label: "Otwarcie linii" }],
+      narrative:
+        "Krótkie połączenie Kamiennej Góry z magistralą 274 w Sędzisławiu — jedyny realny łącznik między Kamienną Górą (i dalej linią 299 do Lubawki) a resztą sieci kolejowej regionu.",
       photos: [],
     },
     tenders: [],
