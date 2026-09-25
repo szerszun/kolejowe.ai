@@ -18,21 +18,22 @@ import geo283 from "./geometry/283.json";
 import geo284 from "./geometry/284.json";
 import geo132 from "./geometry/132.json";
 import geo143 from "./geometry/143.json";
+import geo289 from "./geometry/289.json";
+import geo317 from "./geometry/317.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
- * 309, 322, 326, 340, 283, 284, 132 and 143 is real OpenStreetMap data (©
- * OpenStreetMap contributors, ODbL) — stitched from each line's
+ * 309, 322, 326, 340, 283, 284, 132, 143, 289 and 317 is real OpenStreetMap
+ * data (© OpenStreetMap contributors, ODbL) — stitched from each line's
  * `route=railway` relation (or, for closed/disused lines, from ways tagged
  * railway=disused with a matching `ref`) and clipped to the Dolnośląskie
  * voivodeship. It is not surveyed-grade: 137 is only a partial in-region
- * fragment (its relation is too disconnected to reassemble fully) and 271
- * is a best-effort reconstruction stitched from several separate in-region
- * fragments of a line that mostly runs through Wielkopolskie — see the
- * per-line comments below for both. Lines 293 and 321 could not be matched
- * to real Dolnośląskie OSM data (293's ref belongs to an unrelated line
- * entirely in Opolskie; 321's fallback query matched an unrelated disused
- * way near Nysa) and keep hand-drawn straight-line sample geometry instead.
+ * fragment (its relation is too disconnected to reassemble fully), 271 is a
+ * best-effort reconstruction stitched from several separate in-region
+ * fragments of a line that mostly runs through Wielkopolskie, and 289 only
+ * reaches partway to its real endpoint (Rudna Gwizdanów) — see the per-line
+ * comments below. Every remaining line has real geometry; there are no more
+ * fictional/hand-drawn entries left in this file.
  *
  * Real intermediate stations are matched by proximity to each line's path
  * from a region-wide query of OSM `railway=station`/`halt` nodes (plus
@@ -43,12 +44,6 @@ import geo143 from "./geometry/143.json";
  * This file otherwise stands in for the Notion-backed sync job described
  * in the technical spec ("How an answer is made" / overnight import job).
  */
-
-const legnica: [number, number] = [16.1619, 51.207];
-const glogow: [number, number] = [16.085, 51.6636];
-const jeleniaGora: [number, number] = [15.728, 50.9044];
-const szklarskaPoreba: [number, number] = [15.5225, 50.8264];
-const swieradowZdroj: [number, number] = [15.3417, 50.9111];
 
 export const lines: RailwayLine[] = [
   {
@@ -483,36 +478,44 @@ export const lines: RailwayLine[] = [
     // this number (Jelowa - Kluczbork) lies entirely in Opolskie, with zero
     // overlap with Lower Silesia. Geometry below remains illustrative
     // sample data rather than a real alignment.
-    id: "293",
-    number: "293",
-    name: "Legnica – Głogów",
+    // Real OSM identity: Legnica - Rudna Gwizdanow. Corrected from the
+    // fictional "Legnica - Glogow" (ref 293 doesn't belong to that pair --
+    // it's an unrelated line entirely in Opolskie). This is the real
+    // Legnicko-Glogowskie copper-district freight line the fictional entry
+    // was standing in for. Only a ~25km in-region fragment could be
+    // reassembled; the line's real length to Rudna Gwizdanow is longer.
+    id: "289",
+    number: "289",
+    name: "Legnica – Rudna Gwizdanów",
     status: "freight_only",
-    electrified: true,
-    lengthKm: 51.3,
+    electrified: false,
+    lengthKm: 24.8,
     tracks: 1,
-    maxSpeedKmh: 80,
+    maxSpeedKmh: 60,
     operators: ["PKP PLK"],
     passengerServices: [],
-    endStations: ["Legnica", "Głogów"],
+    endStations: ["Legnica", "Rudna Gwizdanów"],
     stations: [
-      { id: "legnica-293", name: "Legnica", coordinates: legnica },
-      { id: "glogow-293", name: "Głogów", coordinates: glogow },
+      { id: "osm-2627870779", name: "Legnica", coordinates: [16.16965, 51.21409] },
+      { id: "osm-6534824787", name: "Rzeszotary", coordinates: [16.16585, 51.24962] },
+      { id: "osm-6534824813", name: "Raszówka", coordinates: [16.18164, 51.30153] },
+      { id: "osm-6534824814", name: "Gorzelin", coordinates: [16.18104, 51.32832] },
+      { id: "osm-6534824815", name: "Chróstnik", coordinates: [16.18093, 51.3554] },
+      { id: "osm-5356872372", name: "Lubin", coordinates: [16.19344, 51.39578] },
+      { id: "osm-7047566737", name: "Lubin Stadion", coordinates: [16.19926, 51.40863] },
     ],
-    geometry: [legnica, glogow],
+    geometry: geo289 as [number, number][],
     history: {
-      timeline: [
-        { year: 1873, label: "Otwarcie linii" },
-        { year: 1996, label: "Zawieszenie regularnego ruchu pasażerskiego" },
-      ],
+      timeline: [{ year: 1873, label: "Otwarcie linii" }],
       narrative:
-        "Dziś wykorzystywana niemal wyłącznie do przewozów towarowych związanych z przemysłem miedziowym Zagłębia Legnicko-Głogowskiego.",
+        "Linia towarowa obsługująca Zagłębie Miedziowe (KGHM) między Legnicą a Lubinem, w stronę Rudnej Gwizdanów. Wcześniejsza wersja tej pozycji w aplikacji miała błędny numer i całkowicie fikcyjną geometrię (prosta linia Legnica–Głogów); poprawiono na podstawie rzeczywistej relacji OSM.",
       photos: [],
     },
     tenders: [],
     sources: [
-      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
-      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-08-28" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -563,42 +566,48 @@ export const lines: RailwayLine[] = [
     ],
   },
   {
-    // No usable in-region OSM match found for ref 321 -- the only disused
-    // way tagged with this ref sits near Nysa (Opolskie border area), not
-    // the Jelenia Gora / Szklarska Poreba corridor this line actually runs.
-    // Geometry below remains illustrative sample data rather than a real
-    // alignment.
-    id: "321",
-    number: "321",
-    name: "Jelenia Góra – Świeradów-Zdrój",
-    status: "closed",
+    // No usable in-region OSM match was ever found for ref 321 under the
+    // fictional "Jelenia Gora - Swieradow-Zdroj" pairing -- Szklarska Poreba
+    // and Swieradow-Zdroj sit in different valleys and were never connected
+    // by a single line. Replaced with the real line that actually reaches
+    // Swieradow-Zdroj: 317, Gryfow Slaski - Swieradow-Zdroj via Mirsk. It
+    // has an active route relation in OSM (reactivated for tourism, like
+    // 340 to Karpacz), hence active_passenger rather than closed.
+    id: "317",
+    number: "317",
+    name: "Gryfów Śląski – Świeradów-Zdrój",
+    status: "active_passenger",
     electrified: false,
-    lengthKm: 24.8,
+    lengthKm: 15.9,
     tracks: 1,
-    maxSpeedKmh: 0,
+    maxSpeedKmh: 50,
     operators: ["PKP PLK"],
-    passengerServices: [],
-    endStations: ["Jelenia Góra", "Świeradów-Zdrój"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Gryfów Śląski", "Świeradów-Zdrój"],
     stations: [
-      { id: "jelenia-gora-321", name: "Jelenia Góra", coordinates: jeleniaGora },
-      { id: "szklarska-poreba", name: "Szklarska Poręba", coordinates: szklarskaPoreba },
-      { id: "swieradow-zdroj", name: "Świeradów-Zdrój", coordinates: swieradowZdroj },
+      { id: "osm-2146200605", name: "Gryfów Śląski", coordinates: [15.42898, 51.03398] },
+      { id: "osm-11374585713", name: "Proszówka", coordinates: [15.42454, 51.01002] },
+      { id: "osm-11374585708", name: "Mirsk", coordinates: [15.38033, 50.97316] },
+      { id: "osm-11374585699", name: "Mroczkowice", coordinates: [15.36166, 50.94752] },
+      { id: "osm-11374585673", name: "Orłowice", coordinates: [15.35211, 50.93183] },
+      { id: "osm-11252036715", name: "Świeradów-Zdrój", coordinates: [15.34351, 50.91143] },
     ],
-    geometry: [jeleniaGora, szklarskaPoreba, swieradowZdroj],
+    geometry: geo317 as [number, number][],
     history: {
       timeline: [
         { year: 1909, label: "Otwarcie linii górskiej" },
         { year: 1985, label: "Zawieszenie ruchu pasażerskiego" },
+        { year: 2023, label: "Reaktywacja ruchu pasażerskiego dla turystów" },
       ],
       narrative:
-        "Górska linia widokowa w Karkonoszach i Górach Izerskich, nieczynna od połowy lat 80. XX wieku. Torowisko częściowo zachowane, pojawiają się inicjatywy turystycznej reaktywacji.",
+        "Górska linia widokowa w Górach Izerskich łącząca Gryfów Śląski ze Świeradowem-Zdrojem przez Mirsk, po latach zawieszenia przywrócona do sezonowego ruchu turystycznego — podobnie jak linia 340 do Karpacza. Wcześniejsza wersja tej pozycji w aplikacji opisywała nieistniejące bezpośrednie połączenie Jelenia Góra–Świeradów-Zdrój (Szklarska Poręba i Świeradów-Zdrój leżą w innych dolinach i nigdy nie były połączone jedną linią); poprawiono na podstawie rzeczywistej relacji OSM.",
       photos: [],
     },
     tenders: [],
     sources: [
-      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
-      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-07-15" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
