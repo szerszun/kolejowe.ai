@@ -16,10 +16,12 @@ import geo326 from "./geometry/326.json";
 import geo340 from "./geometry/340.json";
 import geo283 from "./geometry/283.json";
 import geo284 from "./geometry/284.json";
+import geo132 from "./geometry/132.json";
+import geo143 from "./geometry/143.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
- * 309, 322, 326, 340, 283 and 284 is real OpenStreetMap data (©
+ * 309, 322, 326, 340, 283, 284, 132 and 143 is real OpenStreetMap data (©
  * OpenStreetMap contributors, ODbL) — stitched from each line's
  * `route=railway` relation (or, for closed/disused lines, from ways tagged
  * railway=disused with a matching `ref`) and clipped to the Dolnośląskie
@@ -931,6 +933,83 @@ export const lines: RailwayLine[] = [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
       { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+    ],
+  },
+  {
+    id: "132",
+    number: "132",
+    name: "Bytom – Wrocław Główny",
+    status: "active_passenger",
+    electrified: true,
+    lengthKm: 42.7,
+    tracks: 2,
+    maxSpeedKmh: 120,
+    operators: ["PKP PLK"],
+    passengerServices: ["PKP Intercity", "Koleje Dolnośląskie"],
+    endStations: ["Bytom", "Wrocław Główny"],
+    stations: [
+      { id: "osm-968778348", name: "Lipki", coordinates: [17.37252, 50.89825] },
+      { id: "osm-242360270", name: "Oława", coordinates: [17.29776, 50.93058] },
+      { id: "osm-12381011597", name: "Oława Zachodnia", coordinates: [17.26871, 50.94502] },
+      { id: "osm-606349229", name: "Lizawice", coordinates: [17.21439, 50.97226] },
+      { id: "osm-1817597365", name: "Zębice Wrocławskie", coordinates: [17.16207, 51.00667] },
+      { id: "osm-413338538", name: "Święta Katarzyna", coordinates: [17.12314, 51.02956] },
+      { id: "osm-1091838853", name: "Wrocław Brochów", coordinates: [17.08462, 51.06428] },
+      { id: "osm-155479759", name: "Wrocław Główny", coordinates: [17.03795, 51.09792] },
+    ],
+    geometry: geo132 as [number, number][],
+    history: {
+      timeline: [{ year: 1843, label: "Otwarcie magistrali Wrocław – Górny Śląsk" }],
+      narrative:
+        "Ważna zelektryfikowana magistrala łącząca Wrocław z Górnym Śląskiem (Bytom) przez Oławę, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii — reszta trasy przebiega przez województwo śląskie i opolskie.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-25" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-25" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-25" },
+    ],
+  },
+  {
+    id: "143",
+    number: "143",
+    name: "Wrocław Mikołajów – Namysłów",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 60.5,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Wrocław Mikołajów", "Kalety"],
+    stations: [
+      { id: "osm-302223767", name: "Wrocław Mikołajów", coordinates: [16.99839, 51.1163] },
+      { id: "osm-9067487855", name: "Wrocław Szczepin", coordinates: [17.01424, 51.12295] },
+      { id: "osm-789996265", name: "Wrocław Nadodrze", coordinates: [17.03299, 51.12566] },
+      { id: "osm-241763683", name: "Wrocław Sołtysowice", coordinates: [17.08354, 51.14255] },
+      { id: "osm-1401192473", name: "Wrocław Psie Pole", coordinates: [17.11854, 51.15045] },
+      { id: "osm-11407068398", name: "Mirków", coordinates: [17.16547, 51.16549] },
+      { id: "osm-3607481169", name: "Długołęka", coordinates: [17.19445, 51.17846] },
+      { id: "osm-295396299", name: "Borowa Oleśnicka", coordinates: [17.27609, 51.18411] },
+      { id: "osm-295374333", name: "Oleśnica", coordinates: [17.38592, 51.20066] },
+      { id: "osm-295374382", name: "Solniki Wielkie", coordinates: [17.46573, 51.16411] },
+      { id: "osm-295374533", name: "Bierutów", coordinates: [17.54612, 51.12844] },
+      { id: "osm-295374531", name: "Wilków Namysłowski", coordinates: [17.65841, 51.09424] },
+      { id: "osm-295374525", name: "Namysłów", coordinates: [17.7169, 51.07443] },
+    ],
+    geometry: geo143 as [number, number][],
+    history: {
+      timeline: [{ year: 1868, label: "Otwarcie linii Wrocław – Kluczbork" }],
+      narrative:
+        "Jednotorowa, niezelektryfikowana linia łącząca Wrocław z Górnym Śląskiem (Kalety) przez Oleśnicę i Namysłów. Aplikacja pokazuje fragment od Wrocławia Mikołajowa po Namysłów; region Namysłowa leży administracyjnie już w województwie opolskim, ale mieści się w uproszczonej granicy regionu użytej w tej aplikacji (patrz src/data/regionBorder.ts) — dalsza trasa do Kluczborka, Tarnowskich Gór i Kalet nie jest pokazana.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-25" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-25" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-25" },
     ],
   },
 ];

@@ -26,6 +26,16 @@ const PALETTE = [
   "#00838F",
   "#5D4037",
   "#34495E",
+  "#8D6E63",
+  "#546E7A",
+  "#EF6C00",
+  "#6A1B9A",
+  "#00695C",
+  "#AD1457",
+  "#33691E",
+  "#4527A0",
+  "#BF360C",
+  "#01579B",
 ];
 
 const LINE_COLORS: Record<string, string> = Object.fromEntries(
