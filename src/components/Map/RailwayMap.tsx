@@ -8,6 +8,25 @@ import { regionBorder } from "../../data/regionBorder";
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
+// The details panel is an absolutely-positioned overlay, not a layout column,
+// so the map container's own size never changes when it opens -- fitBounds
+// and flyTo need to be told how much of the right-hand side it actually
+// covers right now, measured live rather than assumed as a fixed constant
+// (which drifts whenever the panel's CSS width changes, and is wrong outright
+// on the narrow-screen layout where the panel becomes a bottom sheet).
+function getPanelOverlay(map: MapLibreMap): { right: number; bottom: number } {
+  const panel = document.querySelector<HTMLElement>(".details-panel");
+  if (!panel) return { right: 0, bottom: 0 };
+  const mapRect = map.getContainer().getBoundingClientRect();
+  const panelRect = panel.getBoundingClientRect();
+  const isSideOverlay = panelRect.top <= mapRect.top + 10 && panelRect.height >= mapRect.height * 0.5;
+  if (isSideOverlay) {
+    return { right: Math.min(panelRect.width, mapRect.width * 0.7), bottom: 0 };
+  }
+  // Bottom-sheet layout on narrow screens: the panel eats into the bottom instead.
+  return { right: 0, bottom: Math.min(panelRect.height, mapRect.height * 0.7) };
+}
+
 type HoverInfo =
   | { kind: "line"; x: number; y: number; number: string; endStations: [string, string] }
   | { kind: "station"; x: number; y: number; name: string };
@@ -289,7 +308,12 @@ export function RailwayMap({
     if (!map || !ready || !selectedLineId) return;
     const line = lines.find((l) => l.id === selectedLineId);
     if (!line) return;
-    map.fitBounds(boundsForCoordinates(line.geometry), { padding: { top: 80, bottom: 80, left: 80, right: 420 }, duration: 700, maxZoom: 12 });
+    const overlay = getPanelOverlay(map);
+    map.fitBounds(boundsForCoordinates(line.geometry), {
+      padding: { top: 80, bottom: 80 + overlay.bottom, left: 80, right: 80 + overlay.right },
+      duration: 700,
+      maxZoom: 12,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLineId, ready]);
 
@@ -307,7 +331,13 @@ export function RailwayMap({
     for (const line of lines) {
       const station = line.stations.find((s) => s.id === selectedStationId);
       if (station) {
-        map.flyTo({ center: station.coordinates, zoom: Math.max(map.getZoom(), 12), duration: 700 });
+        const overlay = getPanelOverlay(map);
+        map.flyTo({
+          center: station.coordinates,
+          zoom: Math.max(map.getZoom(), 12),
+          duration: 700,
+          offset: [-overlay.right / 2, overlay.bottom / 2],
+        });
         break;
       }
     }
