@@ -63,46 +63,43 @@ npm run dev
 
 ## Explicitly stubbed / not yet real
 
-- **Line geometry**: `src/data/geometry/*.json` holds real alignments for 19 of
-  the 21 lines (274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286, 309,
-  322, 326, 340, 283, 284, 132, 143), stitched from OpenStreetMap `route=railway`
-  relations (© OpenStreetMap contributors, ODbL) and clipped to Lower
-  Silesia — see the comments at the top of `src/data/lines.ts` for how, and
-  its caveats (137 is only a partial ~39km in-region fragment because that
-  OSM relation is too fragmented to reassemble fully; 271 is a best-effort
-  reconstruction stitched from several separate in-region fragments of a
-  line that mostly runs through Wielkopolskie; 286 originally had a serious
-  stitching bug — the raw OSM relation encodes several sections as duplicate
-  parallel/alternate-track chains, and the original clip/merge step
-  concatenated two of them back-to-back, producing a geometry that did a
-  U-turn partway to Wałbrzych and dropped every station past Nowa Ruda. It
-  was manually re-stitched by picking one consistent chain through each
-  duplicated section (confirmed against real station positions, including
-  Ludwikowice Kłodzkie, Głuszyca and Jedlina-Zdrój, which the buggy version
-  was missing entirely); a couple of short real gaps in the OSM way data are
-  bridged with straight segments, visible as small kinks rather than a
-  U-turn; lines that continue beyond the region,
-  like 273, 275 and 271, are simply cut off at the border). **Lines 293 and
-  321 could not be matched to real Dolnośląskie OSM data** (293's ref number
-  belongs to an unrelated line entirely in Opolskie; 321's only OSM match
-  was an unrelated disused way near Nysa) and still use hand-drawn
-  straight-line sample geometry. The 17 lines with real geometry also have
-  real intermediate stations now — matched by proximity to each line's path
-  from a region-wide query of OSM `railway=station`/`halt` nodes (plus
+- **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
+  alignments (© OpenStreetMap contributors, ODbL) for **all 21 lines** — the
+  two that used to be hand-drawn fictional geometry (293, 321) have been
+  replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
+  it was assigned (that ref is an unrelated line in Opolskie), so that entry
+  is now real line **289 Legnica–Rudna Gwizdanów** (the actual Zagłębie
+  Miedziowe freight line the fictional one stood in for); 321's fictional
+  "Jelenia Góra–Świeradów-Zdrój" never corresponded to real geography
+  (Szklarska Poręba and Świeradów-Zdrój are in different valleys, never
+  connected by one line), so that entry is now real line **317 Gryfów
+  Śląski–Świeradów-Zdrój**, reactivated for tourism like line 340 to
+  Karpacz. See the comments at the top of `src/data/lines.ts` and per-line
+  comments for the fetch/stitch/clip pipeline and each line's caveats: 137
+  (Legnica–Nysa fork) and 271 (Poznań–Wrocław Główny) both required manually
+  matching every OSM way fragment's real endpoints after the automatic
+  longest-chain heuristic either picked too short a piece or stitched some
+  fragments backwards; 286 and 132 had real duplicate-parallel-track
+  segments in the OSM data that were originally concatenated instead of
+  deduplicated, producing U-turns/backtracks that are now fixed; 289 only
+  reaches partway to its real endpoint (Rudna Gwizdanów); lines that
+  continue beyond the region, like 273, 275 and 271, are simply cut off at
+  the border. All lines with real geometry also have real intermediate
+  stations — matched by proximity to each line's path from a region-wide
+  query of OSM `railway=station`/`halt` nodes (plus
   `construction:railway`/`disused:railway` for stations mid-renovation on
   newly reactivated lines, e.g. Złotoryja on 284), using each station's real
   OSM node id as a canonical id shared across lines (so a station served by
   several lines, e.g. Wrocław Główny, correctly lists all of them instead of
-  just one). Lines 293 and 321 still only have their two fictional endpoint
-  stations. All other data (history, tenders, sources)
-  is still hand-authored sample content —
-  not synced from Notion — and several lines' real OSM identity (name,
-  endpoints) differs from what the original fictional sample assumed; where
-  that happened the `name`/`endStations` were corrected to match reality
-  (see the per-line comments in `lines.ts`), but history narratives were only
-  touched where they specifically contradicted the correction. The region
-  border in `src/data/regionBorder.ts` is a rough hand-drawn outline, not an
-  official boundary.
+  just one). All other data (history, tenders, sources) is still
+  hand-authored sample content — not synced from Notion — and several
+  lines' real OSM identity (name, endpoints) differs from what the original
+  fictional sample assumed; where that happened the `name`/`endStations`
+  were corrected to match reality (see the per-line comments in
+  `lines.ts`), but history narratives were only touched where they
+  specifically contradicted the correction. The region border in
+  `src/data/regionBorder.ts` is a rough hand-drawn outline, not an official
+  boundary.
 - **AI assistant**: `mockAssistant.ts` answers via keyword matching against
   the same sample data. No real retrieval, no LLM call, no protection
   against prompt injection yet — all of that needs the real backend.
@@ -126,23 +123,24 @@ npm run dev
 2. Wire the Notion sync job for line overview/history/tenders
 3. Replace `mockAssistant.ts` with real retrieval (pgvector) + an LLM call
    behind the backend (key never in the frontend)
-4. Track down the correct real OSM refs (or another source) for lines 293
-   and 321
-5. **Keep expanding line coverage.** The app now has 21 of the real lines
-   that run through Dolnośląskie (10 original + 9 passenger lines added in
-   a second pass: 271, 276, 286, 309, 322, 326, 340, 283, 284 + 2 major
-   mainlines added in a third pass: 132 Bytom–Wrocław, 143 Wrocław
-   Mikołajów–Namysłów). A third-pass batch of 8 more (272, 281, 289, 308,
-   299, 266, 336, plus the very long 14 Łódź Kaliska–Tuplice) was planned
-   but interrupted by the public Overpass API rate-limiting/temporarily
-   blocking this environment — resume with the same fetch/stitch/clip
-   pipeline once that clears, one line at a time (never concurrently, that's
-   what triggered the block), and expect very large relations like 14
-   (500+ way members) to take a very long time per chunk or to need
-   skipping. Querying OSM for every `route=railway` relation touching the
-   region returns ~175 relations; after excluding foreign (Czech/German)
-   lines, cross-border stub duplicates, and intra-yard/depot micro-segments
-   (dozens of very short technical connectors inside Wrocław/Legnica/
-   Węgliniec yards), a realistic estimate is **~30-50 further genuine
-   lines** still missing — mostly freight-only and closed/disused lines,
-   since the passenger lines and major mainlines were prioritized first.
+4. **Keep expanding line coverage.** The app now has 21 real lines running
+   through Dolnośląskie (10 original + 9 passenger lines added in a second
+   pass: 271, 276, 286, 309, 322, 326, 340, 283, 284 + 132 Bytom–Wrocław and
+   143 Wrocław Mikołajów–Namysłów in a third pass, plus 289 and 317
+   replacing the last two fictional entries). A further batch (272, 281,
+   308, 299, 266, 336, plus the very long 14 Łódź Kaliska–Tuplice, likely
+   impractically slow to fetch — 500+ way members) is still pending, having
+   been interrupted by the public Overpass API rate-limiting/temporarily
+   blocking this environment when two fetches ran concurrently — resume
+   with the same fetch/stitch/clip pipeline, one line at a time. Querying
+   OSM for every `route=railway` relation touching the region returns ~175
+   relations; after excluding foreign (Czech/German) lines, cross-border
+   stub duplicates, and intra-yard/depot micro-segments (dozens of very
+   short technical connectors inside Wrocław/Legnica/Węgliniec yards), a
+   realistic estimate is **~25-45 further genuine lines** still missing —
+   mostly freight-only and closed/disused lines, since the passenger lines
+   and major mainlines were prioritized first. When reconstructing any of
+   these, watch for the duplicate-parallel-track and wrong-orientation
+   stitching bugs described above (137/271/286/132 all had one) — check for
+   OSM relations that pass near the same real station more than once before
+   trusting the automatic longest-chain heuristic.
