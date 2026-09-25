@@ -1,7 +1,7 @@
 export const translations = {
   pl: {
     appTitle: "kolejowe.ai",
-    appSubtitle: "Twoje źródło informacji o kolei na Dolnym Śląsku",
+    appSubtitle: "Twoje źródło informacji o kolei",
     demoBanner:
       "Wersja robocza — dane przykładowe do celów demonstracyjnych, geometria linii jest uproszczona.",
     searchPlaceholder: "Szukaj linii lub stacji",
@@ -77,7 +77,7 @@ export const translations = {
   },
   en: {
     appTitle: "kolejowe.ai",
-    appSubtitle: "Your source for railway information in Lower Silesia",
+    appSubtitle: "Your source for railway information",
     demoBanner: "Draft build — sample data for demonstration purposes, line geometry is simplified.",
     searchPlaceholder: "Search line or station",
     listViewToggle: "Line list",

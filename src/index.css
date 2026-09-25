@@ -76,7 +76,9 @@ a {
 }
 
 .app-header-subtitle {
-  font-size: 1.275rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.7rem;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
