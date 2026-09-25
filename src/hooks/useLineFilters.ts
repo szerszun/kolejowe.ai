@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import type { LineStatus, RailwayLine } from "../types";
 import { getAllStations, type StationEntry } from "../utils/stations";
+import { normalize } from "../utils/text";
 
 export interface FilterState {
   statuses: Set<LineStatus>;
@@ -13,13 +14,6 @@ export interface FilterState {
 // of them, rather than starting from everything selected and deselecting.
 export function defaultFilterState(): FilterState {
   return { statuses: new Set(), electrifiedOnly: false, hasTendersOnly: false };
-}
-
-function normalize(s: string) {
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
 }
 
 export function useLineFilters(lines: RailwayLine[]) {

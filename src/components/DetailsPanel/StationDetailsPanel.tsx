@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine, Station } from "../../types";
-import { getLineColor } from "../../utils/lineColors";
+import { stationDetails } from "../../data/stationDetails";
+import { StationOverviewTab } from "./StationOverviewTab";
+import { StationTimetableTab } from "./StationTimetableTab";
+import { StationDeparturesTab } from "./StationDeparturesTab";
+
+type Tab = "overview" | "timetable" | "departures";
 
 interface StationDetailsPanelProps {
   station: Station;
@@ -11,6 +17,8 @@ interface StationDetailsPanelProps {
 
 export function StationDetailsPanel({ station, servingLines, onClose, onSelectLine }: StationDetailsPanelProps) {
   const { t } = useI18n();
+  const [tab, setTab] = useState<Tab>("overview");
+  const details = stationDetails[station.id];
 
   return (
     <aside className="details-panel" aria-label={station.name}>
@@ -23,26 +31,27 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
         </button>
       </header>
 
-      <div className="details-panel-body">
-        <h3>{t("stationPanelLinesTitle")}</h3>
-        <ul className="line-list" role="listbox" aria-label={t("stationPanelLinesTitle")}>
-          {servingLines.map((line) => (
-            <li key={line.id}>
-              <button type="button" role="option" className="line-list-item" onClick={() => onSelectLine(line.id)}>
-                <span className="line-list-badge" style={{ backgroundColor: getLineColor(line.id) }}>
-                  {line.number}
-                </span>
-                <span className="line-list-text">
-                  <strong>{line.name}</strong>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="tabs" role="tablist">
+        {(["overview", "timetable", "departures"] as Tab[]).map((tabId) => (
+          <button
+            key={tabId}
+            role="tab"
+            type="button"
+            aria-selected={tab === tabId}
+            className={`tab-button ${tab === tabId ? "tab-button--active" : ""}`}
+            onClick={() => setTab(tabId)}
+          >
+            {t(tabId === "overview" ? "tabOverview" : tabId === "timetable" ? "tabTimetable" : "tabDepartures")}
+          </button>
+        ))}
+      </div>
 
-        <p className="empty-state" style={{ marginTop: "1.4rem" }}>
-          {t("stationPanelNoData")}
-        </p>
+      <div className="details-panel-body">
+        {tab === "overview" && (
+          <StationOverviewTab station={station} servingLines={servingLines} details={details} onSelectLine={onSelectLine} />
+        )}
+        {tab === "timetable" && <StationTimetableTab details={details} lines={servingLines} />}
+        {tab === "departures" && <StationDeparturesTab details={details} lines={servingLines} />}
       </div>
     </aside>
   );
