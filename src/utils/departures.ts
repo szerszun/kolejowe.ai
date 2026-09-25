@@ -1,9 +1,15 @@
-import type { DaysOfOperation, StationTimetableEntry } from "../types";
+import type { DaysOfOperation } from "../types";
 
 export type DepartureStatus = "on_time" | "delayed" | "cancelled";
 
-export interface UpcomingDeparture {
-  entry: StationTimetableEntry;
+interface TimedEntry {
+  id: string;
+  time: string;
+  daysOfOperation: DaysOfOperation;
+}
+
+export interface UpcomingMovement<T> {
+  entry: T;
   scheduledAt: Date;
   actualAt: Date | null;
   delayMinutes: number;
@@ -29,20 +35,20 @@ function hashString(s: string): number {
 // given day instead of flickering on every re-render -- there's no real
 // dispatch system behind this draft, just a stand-in for what live running
 // information would look like.
-function mockRealtimeFor(entry: StationTimetableEntry, dateKey: string): { status: DepartureStatus; delayMinutes: number } {
-  const h = hashString(`${entry.id}:${dateKey}`);
+function mockRealtimeFor(entryId: string, dateKey: string): { status: DepartureStatus; delayMinutes: number } {
+  const h = hashString(`${entryId}:${dateKey}`);
   const bucket = h % 10;
   if (bucket === 9) return { status: "cancelled", delayMinutes: 0 };
   if (bucket >= 6) return { status: "delayed", delayMinutes: 2 + (h % 13) };
   return { status: "on_time", delayMinutes: 0 };
 }
 
-export function getUpcomingDepartures(
-  timetable: StationTimetableEntry[],
-  now: Date,
-  hoursAhead = 6,
-): UpcomingDeparture[] {
-  const result: UpcomingDeparture[] = [];
+// Shared by the Departures and Arrivals tabs -- same "what's happening in
+// the next N hours" windowing and mock realtime status logic, just fed a
+// different entry list (departures keyed by destination, arrivals by
+// origin).
+export function getUpcomingMovements<T extends TimedEntry>(timetable: T[], now: Date, hoursAhead = 6): UpcomingMovement<T>[] {
+  const result: UpcomingMovement<T>[] = [];
 
   for (const dayOffset of [0, 1]) {
     const day = new Date(now);
@@ -58,7 +64,7 @@ export function getUpcomingDepartures(
       if (diffHours < 0 || diffHours > hoursAhead) continue;
 
       const dateKey = scheduledAt.toISOString().slice(0, 10);
-      const { status, delayMinutes } = mockRealtimeFor(entry, dateKey);
+      const { status, delayMinutes } = mockRealtimeFor(entry.id, dateKey);
       const actualAt = status === "cancelled" ? null : new Date(scheduledAt.getTime() + delayMinutes * 60_000);
       result.push({ entry, scheduledAt, actualAt, delayMinutes, status });
     }

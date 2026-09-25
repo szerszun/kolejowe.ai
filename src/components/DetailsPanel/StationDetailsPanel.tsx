@@ -5,8 +5,16 @@ import { stationDetails } from "../../data/stationDetails";
 import { StationOverviewTab } from "./StationOverviewTab";
 import { StationTimetableTab } from "./StationTimetableTab";
 import { StationDeparturesTab } from "./StationDeparturesTab";
+import { StationArrivalsTab } from "./StationArrivalsTab";
 
-type Tab = "overview" | "timetable" | "departures";
+type Tab = "overview" | "timetable" | "arrivals" | "departures";
+
+const TAB_LABEL_KEY: Record<Tab, "tabOverview" | "tabTimetable" | "tabArrivals" | "tabDepartures"> = {
+  overview: "tabOverview",
+  timetable: "tabTimetable",
+  arrivals: "tabArrivals",
+  departures: "tabDepartures",
+};
 
 interface StationDetailsPanelProps {
   station: Station;
@@ -32,7 +40,7 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
       </header>
 
       <div className="tabs" role="tablist">
-        {(["overview", "timetable", "departures"] as Tab[]).map((tabId) => (
+        {(["overview", "timetable", "arrivals", "departures"] as Tab[]).map((tabId) => (
           <button
             key={tabId}
             role="tab"
@@ -41,7 +49,7 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
             className={`tab-button ${tab === tabId ? "tab-button--active" : ""}`}
             onClick={() => setTab(tabId)}
           >
-            {t(tabId === "overview" ? "tabOverview" : tabId === "timetable" ? "tabTimetable" : "tabDepartures")}
+            {t(TAB_LABEL_KEY[tabId])}
           </button>
         ))}
       </div>
@@ -51,6 +59,7 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
           <StationOverviewTab station={station} servingLines={servingLines} details={details} onSelectLine={onSelectLine} />
         )}
         {tab === "timetable" && <StationTimetableTab details={details} lines={servingLines} />}
+        {tab === "arrivals" && <StationArrivalsTab details={details} lines={servingLines} />}
         {tab === "departures" && <StationDeparturesTab details={details} lines={servingLines} />}
       </div>
     </aside>
