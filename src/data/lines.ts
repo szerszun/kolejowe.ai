@@ -691,7 +691,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Główny – Międzylesie",
     status: "active_passenger",
     electrified: true,
-    lengthKm: 129.5,
+    lengthKm: 97.6,
     tracks: 1,
     maxSpeedKmh: 90,
     operators: ["PKP PLK"],
@@ -710,18 +710,18 @@ export const lines: RailwayLine[] = [
       { id: "osm-487097036", name: "Henryków", coordinates: [17.03014, 50.66308] },
       { id: "osm-487092286", name: "Biały Kościół", coordinates: [17.02995, 50.72846] },
       { id: "osm-746756710", name: "Warkocz", coordinates: [17.04622, 50.8296] },
+      { id: "osm-746756709", name: "Boreczek", coordinates: [17.02458, 50.87893] },
+      { id: "osm-413351232", name: "Węgry", coordinates: [17.03282, 50.92579] },
       { id: "osm-413567246", name: "Żórawina", coordinates: [17.04958, 50.98342] },
       { id: "osm-510885402", name: "Smardzów Wrocławski", coordinates: [17.06613, 51.03069] },
       { id: "osm-9221292010", name: "Iwiny", coordinates: [17.06881, 51.05467] },
-      { id: "osm-413351232", name: "Węgry", coordinates: [17.03282, 50.92579] },
-      { id: "osm-746756709", name: "Boreczek", coordinates: [17.02458, 50.87893] },
-      { id: "osm-413398658", name: "Strzelin", coordinates: [17.06024, 50.78421] },
+      { id: "osm-155479759", name: "Wrocław Główny", coordinates: [17.03795, 51.09792] },
     ],
     geometry: geo276 as [number, number][],
     history: {
       timeline: [{ year: 1874, label: "Otwarcie linii Wrocław – Kłodzko – Międzylesie" }],
       narrative:
-        "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie.",
+        "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie. Wcześniejsza wersja geometrii kończyła się na Strzelinie zamiast dochodzić do Wrocławia Głównego — surowa relacja OSM zawierała odcinek Strzelin–Wrocław zapisany tam i z powrotem (ten sam rodzaj błędu co w liniach 271/286/132/289/298); poprawiono, zostawiając tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1330,7 +1330,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Gądów – Wrocław Popowice",
     status: "freight_only",
     electrified: true,
-    lengthKm: 9.0,
+    lengthKm: 5.7,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1341,7 +1341,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1384,7 +1384,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Popowice WP1 – WP4",
     status: "freight_only",
     electrified: true,
-    lengthKm: 5.2,
+    lengthKm: 1.2,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1395,7 +1395,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1449,7 +1449,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1476,7 +1476,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1492,7 +1492,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Stadion – Wrocław Muchobór",
     status: "freight_only",
     electrified: true,
-    lengthKm: 6.6,
+    lengthKm: 3.3,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1503,7 +1503,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1519,7 +1519,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Gądów – Wrocław Nowy Dwór",
     status: "freight_only",
     electrified: true,
-    lengthKm: 3.0,
+    lengthKm: 1.4,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1530,7 +1530,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1573,7 +1573,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Grabiszyn – Wrocław Świebodzki",
     status: "freight_only",
     electrified: true,
-    lengthKm: 1.6,
+    lengthKm: 0.8,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1584,7 +1584,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1627,7 +1627,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Brochów – Wrocław Główny",
     status: "freight_only",
     electrified: true,
-    lengthKm: 8.9,
+    lengthKm: 4.4,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1638,7 +1638,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1665,7 +1665,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
@@ -1681,7 +1681,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Brochów – Lamowice",
     status: "freight_only",
     electrified: true,
-    lengthKm: 4.7,
+    lengthKm: 2.5,
     tracks: 1,
     maxSpeedKmh: 40,
     operators: ["PKP PLK"],
@@ -1692,7 +1692,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); pokazany jest tylko przejazd w jedną stronę.",
       photos: [],
     },
     tenders: [],
