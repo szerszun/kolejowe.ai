@@ -482,14 +482,18 @@ export const lines: RailwayLine[] = [
     // fictional "Legnica - Glogow" (ref 293 doesn't belong to that pair --
     // it's an unrelated line entirely in Opolskie). This is the real
     // Legnicko-Glogowskie copper-district freight line the fictional entry
-    // was standing in for. Only a ~25km in-region fragment could be
-    // reassembled; the line's real length to Rudna Gwizdanow is longer.
+    // was standing in for. An earlier version of this reconstruction only
+    // used the middle of 3 raw chains (the automatic longest-chain picker
+    // treated the short Legnica-end stub and the Rudna Gwizdanow-bound
+    // continuation as separate, unrelated fragments purely because of their
+    // order in the OSM relation, even though all three join with 0km gaps);
+    // now stitched into one continuous path all the way to Rudna Gwizdanow.
     id: "289",
     number: "289",
     name: "Legnica – Rudna Gwizdanów",
     status: "freight_only",
     electrified: false,
-    lengthKm: 24.8,
+    lengthKm: 38.8,
     tracks: 1,
     maxSpeedKmh: 60,
     operators: ["PKP PLK"],
@@ -503,12 +507,16 @@ export const lines: RailwayLine[] = [
       { id: "osm-6534824815", name: "Chróstnik", coordinates: [16.18093, 51.3554] },
       { id: "osm-5356872372", name: "Lubin", coordinates: [16.19344, 51.39578] },
       { id: "osm-7047566737", name: "Lubin Stadion", coordinates: [16.19926, 51.40863] },
+      { id: "osm-6534833802", name: "Koźlice", coordinates: [16.233, 51.45113] },
+      { id: "osm-6534833803", name: "Rynarcice", coordinates: [16.22737, 51.47255] },
+      { id: "osm-1397290730", name: "Rudna Miasto", coordinates: [16.26961, 51.50574] },
+      { id: "osm-3986093725", name: "Rudna Gwizdanów", coordinates: [16.28097, 51.5291] },
     ],
     geometry: geo289 as [number, number][],
     history: {
       timeline: [{ year: 1873, label: "Otwarcie linii" }],
       narrative:
-        "Linia towarowa obsługująca Zagłębie Miedziowe (KGHM) między Legnicą a Lubinem, w stronę Rudnej Gwizdanów. Wcześniejsza wersja tej pozycji w aplikacji miała błędny numer i całkowicie fikcyjną geometrię (prosta linia Legnica–Głogów); poprawiono na podstawie rzeczywistej relacji OSM.",
+        "Linia towarowa obsługująca Zagłębie Miedziowe (KGHM) między Legnicą, Lubinem a Rudną, obecnie wykorzystywana głównie do przewozu rudy miedzi. Wcześniejsza wersja tej pozycji w aplikacji miała błędny numer i całkowicie fikcyjną geometrię (prosta linia Legnica–Głogów); poprawiono na podstawie rzeczywistej relacji OSM, początkowo tylko częściowo (do Lubina), docelowo obejmując pełny przebieg do Rudnej Gwizdanów.",
       photos: [],
     },
     tenders: [],
