@@ -946,7 +946,7 @@ export const lines: RailwayLine[] = [
     name: "Bytom – Wrocław Główny",
     status: "active_passenger",
     electrified: true,
-    lengthKm: 42.7,
+    lengthKm: 33.3,
     tracks: 2,
     maxSpeedKmh: 120,
     operators: ["PKP PLK"],
@@ -966,7 +966,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [{ year: 1843, label: "Otwarcie magistrali Wrocław – Górny Śląsk" }],
       narrative:
-        "Ważna zelektryfikowana magistrala łącząca Wrocław z Górnym Śląskiem (Bytom) przez Oławę, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii — reszta trasy przebiega przez województwo śląskie i opolskie.",
+        "Ważna zelektryfikowana magistrala łącząca Wrocław z Górnym Śląskiem (Bytom) przez Oławę, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii — reszta trasy przebiega przez województwo śląskie i opolskie. Wcześniejsza wersja geometrii miała zdublowany odcinek między Zębicami Wrocławskimi a Świętą Katarzyną (dwa nakładające się warianty toru w danych OSM); poprawiono ją tak, by pozostał tylko jeden, faktyczny przebieg.",
       photos: [],
     },
     tenders: [],
