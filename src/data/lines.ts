@@ -206,25 +206,55 @@ export const lines: RailwayLine[] = [
     number: "137",
     // Real OSM identity (route relation): Katowice - Legnica. Corrected from
     // the fictional "Legnica - Klodzko Glowne" (that pair isn't a real PKP
-    // line). The relation itself is heavily fragmented in OSM -- the best
-    // we could reassemble is a single clean ~39km in-region piece (roughly
-    // the Swidnica/Dzierzoniow area), not the full Katowice-Legnica run, so
-    // the map shows a partial fragment of this line rather than end-to-end.
+    // line). The relation is heavily fragmented in OSM -- an earlier version
+    // of this reconstruction only recovered a single ~39km in-region piece
+    // (Krzyzowa/Swidnica through Zabkowice Slaskie) and, worse, had several
+    // of the small connecting fragments stitched in the wrong orientation,
+    // producing a zigzag instead of following the real alignment. Redone by
+    // matching every fragment's endpoints explicitly: the in-region geometry
+    // now runs continuously from Legnica down through Jawor, Swidnica,
+    // Dzierzoniow and Zabkowice Slaskie to a fork toward Nysa via Kamieniec
+    // Zabkowicki (the Katowice-bound continuation south of Zabkowice is
+    // outside the region and isn't shown).
     name: "Katowice – Legnica",
     status: "active_passenger",
     electrified: true,
-    lengthKm: 39.0,
+    lengthKm: 144.3,
     tracks: 2,
     maxSpeedKmh: 100,
     operators: ["PKP PLK"],
     passengerServices: ["Koleje Dolnośląskie", "PolRegio"],
     endStations: ["Katowice", "Legnica"],
     stations: [
+      { id: "osm-2627870779", name: "Legnica", coordinates: [16.16965, 51.21409] },
+      { id: "osm-9218764911", name: "Legnica Piekary", coordinates: [16.19797, 51.20168] },
+      { id: "osm-9218764912", name: "Nowa Wieś Legnicka", coordinates: [16.18923, 51.17621] },
+      { id: "osm-10864133221", name: "Legnica Strefa", coordinates: [16.18531, 51.16524] },
+      { id: "osm-1729229709", name: "Przybyłowice", coordinates: [16.15869, 51.12514] },
+      { id: "osm-1729229718", name: "Stary Jawor", coordinates: [16.16124, 51.07898] },
+      { id: "osm-2126723884", name: "Jawor", coordinates: [16.19844, 51.05505] },
+      { id: "osm-612312822", name: "Rogoźnica", coordinates: [16.30193, 51.01453] },
+      { id: "osm-2126759021", name: "Goczałków", coordinates: [16.32533, 51.00843] },
+      { id: "osm-3683604050", name: "Strzegom", coordinates: [16.35895, 50.97457] },
+      { id: "osm-2146579435", name: "Stanowice", coordinates: [16.37488, 50.92994] },
+      { id: "osm-3683522126", name: "Jaworzyna Śląska", coordinates: [16.42888, 50.91249] },
+      { id: "osm-10574304735", name: "Świdnica Zawiszów", coordinates: [16.47937, 50.86006] },
+      { id: "osm-3682511205", name: "Świdnica Miasto", coordinates: [16.48151, 50.84122] },
+      { id: "osm-7110863509", name: "Świdnica Kraszowice", coordinates: [16.4922, 50.81526] },
       { id: "osm-13414176169", name: "Krzyżowa", coordinates: [16.5301, 50.79395] },
       { id: "osm-13945351832", name: "Mościsko Dzierżoniowskie", coordinates: [16.5804, 50.77206] },
       { id: "osm-3682234687", name: "Dzierżoniów Śląski", coordinates: [16.64091, 50.72424] },
       { id: "osm-1744509719", name: "Piława Górna", coordinates: [16.77326, 50.67877] },
       { id: "osm-3681874597", name: "Ząbkowice Śląskie", coordinates: [16.81277, 50.5973] },
+      { id: "osm-10977746452", name: "Kamieniec Ząbkowicki", coordinates: [16.8990, 50.5361] },
+      { id: "osm-833677096", name: "Doboszowice", coordinates: [16.94269, 50.50729] },
+      { id: "osm-2555343772", name: "Paczków", coordinates: [17.01106, 50.47842] },
+      { id: "osm-331033937", name: "Otmuchów Jezioro", coordinates: [17.11057, 50.48138] },
+      { id: "osm-2555343793", name: "Otmuchów", coordinates: [17.15256, 50.47413] },
+      { id: "osm-3680304139", name: "Wójcice", coordinates: [17.22085, 50.46841] },
+      { id: "osm-3680257925", name: "Goświnowice", coordinates: [17.25717, 50.47852] },
+      { id: "osm-2281230137", name: "Radzikowice", coordinates: [17.28965, 50.49836] },
+      { id: "osm-3679909514", name: "Nysa", coordinates: [17.34195, 50.47765] },
     ],
     geometry: geo137 as [number, number][],
     history: {
@@ -234,7 +264,7 @@ export const lines: RailwayLine[] = [
         { year: 1998, label: "Elektryfikacja całej linii" },
       ],
       narrative:
-        "Linia 137 spina aglomerację katowicką z Legnicą, obsługując po drodze gęsto zaludniony pas Przedgórza Sudeckiego wraz z okolicami Świdnicy i Dzierżoniowa. Historycznie kluczowa dla transportu węgla z zagłębia wałbrzyskiego, dziś pełni głównie funkcję pasażerską w ruchu regionalnym. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii.",
+        "Linia 137 spina aglomerację katowicką z Legnicą, obsługując po drodze gęsto zaludniony pas Przedgórza Sudeckiego wraz z okolicami Jawora, Świdnicy i Dzierżoniowa, a za Ząbkowicami Śląskimi odgałęzia się w stronę Nysy przez Kamieniec Ząbkowicki. Historycznie kluczowa dla transportu węgla z zagłębia wałbrzyskiego, dziś pełni głównie funkcję pasażerską w ruchu regionalnym. Aplikacja pokazuje dolnośląski fragment tej linii od Legnicy po odgałęzienie w stronę Nysy; dalszy przebieg w stronę Katowic leży już poza regionem. Wcześniejsza wersja tej rekonstrukcji obejmowała tylko krótki środkowy odcinek i miała kilka błędnie zorientowanych fragmentów tworzących zygzak zamiast płynnej trasy — poprawiono to, dopasowując każdy fragment po jego rzeczywistych końcach.",
       photos: [],
     },
     tenders: [
