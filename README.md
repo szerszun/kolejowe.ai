@@ -136,7 +136,20 @@ npm run dev
    (and only) link between 299 and the rest of the network at Sędzisław on
    line 274 — in a fourth pass, plus all 16 short freight-only connector
    lines of the Wrocław rail node's "Obwodnica Towarowa" (750-765) in a
-   fifth pass). Several candidates were deliberately skipped: **272**
+   fifth pass). Line 276 additionally got a second geometry fix: it was
+   missing its entire southern half (Kłodzko down through Bystrzyca
+   Kłodzka and Międzylesie to the Czech border) because the automatic
+   picker never combined that raw chain with the Kłodzko–Wrocław one it
+   did use; it's now stitched in along with the short official
+   cross-border connector **481** (Lichkov – granica państwa), so 276's
+   geometry runs all the way into the Czech Republic even though the
+   line itself officially ends at Międzylesie. **A systematic re-check
+   after that discovery** (comparing each line's own start point to its
+   farthest point and to its own endpoint) turned up 8 more instances of
+   the same duplicate/there-and-back bug that earlier spot-checks had
+   missed: 752, 754, 758, 759, 761, 763 and 765 (all in the Wrocław
+   freight bypass) plus 276 itself — all fixed the same way, keeping
+   only the genuine outbound leg. Several candidates were deliberately skipped: **272**
    Kluczbork–Poznań turned out to barely graze Dolnośląskie at all (<0.1%
    of its path is in-region — it's really an Opolskie/Wielkopolskie line),
    **336** Mirsk–Świeradów-Zdrój is ~67% physically identical to the
