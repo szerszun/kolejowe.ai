@@ -26,7 +26,7 @@ npm run dev
 
 ## What's implemented (draft scope)
 
-- Interactive map of 21 lines across Lower Silesia, most with **real
+- Interactive map of 25 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (30-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -65,7 +65,7 @@ npm run dev
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 21 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 25 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -124,24 +124,35 @@ npm run dev
 2. Wire the Notion sync job for line overview/history/tenders
 3. Replace `mockAssistant.ts` with real retrieval (pgvector) + an LLM call
    behind the backend (key never in the frontend)
-4. **Keep expanding line coverage.** The app now has 21 real lines running
+4. **Keep expanding line coverage.** The app now has 25 real lines running
    through Dolnośląskie (10 original + 9 passenger lines added in a second
    pass: 271, 276, 286, 309, 322, 326, 340, 283, 284 + 132 Bytom–Wrocław and
    143 Wrocław Mikołajów–Namysłów in a third pass, plus 289 and 317
-   replacing the last two fictional entries). A further batch (272, 281,
-   308, 299, 266, 336, plus the very long 14 Łódź Kaliska–Tuplice, likely
-   impractically slow to fetch — 500+ way members) is still pending, having
-   been interrupted by the public Overpass API rate-limiting/temporarily
-   blocking this environment when two fetches ran concurrently — resume
-   with the same fetch/stitch/clip pipeline, one line at a time. Querying
-   OSM for every `route=railway` relation touching the region returns ~175
-   relations; after excluding foreign (Czech/German) lines, cross-border
-   stub duplicates, and intra-yard/depot micro-segments (dozens of very
+   replacing the last two fictional entries, plus 281 Oleśnica–Chojnice,
+   308 Jelenia Góra–Mysłakowice, 299 Kamienna Góra–Lubawka and 266 Świdnica
+   Kraszowice–Jedlina Zdrój in a fourth pass). Two candidates from that
+   fourth-pass list were deliberately skipped: **272** Kluczbork–Poznań
+   turned out to barely graze Dolnośląskie at all (<0.1% of its path is
+   in-region — it's really an Opolskie/Wielkopolskie line), and **336**
+   Mirsk–Świeradów-Zdrój is ~67% physically identical to the Mirsk–
+   Świeradów-Zdrój tail of line 317 already in the app (same real
+   trackage, a different PKP line number) — adding it would just draw a
+   near-duplicate on the map. The very long **14** Łódź Kaliska–Tuplice
+   (500+ way members) remains unfetched, likely impractically slow via the
+   public Overpass API. Querying OSM for every `route=railway` relation
+   touching the region returns ~175 relations; after excluding foreign
+   (Czech/German) lines, cross-border stub duplicates, near-duplicate
+   trackage like 336, and intra-yard/depot micro-segments (dozens of very
    short technical connectors inside Wrocław/Legnica/Węgliniec yards), a
-   realistic estimate is **~25-45 further genuine lines** still missing —
+   realistic estimate is **~20-40 further genuine lines** still missing —
    mostly freight-only and closed/disused lines, since the passenger lines
    and major mainlines were prioritized first. When reconstructing any of
    these, watch for the duplicate-parallel-track and wrong-orientation
-   stitching bugs described above (137/271/286/132 all had one) — check for
-   OSM relations that pass near the same real station more than once before
-   trusting the automatic longest-chain heuristic.
+   stitching bugs described above (137/271/286/132/289 all had one) —
+   check for OSM relations that pass near the same real station more than
+   once, or that leave an adjacent zero-gap fragment unmerged (289's bug),
+   before trusting the automatic longest-chain heuristic. The public
+   Overpass API is also prone to long stretches of slow/timing-out
+   responses (not just the hard rate-limit block from earlier) — expect a
+   single line's fetch to occasionally take 10+ minutes even when it
+   eventually succeeds.
