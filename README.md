@@ -26,9 +26,9 @@ npm run dev
 
 ## What's implemented (draft scope)
 
-- Interactive map of 19 lines across Lower Silesia, most with **real
+- Interactive map of 21 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
-  distinguishable colour (20-colour palette, no yellow — it disappears
+  distinguishable colour (30-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
   closed) is conveyed by line style (solid / dashed / dotted) plus a legend,
   with hover tooltips, click-to-select + zoom-to-fit, and open-tender badges
@@ -56,9 +56,9 @@ npm run dev
 
 ## Explicitly stubbed / not yet real
 
-- **Line geometry**: `src/data/geometry/*.json` holds real alignments for 17 of
-  the 19 lines (274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286, 309,
-  322, 326, 340, 283, 284), stitched from OpenStreetMap `route=railway`
+- **Line geometry**: `src/data/geometry/*.json` holds real alignments for 19 of
+  the 21 lines (274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286, 309,
+  322, 326, 340, 283, 284, 132, 143), stitched from OpenStreetMap `route=railway`
   relations (© OpenStreetMap contributors, ODbL) and clipped to Lower
   Silesia — see the comments at the top of `src/data/lines.ts` for how, and
   its caveats (137 is only a partial ~39km in-region fragment because that
@@ -121,15 +121,21 @@ npm run dev
    behind the backend (key never in the frontend)
 4. Track down the correct real OSM refs (or another source) for lines 293
    and 321
-5. **Keep expanding line coverage.** The app now has 19 of the real lines
+5. **Keep expanding line coverage.** The app now has 21 of the real lines
    that run through Dolnośląskie (10 original + 9 passenger lines added in
-   a second pass: 271, 276, 286, 309, 322, 326, 340, 283, 284). Querying OSM
-   for every `route=railway` relation touching the region returns ~175
-   relations; after excluding foreign (Czech/German) lines, cross-border
-   stub duplicates, and intra-yard/depot micro-segments (dozens of very
-   short technical connectors inside Wrocław/Legnica/Węgliniec yards), a
-   realistic estimate is **~30-60 further genuine lines** still missing —
-   mostly freight-only and closed/disused lines, since the passenger lines
-   were prioritized first. The same fetch/stitch/clip pipeline applies per
-   line; the public Overpass API is slow/rate-limited, so budget real time
-   for each additional batch.
+   a second pass: 271, 276, 286, 309, 322, 326, 340, 283, 284 + 2 major
+   mainlines added in a third pass: 132 Bytom–Wrocław, 143 Wrocław
+   Mikołajów–Namysłów). A third-pass batch of 8 more (272, 281, 289, 308,
+   299, 266, 336, plus the very long 14 Łódź Kaliska–Tuplice) was planned
+   but interrupted by the public Overpass API rate-limiting/temporarily
+   blocking this environment — resume with the same fetch/stitch/clip
+   pipeline once that clears, one line at a time (never concurrently, that's
+   what triggered the block), and expect very large relations like 14
+   (500+ way members) to take a very long time per chunk or to need
+   skipping. Querying OSM for every `route=railway` relation touching the
+   region returns ~175 relations; after excluding foreign (Czech/German)
+   lines, cross-border stub duplicates, and intra-yard/depot micro-segments
+   (dozens of very short technical connectors inside Wrocław/Legnica/
+   Węgliniec yards), a realistic estimate is **~30-50 further genuine
+   lines** still missing — mostly freight-only and closed/disused lines,
+   since the passenger lines and major mainlines were prioritized first.
