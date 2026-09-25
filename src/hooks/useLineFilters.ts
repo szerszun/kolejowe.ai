@@ -37,11 +37,14 @@ export function useLineFilters(lines: RailwayLine[]) {
   // name, end stations) -- not by an intermediate station name, so a line
   // search doesn't get cluttered with every line that merely passes near a
   // matching town (that's what the separate "Stations" section is for).
+  // Sorted ascending by line number rather than left in data-file order.
   const filteredLines = useMemo(() => {
-    if (!q) return statusFilteredLines;
-    return statusFilteredLines.filter((line) =>
-      [line.number, line.name, ...line.endStations].map(normalize).some((h) => h.includes(q)),
-    );
+    const matched = !q
+      ? statusFilteredLines
+      : statusFilteredLines.filter((line) =>
+          [line.number, line.name, ...line.endStations].map(normalize).some((h) => h.includes(q)),
+        );
+    return [...matched].sort((a, b) => Number(a.number) - Number(b.number));
   }, [statusFilteredLines, q]);
 
   const allStations = useMemo(() => getAllStations(lines), [lines]);
