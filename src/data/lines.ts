@@ -582,7 +582,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Główny – Poznań Główny",
     status: "active_passenger",
     electrified: true,
-    lengthKm: 79.5,
+    lengthKm: 69.7,
     tracks: 2,
     maxSpeedKmh: 100,
     operators: ["PKP PLK"],
@@ -607,7 +607,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [{ year: 1856, label: "Otwarcie magistrali Wrocław – Poznań" }],
       narrative:
-        "Ważna magistrala łącząca Wrocław z Poznaniem przez Żmigród i Rawicz, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii. Wcześniejsza wersja geometrii kończyła się kilkanaście kilometrów przed Wrocławiem; poprawiono ją tak, by faktycznie dochodziła do Wrocławia Głównego, z dodatkowymi przystankami (Wrocław Osobowice, Różanka, Popowice, Mikołajów) po drodze.",
+        "Ważna magistrala łącząca Wrocław z Poznaniem przez Żmigród i Rawicz, obsługiwana przez PKP Intercity oraz Koleje Dolnośląskie. Aplikacja pokazuje tylko dolnośląski fragment tej długiej, międzywojewódzkiej linii. Wcześniejsza wersja geometrii kończyła się kilkanaście kilometrów przed Wrocławiem, a odcinek Popowice–Główny był przez pomyłkę zdublowany (pętla zawracająca przez Różankę); poprawiono ją tak, by faktycznie dochodziła do Wrocławia Głównego bez powtórzeń, z dodatkowymi przystankami (Wrocław Osobowice, Różanka, Popowice, Mikołajów) po drodze.",
       photos: [],
     },
     tenders: [],
