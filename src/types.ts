@@ -78,6 +78,16 @@ export interface StationTimetableEntry {
   daysOfOperation: DaysOfOperation;
 }
 
+export interface StationArrivalEntry {
+  id: string;
+  time: string; // "HH:MM", 24h
+  lineId: string;
+  origin: string;
+  operator: string;
+  platform: string;
+  daysOfOperation: DaysOfOperation;
+}
+
 export interface StationDetails {
   stationId: string;
   category?: string;
@@ -88,5 +98,6 @@ export interface StationDetails {
   amenities: string[];
   photo?: StationPhoto;
   timetable: StationTimetableEntry[];
+  arrivals: StationArrivalEntry[];
   sources: SourceRef[];
 }

@@ -76,6 +76,7 @@ export const translations = {
       "Szczegółowe informacje o przystanku (perony, dostępność, adres) będą dostępne w kolejnej wersji.",
     tabTimetable: "Rozkład jazdy",
     tabDepartures: "Odjazdy",
+    tabArrivals: "Przyjazdy",
     stationCategory: "Kategoria dworca",
     stationAddress: "Adres",
     stationYearBuilt: "Rok budowy",
@@ -93,6 +94,9 @@ export const translations = {
     departuresEmpty: "Brak odjazdów w najbliższych 6 godzinach.",
     departuresDisclaimer:
       "Przykładowe dane ilustrujące funkcję odjazdów na żywo — rzeczywiste opóźnienia będą pochodzić z systemu dyspozytorskiego PKP PLK.",
+    arrivalsEmpty: "Brak przyjazdów w najbliższych 6 godzinach.",
+    arrivalsDisclaimer:
+      "Przykładowe dane ilustrujące funkcję przyjazdów na żywo — rzeczywiste opóźnienia będą pochodzić z systemu dyspozytorskiego PKP PLK.",
     departureScheduled: "Rozkładowo",
     departureActual: "Faktycznie",
     departureStatusOnTime: "Punktualnie",
@@ -177,6 +181,7 @@ export const translations = {
     stationPanelNoData: "Detailed station info (platforms, accessibility, address) will be available in a future version.",
     tabTimetable: "Timetable",
     tabDepartures: "Departures",
+    tabArrivals: "Arrivals",
     stationCategory: "Station category",
     stationAddress: "Address",
     stationYearBuilt: "Year built",
@@ -194,6 +199,9 @@ export const translations = {
     departuresEmpty: "No departures in the next 6 hours.",
     departuresDisclaimer:
       "Sample data illustrating a live-departures feature — real delay data would come from the PKP PLK dispatch system.",
+    arrivalsEmpty: "No arrivals in the next 6 hours.",
+    arrivalsDisclaimer:
+      "Sample data illustrating a live-arrivals feature — real delay data would come from the PKP PLK dispatch system.",
     departureScheduled: "Scheduled",
     departureActual: "Actual",
     departureStatusOnTime: "On time",
