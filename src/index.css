@@ -129,6 +129,7 @@ a {
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
   font-size: 0.95rem;
+  margin-bottom: 0.75rem;
 }
 
 .filters {
@@ -684,6 +685,137 @@ a {
   border-top: 1px solid var(--color-border);
   padding-top: 0.5rem;
   margin-top: 0.5rem;
+}
+
+/* Station overview: photo, amenities */
+.station-photo-figure {
+  margin: 0 0 1rem;
+}
+.station-photo {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--color-bg);
+}
+.station-photo--placeholder {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+.photo-credit {
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}
+.amenity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.amenity-list li {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.78rem;
+}
+
+/* Station timetable */
+.timetable-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.timetable-row {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.7rem;
+}
+.timetable-time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.timetable-destination {
+  grid-column: 3;
+  font-weight: 600;
+}
+.timetable-meta {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
+}
+
+/* Station departures */
+.departures-disclaimer {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  margin: 0 0 1rem;
+}
+.departure-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.departure-card {
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  padding: 0.7rem 0.9rem;
+}
+.departure-card--on_time {
+  border-left-color: #2e7d32;
+}
+.departure-card--delayed {
+  border-left-color: #e6a100;
+}
+.departure-card--cancelled {
+  border-left-color: #c0392b;
+}
+.departure-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.departure-destination {
+  flex: 1;
+}
+.badge--on_time {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+}
+.badge--delayed {
+  background: rgba(230, 161, 0, 0.15);
+  color: #8a6100;
+}
+.badge--cancelled {
+  background: rgba(192, 57, 43, 0.12);
+  color: #c0392b;
 }
 
 /* Chat */

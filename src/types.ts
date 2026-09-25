@@ -60,3 +60,33 @@ export interface RailwayLine {
 }
 
 export type Language = "pl" | "en";
+
+export type DaysOfOperation = "daily" | "weekdays" | "weekend";
+
+export interface StationPhoto {
+  url: string;
+  credit: string;
+}
+
+export interface StationTimetableEntry {
+  id: string;
+  time: string; // "HH:MM", 24h
+  lineId: string;
+  destination: string;
+  operator: string;
+  platform: string;
+  daysOfOperation: DaysOfOperation;
+}
+
+export interface StationDetails {
+  stationId: string;
+  category?: string;
+  address?: string;
+  yearBuilt?: number;
+  platformCount?: number;
+  accessibility?: string;
+  amenities: string[];
+  photo?: StationPhoto;
+  timetable: StationTimetableEntry[];
+  sources: SourceRef[];
+}

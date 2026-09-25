@@ -34,8 +34,15 @@ npm run dev
   with hover tooltips, click-to-select + zoom-to-fit, and open-tender badges
 - Deep-linkable line selection (`/line/274`) and station selection
   (`/station/<id>`) via the URL — clicking a station on the map, or a station
-  name inside a line's Overview tab, opens a dedicated station panel listing
-  which lines serve it (station-level data beyond that is a placeholder for now)
+  name inside a line's Overview tab, opens a dedicated station panel with its
+  own Overview / Timetable / Departures tabs (photo, address, year built,
+  platform count, accessibility notes and amenities where hand-authored —
+  currently Wrocław Główny, Legnica, Jelenia Góra and Wałbrzych Główny; other
+  stations fall back to just their serving-lines list); the Timetable tab has
+  a destination/operator/line-number search box; the Departures tab derives
+  "next 6 hours" live-style departures from the same sample timetable, with a
+  deterministic mock on-time/delayed/cancelled status standing in for real
+  PKP PLK dispatch data
 - Search by line number/name or station name (once real station data was
   in place, town-only matches were dropped in favour of matching real
   stations directly), shown as separate Lines/Stations result sections with
