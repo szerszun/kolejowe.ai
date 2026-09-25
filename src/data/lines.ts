@@ -20,6 +20,10 @@ import geo132 from "./geometry/132.json";
 import geo143 from "./geometry/143.json";
 import geo289 from "./geometry/289.json";
 import geo317 from "./geometry/317.json";
+import geo281 from "./geometry/281.json";
+import geo308 from "./geometry/308.json";
+import geo299 from "./geometry/299.json";
+import geo266 from "./geometry/266.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1062,6 +1066,154 @@ export const lines: RailwayLine[] = [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-25" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-25" },
       { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-25" },
+    ],
+  },
+  {
+    id: "281",
+    number: "281",
+    name: "Oleśnica – Chojnice",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 68.3,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Oleśnica", "Chojnice"],
+    stations: [
+      { id: "osm-295374333", name: "Oleśnica", coordinates: [17.38592, 51.20066] },
+      { id: "osm-703660050", name: "Oleśnica Rataje", coordinates: [17.36462, 51.21651] },
+      { id: "osm-1420388750", name: "Dąbrowa Oleśnicka", coordinates: [17.36892, 51.23008] },
+      { id: "osm-2003309188", name: "Dobroszyce", coordinates: [17.3638, 51.27051] },
+      { id: "osm-2003311924", name: "Grabowno Wielkie", coordinates: [17.40347, 51.34322] },
+      { id: "osm-2003364457", name: "Bukowice Trzebnickie", coordinates: [17.36854, 51.39951] },
+      { id: "osm-4054764600", name: "Krośnice", coordinates: [17.37389, 51.4712] },
+      { id: "osm-4054788624", name: "Wierzchowice", coordinates: [17.35166, 51.50283] },
+      { id: "osm-266913785", name: "Milicz", coordinates: [17.29504, 51.52738] },
+      { id: "osm-4059419435", name: "Rakoniewice Milickie", coordinates: [17.32142, 51.5969] },
+      { id: "osm-2003357914", name: "Cieszków", coordinates: [17.35262, 51.63136] },
+      { id: "osm-2003354879", name: "Zduny", coordinates: [17.36627, 51.64642] },
+      { id: "osm-1102752023", name: "Krotoszyn", coordinates: [17.42619, 51.70168] },
+      { id: "osm-2003345327", name: "Bożacin", coordinates: [17.43393, 51.73241] },
+    ],
+    geometry: geo281 as [number, number][],
+    history: {
+      timeline: [{ year: 1868, label: "Otwarcie linii" }],
+      narrative:
+        "Linia łącząca Oleśnicę z Miliczem i dalej w stronę Krotoszyna i Chojnic, obsługująca rolniczy pas północno-wschodniego Dolnego Śląska. Aplikacja pokazuje fragment od Oleśnicy po okolice Krotoszyna, gdzie linia opuszcza region; dalsza trasa do Chojnic nie jest pokazana. W surowych danych OSM część odcinka koło Oleśnicy występowała jako zdublowany, równoległy wariant toru — użyto tylko jednego, faktycznego przebiegu.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+    ],
+  },
+  {
+    id: "308",
+    number: "308",
+    name: "Jelenia Góra – Mysłakowice",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 34.5,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Jelenia Góra", "Pisarzowice"],
+    stations: [
+      { id: "osm-13198835795", name: "Kowary", coordinates: [15.82578, 50.79806] },
+      { id: "osm-13197976817", name: "Kostrzyca", coordinates: [15.79829, 50.81454] },
+      { id: "osm-12871928025", name: "Mysłakowice Orzeł", coordinates: [15.78641, 50.82508] },
+      { id: "osm-11380011571", name: "Mysłakowice", coordinates: [15.78802, 50.83533] },
+      { id: "osm-12871928034", name: "Łomnica", coordinates: [15.79778, 50.86237] },
+      { id: "osm-11359355533", name: "Łomnica Dolna", coordinates: [15.80127, 50.87816] },
+      { id: "osm-12871928054", name: "Łomnica Średnia", coordinates: [15.79441, 50.88682] },
+      { id: "osm-1642733781", name: "Jelenia Góra", coordinates: [15.75599, 50.90259] },
+    ],
+    geometry: geo308 as [number, number][],
+    history: {
+      timeline: [
+        { year: 1895, label: "Otwarcie linii" },
+        { year: 2022, label: "Reaktywacja ruchu pasażerskiego" },
+      ],
+      narrative:
+        "Linia łącząca Jelenią Górę z Kowarami i Mysłakowicami u podnóża Karkonoszy, skąd linia 340 prowadzi dalej do Karpacza — razem tworzą popularną trasę turystyczną z Jeleniej Góry na narty/w góry.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+    ],
+  },
+  {
+    id: "299",
+    number: "299",
+    name: "Kamienna Góra – Lubawka",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 12.5,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Kamienna Góra", "Lubawka"],
+    stations: [
+      { id: "osm-412258495", name: "Kamienna Góra", coordinates: [16.02282, 50.78525] },
+      { id: "osm-2270778851", name: "Błażkowa", coordinates: [15.99003, 50.74424] },
+      { id: "osm-634385567", name: "Lubawka", coordinates: [16.00304, 50.70585] },
+    ],
+    geometry: geo299 as [number, number][],
+    history: {
+      timeline: [{ year: 1867, label: "Otwarcie linii" }],
+      narrative:
+        "Krótka linia graniczna z Kamiennej Góry do Lubawki, historycznie prowadząca dalej do czeskiego Trutnova; ruch przygraniczny bywał okresowo zawieszany i wznawiany.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+    ],
+  },
+  {
+    id: "266",
+    number: "266",
+    name: "Świdnica Kraszowice – Jedlina Zdrój",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 22.5,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Świdnica Kraszowice", "Jedlina Zdrój"],
+    stations: [
+      { id: "osm-7110863509", name: "Świdnica Kraszowice", coordinates: [16.4922, 50.81526] },
+      { id: "osm-10572804710", name: "Burkatów", coordinates: [16.47338, 50.79349] },
+      { id: "osm-10572804752", name: "Bystrzyca Górna", coordinates: [16.45613, 50.78129] },
+      { id: "osm-10572804799", name: "Lubachów", coordinates: [16.43454, 50.77431] },
+      { id: "osm-10572804866", name: "Zagórze Śląskie", coordinates: [16.4036, 50.75374] },
+      { id: "osm-10572804904", name: "Jugowice", coordinates: [16.40531, 50.73213] },
+      { id: "osm-9562419262", name: "Jedlina-Zdrój Centrum", coordinates: [16.34464, 50.72115] },
+      { id: "osm-2075308765", name: "Jedlina-Zdrój", coordinates: [16.34302, 50.71154] },
+    ],
+    geometry: geo266 as [number, number][],
+    history: {
+      timeline: [{ year: 1880, label: "Otwarcie linii" }],
+      narrative:
+        "Linia łącząca Świdnicę Kraszowice (koniec linii 285) z Jedliną-Zdrój przez malownicze Góry Sowie, w pobliżu zamku Grodno w Zagórzu Śląskim — popularna wśród turystów odwiedzających region wałbrzyski.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
 ];
