@@ -74,6 +74,7 @@ import geo773 from "./geometry/773.json";
 import geo976 from "./geometry/976.json";
 import geo869 from "./geometry/869.json";
 import geo774 from "./geometry/774.json";
+import geo776 from "./geometry/776.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2789,6 +2790,37 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2004, label: "Zawieszenie ruchu" }],
       narrative:
         "Nieczynny od 2004 roku odcinek łączący dawne posterunki Krużyn i Marciszów Górny (odrębny punkt od stacji Marciszów na linii 302, mimo bliskiego sąsiedztwa w tym samym rejonie u podnóża Rudaw Janowickich).",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "776",
+    number: "776",
+    name: "Marciszów – Wojcieszów Górny",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 15.62,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Marciszów", "Wojcieszów Górny"],
+    stations: [
+      { id: "osm-4014521900", name: "Marciszów", coordinates: [16.0076, 50.8515] },
+      { id: "osm-1987666624", name: "Kaczorów", coordinates: [15.95251, 50.91366] },
+      { id: "osm-1987672259", name: "Płonina", coordinates: [15.99863, 50.8975] },
+    ],
+    geometry: geo776 as [number, number][],
+    history: {
+      timeline: [{ year: 1995, label: "Zawieszenie ruchu" }, { year: 2008, label: "Wznowienie ruchu" }],
+      narrative:
+        "Lokalna linia łącząca Marciszów (ten sam punkt, co na linii 302) z Wojcieszowem Górnym przez Kaczorów i Płoninę — jeden z niewielu wciąż czynnych fragmentów dawnej trasy Marciszów–Jerzmanice-Zdrój. Zawieszona w 1995 roku, wznowiona w 2008 — podobnie jak linia 337 — głównie dla obsługi bocznicy kamieniołomu w Wojcieszowie; mimo historycznego przystanku osobowego w Wojcieszowie Górnym brak potwierdzenia regularnego ruchu pasażerskiego.",
       photos: [],
     },
     tenders: [],
