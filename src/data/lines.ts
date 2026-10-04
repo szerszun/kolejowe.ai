@@ -72,6 +72,7 @@ import geo974 from "./geometry/974.json";
 import geo749 from "./geometry/749.json";
 import geo773 from "./geometry/773.json";
 import geo976 from "./geometry/976.json";
+import geo869 from "./geometry/869.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2730,6 +2731,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bocznica przemysłowa do Czarnego Boru, obsługiwana wspólnie z firmą Mineral Polska — prawdopodobnie na potrzeby pobliskiego wydobycia surowców mineralnych w rejonie Wałbrzycha. Wyłącznie ruch towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "869",
+    number: "869",
+    name: "Wałbrzych Szczawienko – Wałbrzych Zespół Bocznic",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 3.25,
+    tracks: 1,
+    maxSpeedKmh: 30,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Wałbrzych Szczawienko", "Wałbrzych Zespół Bocznic"],
+    stations: [{ id: "osm-295966496", name: "Wałbrzych Szczawienko", coordinates: [16.30271, 50.81639] }],
+    geometry: geo869 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Niewielki fragment dawnej, dłuższej linii sięgającej niegdyś Mieroszowa — dziś łącznik lokalnego znaczenia ze stacji Wałbrzych Szczawienko do zespołu trzech bocznic przemysłowych (m.in. Green Metals Poland, PEC SA i składu paliw), obsługiwany pociągami towarowymi z kierunku Świebodzic i Boguszowa-Gorc.",
       photos: [],
     },
     tenders: [],
