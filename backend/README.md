@@ -52,10 +52,33 @@ from the admin UI (or an admin-authenticated API call) makes a change live.
 `lines.changeSummary` is a sidebar field for the agent to explain what it
 changed and why/from-what-source on each draft -- read it before publishing.
 
+**Gotcha found while writing the seed script**: `draft: false` on a Local
+API `create`/`update` does *not* by itself flip `_status` to `"published"`
+in this Payload version, even with `overrideAccess: true` and even
+(tested) via an authenticated admin REST `PATCH`. The fix is to include
+`_status: 'published'` explicitly in the submitted `data`. The real
+workflow -- an admin clicking "Publish changes" in the admin UI -- already
+submits `_status` that way itself and works correctly; this only bit the
+scripted/API path. See `src/seed/seed.ts` for the working pattern if you
+write another script that needs to publish.
+
+## Seeding
+
+```bash
+npm run seed
+```
+
+Migrates everything currently in `../src/data/lines.ts` +
+`../src/data/stationDetails.ts` into Payload as published documents: 44
+lines, 347 unique stations, and the 4 real Wikimedia station photos
+(downloaded and uploaded into `media`). Safe to re-run only against an
+empty database -- it always creates (not upserts), so a second run against
+existing data will fail on duplicate ids. `src/seed/verify.ts` does a
+quick sanity read-back afterward (counts, one line, one station) if you
+want to check it worked without opening the admin UI.
+
 ## Not done yet
 
-- No seed script moving the current `src/data/lines.ts` / `geometry/*.json`
-  / `stationDetails.ts` into Payload.
 - No scheduled agent job (Overpass re-fetch -> dedup/stitch -> draft write).
 - Frontend still reads the static `src/data/lines.ts`, not this API.
 - No production deploy config (Docker/hosting) -- removed the template's
