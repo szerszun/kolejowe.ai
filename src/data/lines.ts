@@ -62,6 +62,7 @@ import geo331 from "./geometry/331.json";
 import geo334 from "./geometry/334.json";
 import geo335 from "./geometry/335.json";
 import geo344 from "./geometry/344.json";
+import geo766 from "./geometry/766.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2425,6 +2426,37 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótkie pierwszorzędne połączenie od posterunku odgałęźnego Wilka (koło Mikułowa, gdzie krzyżuje się z linią 290) do przejścia granicznego z Czechami w Zawidowie, skąd tory biegną dalej do czeskiego Černousy. Cały przebieg oznaczony w OSM jako czynny (`rail`), bez wzmianek o regularnym ruchu pasażerskim.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "766",
+    number: "766",
+    name: "Łukanów – Dąbrowa Oleśnicka",
+    status: "active_passenger",
+    electrified: true,
+    lengthKm: 4.03,
+    tracks: 1,
+    maxSpeedKmh: 100,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Łukanów", "Dąbrowa Oleśnicka"],
+    stations: [
+      { id: "osm-3707817004", name: "Łukanów", coordinates: [17.34211, 51.1954] },
+      { id: "osm-703660050", name: "Oleśnica Rataje", coordinates: [17.36462, 51.21651] },
+      { id: "osm-12810654077", name: "Dąbrowa Oleśnicka", coordinates: [17.36847, 51.22862] },
+    ],
+    geometry: geo766 as [number, number][],
+    history: {
+      timeline: [{ year: 1975, label: "Elektryfikacja" }],
+      narrative:
+        "Krótkie, pierwszorzędne i zelektryfikowane (1975) połączenie między posterunkami odgałęźnymi Łukanów i Dąbrowa Oleśnicka w rejonie Oleśnicy, krzyżujące linie 143 i 281 — obie już ujęte w bazie. Jeden przystanek pasażerski, Oleśnica Rataje, potwierdza mieszany ruch pasażersko-towarowy.",
       photos: [],
     },
     tenders: [],
