@@ -1,10 +1,10 @@
 # kolejowe.ai — Lower Silesia Railways Explorer
 
 Interactive map + AI assistant for exploring railway lines in the Dolnośląskie
-voivodeship. This repo currently contains the **v1 draft**: a frontend-only
-prototype built against a hand-authored sample dataset, so the map, details
-panel and chat UX can be reviewed before the real backend, Notion sync and
-LLM integration are built.
+voivodeship. This repo currently contains the **v1 draft**: the map, details
+panel and chat UX, backed by a real Payload CMS (`backend/`) seeded from a
+hand-authored sample dataset, so the UX can be reviewed before the real
+Notion sync and LLM integration are built.
 
 See `kolejowe.ai v1 Technical Specification.pdf` (project owner's copy) for
 the full requirements this UI is tracking.
@@ -14,15 +14,28 @@ the full requirements this UI is tracking.
 - React 19 + TypeScript + Vite
 - MapLibre GL JS, tiles from [OpenFreeMap](https://openfreemap.org/) (no usage billing)
 - react-router-dom for `/line/:number` deep links
-- No backend yet — data lives in `src/data/lines.ts`, chat answers come from
-  a keyword-matching mock in `src/components/Chat/mockAssistant.ts`
+- `backend/` — Payload CMS, the real source of truth for line/station data
+  (see `backend/README.md`); the frontend fetches from its REST API
+  (`src/lib/payloadClient.ts` / `src/hooks/useLines.ts` /
+  `src/hooks/useStationDetails.ts`) instead of a static import. Chat answers
+  still come from a keyword-matching mock in `src/components/Chat/mockAssistant.ts`.
 
 ## Running it
 
+Needs both the frontend and the backend running:
+
 ```bash
+# terminal 1 -- backend (first time: npm install && cp .env.example .env && npm run seed)
+cd backend && npm run dev
+
+# terminal 2 -- frontend
 npm install
 npm run dev
 ```
+
+The frontend shows a loading/error state if it can't reach the backend at
+`http://localhost:3000` (configurable via `VITE_PAYLOAD_URL`) — see
+`backend/README.md` for first-time setup (seeding, the agent job, etc.).
 
 ## What's implemented (draft scope)
 
@@ -106,8 +119,12 @@ npm run dev
 - **AI assistant**: `mockAssistant.ts` answers via keyword matching against
   the same sample data. No real retrieval, no LLM call, no protection
   against prompt injection yet — all of that needs the real backend.
-- **Backend**: none. No FastAPI/PostGIS/pgvector, no overnight Notion sync
-  job, no tender-to-line auto-matching pipeline.
+- **Backend**: `backend/` (Payload CMS) is real and the frontend reads from
+  it, but it's seeded from the same hand-authored sample data, not a real
+  Notion sync -- no pgvector, no overnight Notion sync job, no
+  tender-to-line auto-matching pipeline. Its scheduled agent job only
+  keeps line *geometry* fresh against OSM; station details/tenders/sources
+  are still static seed content.
 - Line 275's "manually curated" flag is just a UI badge here — the real
   dedicated-Notion-structure workflow doesn't exist yet.
 
@@ -125,13 +142,11 @@ npm run dev
 sync job) has been superseded by `backend/` -- a Payload CMS instance with
 `stations`/`lines` collections, draft/publish versioning, and a scheduled
 agent job that re-fetches geometry from OSM and writes drafts for a human
-to review. See `backend/README.md`. It's seeded with everything currently
-in `src/data/lines.ts`, but the frontend doesn't read from it yet -- that
-wiring is the next real step, not a new FastAPI service.
+to review. See `backend/README.md`. The frontend now reads from it live
+(see "Running it" above) instead of the static `src/data/lines.ts` import.
 
 1. ~~Stand up the FastAPI + PostgreSQL/PostGIS backend~~ -- see `backend/`
-   instead. Still to do: point the frontend at it (replace the
-   `src/data/lines.ts` import with API calls) instead of the static file.
+   instead. ~~Point the frontend at it~~ -- done.
 2. ~~Wire the Notion sync job~~ -- superseded by `backend/`'s agent job
    (currently geometry-only; station details/tenders/sources are still
    seeded from the static files, not kept in sync with anything external).
