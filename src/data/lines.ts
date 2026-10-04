@@ -49,6 +49,7 @@ import geo319 from "./geometry/319.json";
 import geo341 from "./geometry/341.json";
 import geo786 from "./geometry/786.json";
 import geo345 from "./geometry/345.json";
+import geo302 from "./geometry/302.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1989,6 +1990,45 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótkie odgałęzienie od stacji Kamienna Góra w stronę Pisarzowic, formalnie w sieci DSDiK, lecz niemal na całej długości nieczynne — tylko krótki odcinek przy samej stacji Kamienna Góra pozostaje w stanie czynnym jako tor łączący. Linia nie obsługuje dziś ruchu pasażerskiego ani towarowego.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "302",
+    number: "302",
+    name: "Malczyce – Marciszów",
+    status: "closed",
+    electrified: false,
+    lengthKm: 74.14,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Malczyce", "Marciszów"],
+    stations: [
+      { id: "osm-266565814", name: "Malczyce", coordinates: [16.48597, 51.21569] },
+      { id: "osm-3683604050", name: "Strzegom", coordinates: [16.35895, 50.97457] },
+      { id: "osm-574335394", name: "Strzegom Miasto", coordinates: [16.35122, 50.96095] },
+      { id: "osm-12737036608", name: "Grabina Śląska", coordinates: [16.32424, 50.95188] },
+      { id: "osm-12737036607", name: "Roztoka", coordinates: [16.24207, 50.95084] },
+      { id: "osm-12737036606", name: "Kłaczyna", coordinates: [16.19438, 50.93775] },
+      { id: "osm-12737036605", name: "Bolków", coordinates: [16.10904, 50.93154] },
+      { id: "osm-12736987294", name: "Stare Rochowice", coordinates: [16.05581, 50.92785] },
+      { id: "osm-804819896", name: "Poręba Górska", coordinates: [16.06579, 50.88655] },
+      { id: "osm-1886612874", name: "Domanów Jaworski", coordinates: [16.06196, 50.87199] },
+      { id: "osm-4014521900", name: "Marciszów", coordinates: [16.0076, 50.8515] },
+    ],
+    geometry: geo302 as [number, number][],
+    history: {
+      timeline: [{ year: 2014, label: "Zawieszenie ruchu pociągów" }, { year: 2022, label: "Przejęcie odcinka Grabina Śląska – Marciszów przez DSDiK" }],
+      narrative:
+        "Długa linia łącząca Malczyce ze Strzegomiem, Bolkowem i Marciszowem u podnóża Rudaw Janowickich. Ruch pasażerski zlikwidowano w 1996 roku, a mimo modernizacji w 2013 roku cały ruch pociągów wstrzymano w 2014. Od grudnia 2022 odcinek Grabina Śląska – Marciszów zarządza Dolnośląska Służba Dróg i Kolei we Wrocławiu, co otwiera możliwość przyszłej reaktywacji (m.in. ruchu turystycznego); większość trasy pozostaje dziś fizycznie nieczynna.",
       photos: [],
     },
     tenders: [],
