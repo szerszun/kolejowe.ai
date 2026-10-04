@@ -1,5 +1,4 @@
 import type { Language, RailwayLine } from "../../types";
-import { lines as allLines } from "../../data/lines";
 
 export interface AssistantSource {
   label: string;
@@ -33,7 +32,11 @@ export function detectQuestionLanguage(question: string, fallback: Language): La
   return fallback;
 }
 
-function findMentionedLine(question: string, contextLineId: string | null): RailwayLine | undefined {
+function findMentionedLine(
+  allLines: RailwayLine[],
+  question: string,
+  contextLineId: string | null,
+): RailwayLine | undefined {
   const numberMatch = question.match(/\b\d{2,3}\b/);
   if (numberMatch) {
     const byNumber = allLines.find((l) => l.number === numberMatch[0]);
@@ -101,9 +104,14 @@ const noAnswer = (lang: Language): AssistantAnswer => ({
   mentionedLineIds: [],
 });
 
-export function answerQuestion(question: string, lang: Language, contextLineId: string | null): AssistantAnswer {
+export function answerQuestion(
+  allLines: RailwayLine[],
+  question: string,
+  lang: Language,
+  contextLineId: string | null,
+): AssistantAnswer {
   const q = question.toLowerCase();
-  const line = findMentionedLine(question, contextLineId);
+  const line = findMentionedLine(allLines, question, contextLineId);
 
   // Cross-line query: tenders closing "this month"
   if (!line && (q.includes("przetarg") || q.includes("tender"))) {
