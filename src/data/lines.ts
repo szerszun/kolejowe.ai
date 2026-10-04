@@ -52,6 +52,7 @@ import geo345 from "./geometry/345.json";
 import geo302 from "./geometry/302.json";
 import geo337 from "./geometry/337.json";
 import geo349 from "./geometry/349.json";
+import geo290 from "./geometry/290.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2093,6 +2094,39 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1896, label: "Otwarcie linii" }],
       narrative:
         "Element Towarowej Obwodnicy Wrocławia — dwutorowa, zelektryfikowana linia okrężna omijająca centrum Wrocławia od południa i zachodu, łącząca stacje rozrządowe Wrocław Brochów i Wrocław Gądów (podobnie jak sąsiednie odcinki tej obwodnicy, linie 750–765, już ujęte w bazie). Wyłącznie ruch towarowy, bez przystanków pasażerskich; zbudowana w 1896 roku z myślą o odciążeniu śródmiejskiej sieci kolejowej.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "290",
+    number: "290",
+    name: "Mikułowa – Granica Państwa (Krzewina Zgorzelecka)",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 24.34,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Mikułowa", "Krzewina Zgorzelecka (Gr)"],
+    stations: [
+      { id: "osm-790682004", name: "Mikułowa", coordinates: [15.10786, 51.09512] },
+      { id: "osm-8497276942", name: "Sulików", coordinates: [15.07218, 51.08206] },
+      { id: "osm-10811935268", name: "Wilka", coordinates: [15.01996, 51.04917] },
+      { id: "osm-10805643560", name: "Krzewina Zgorzelecka Ręczyn", coordinates: [14.95592, 51.04078] },
+      { id: "osm-2805181605", name: "Krzewina Zgorzelecka", coordinates: [14.93979, 51.01544] },
+    ],
+    geometry: geo290 as [number, number][],
+    history: {
+      timeline: [{ year: 2000, label: "Zawieszenie ruchu pasażerskiego" }],
+      narrative:
+        "Linia graniczna biegnąca od Mikułowa przez Sulików i Wilkę do przejścia granicznego z Niemcami w Krzewinie Zgorzeleckiej, gdzie — podobnie jak w pobliskim Trzcińcu Zgorzeleckim na linii 786 — łączy się z korytarzem Görlitz–Zittau (Neißetalbahn). Ruch pasażerski zawieszono w 2000 roku; dziś linia obsługuje wyłącznie ruch towarowy, ze stacjami w Sulikowie i Wilce czynnymi tylko w ograniczonych godzinach.",
       photos: [],
     },
     tenders: [],
