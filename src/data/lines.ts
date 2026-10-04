@@ -61,6 +61,7 @@ import geo327 from "./geometry/327.json";
 import geo331 from "./geometry/331.json";
 import geo334 from "./geometry/334.json";
 import geo335 from "./geometry/335.json";
+import geo344 from "./geometry/344.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2394,6 +2395,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Nieczynna linia łącząca Henryków z Ciepłowodami przez Stary Henryków. Podobnie jak sąsiednia linia 334, oznaczona w OSM jako „wykreślona z ewidencji PKP PLK”; cały przebieg stanowią tory oznaczone jako `abandoned` — w okolicach samych Ciepłowód nie zachował się już żaden nazwany punkt stacyjny w danych OSM.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "344",
+    number: "344",
+    name: "Wilka – Zawidów",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 4.82,
+    tracks: 1,
+    maxSpeedKmh: 70,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Wilka", "Zawidów (Gr)"],
+    stations: [
+      { id: "osm-10811935268", name: "Wilka", coordinates: [15.01996, 51.04917] },
+      { id: "osm-431237714", name: "Zawidów", coordinates: [15.0268, 51.02831] },
+    ],
+    geometry: geo344 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótkie pierwszorzędne połączenie od posterunku odgałęźnego Wilka (koło Mikułowa, gdzie krzyżuje się z linią 290) do przejścia granicznego z Czechami w Zawidowie, skąd tory biegną dalej do czeskiego Černousy. Cały przebieg oznaczony w OSM jako czynny (`rail`), bez wzmianek o regularnym ruchu pasażerskim.",
       photos: [],
     },
     tenders: [],
