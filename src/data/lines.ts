@@ -59,6 +59,7 @@ import geo310 from "./geometry/310.json";
 import geo324 from "./geometry/324.json";
 import geo327 from "./geometry/327.json";
 import geo331 from "./geometry/331.json";
+import geo334 from "./geometry/334.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2329,6 +2330,39 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }],
       narrative:
         "Odgałęzienie od Jawora do Roztoki, gdzie styka się z linią 302 (obie na odcinku ku Marciszowowi przejęte przez DSDiK w grudniu 2022). Ruch pasażerski i towarowy zawieszono w 1991 roku; dziś przejezdny jest wyłącznie odcinek Jawor–Borów, wykorzystywany do wywozu kruszyw z kamieniołomów w rejonie Gniewkowa i Borowa, podczas gdy dalszy odcinek Borów–Roztoka jest nieprzejezdny.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "334",
+    number: "334",
+    name: "Kamieniec Ząbkowicki – Złoty Stok",
+    status: "closed",
+    electrified: false,
+    lengthKm: 12.25,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Kamieniec Ząbkowicki", "Złoty Stok"],
+    stations: [
+      { id: "osm-10977746452", name: "Kamieniec Ząbkowicki", coordinates: [16.89898, 50.53614] },
+      { id: "osm-10978688321", name: "Byczeń", coordinates: [16.90236, 50.51797] },
+      { id: "osm-10978688364", name: "Sosnowa Śląska", coordinates: [16.87979, 50.49552] },
+      { id: "osm-10978688378", name: "Płonica Śląska", coordinates: [16.88394, 50.47076] },
+      { id: "osm-10978688409", name: "Złoty Stok", coordinates: [16.88248, 50.44797] },
+    ],
+    geometry: geo334 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Nieczynna linia łącząca Kamieniec Ząbkowicki ze Złotym Stokiem przez Byczeń, Sosnową Śląską i Płonicę Śląską. Oznaczona w OSM jako „wykreślona z ewidencji PKP PLK” (na podstawie Regulaminu sieci 2003/2004) — formalnie zdjęta z rejestru infrastruktury, bez ruchu pasażerskiego ani towarowego.",
       photos: [],
     },
     tenders: [],
