@@ -212,10 +212,7 @@ export interface Station {
         lineId: string | Line;
         operator?: string | null;
         platform?: string | null;
-        /**
-         * e.g. "codziennie", "pon-pt"
-         */
-        daysOfOperation?: string | null;
+        daysOfOperation?: ('daily' | 'weekdays' | 'weekend') | null;
         destination: string;
         id?: string | null;
       }[]
@@ -229,10 +226,7 @@ export interface Station {
         lineId: string | Line;
         operator?: string | null;
         platform?: string | null;
-        /**
-         * e.g. "codziennie", "pon-pt"
-         */
-        daysOfOperation?: string | null;
+        daysOfOperation?: ('daily' | 'weekdays' | 'weekend') | null;
         origin: string;
         id?: string | null;
       }[]
@@ -266,6 +260,10 @@ export interface Line {
   lengthKm: number;
   tracks: number;
   maxSpeedKmh: number;
+  /**
+   * Line 275 in the spec has a manually curated Notion structure.
+   */
+  manuallyCurated?: boolean | null;
   operators?:
     | {
         value: string;
@@ -314,10 +312,13 @@ export interface Line {
   tenders?:
     | {
         title: string;
-        status?: string | null;
-        description?: string | null;
+        authority?: string | null;
+        estimatedValuePLN?: number | null;
+        publicationDate?: string | null;
         deadline?: string | null;
+        status?: ('open' | 'closed' | 'awarded') | null;
         url?: string | null;
+        matchType?: ('auto-matched' | 'confirmed') | null;
         id?: string | null;
       }[]
     | null;
@@ -531,6 +532,7 @@ export interface LinesSelect<T extends boolean = true> {
   lengthKm?: T;
   tracks?: T;
   maxSpeedKmh?: T;
+  manuallyCurated?: T;
   operators?:
     | T
     | {
@@ -568,10 +570,13 @@ export interface LinesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        status?: T;
-        description?: T;
+        authority?: T;
+        estimatedValuePLN?: T;
+        publicationDate?: T;
         deadline?: T;
+        status?: T;
         url?: T;
+        matchType?: T;
         id?: T;
       };
   sources?:

@@ -18,10 +18,18 @@ export const publicRead: Access = () => true
  * _status to "published". An agent's write is always forced back to
  * "draft", no matter what it sent -- publishing only happens from the
  * admin UI (or an admin-authenticated API call).
+ *
+ * A request with no `req.user` at all (the Local API called from a
+ * trusted server-side script, e.g. the seed script) is left alone: by
+ * the time code is running server-side with direct Local API access, it
+ * already has full database access, so this check only has something
+ * meaningful to enforce once a specific *agent* identity is attached to
+ * the request (REST/GraphQL with an API key, or an authenticated
+ * non-admin user).
  */
 export const requireAdminToPublish: CollectionBeforeChangeHook = ({ req, data }) => {
   const user = req.user as User | null
-  if (data?._status === 'published' && !isAdmin(user)) {
+  if (data?._status === 'published' && user && !isAdmin(user)) {
     data._status = 'draft'
   }
   return data

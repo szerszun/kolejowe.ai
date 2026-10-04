@@ -47,6 +47,12 @@ export const Lines: CollectionConfig = {
     { name: 'tracks', type: 'number', required: true },
     { name: 'maxSpeedKmh', type: 'number', required: true },
     {
+      name: 'manuallyCurated',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Line 275 in the spec has a manually curated Notion structure.' },
+    },
+    {
       name: 'operators',
       type: 'array',
       fields: [{ name: 'value', type: 'text', required: true }],
@@ -101,10 +107,28 @@ export const Lines: CollectionConfig = {
       type: 'array',
       fields: [
         { name: 'title', type: 'text', required: true },
-        { name: 'status', type: 'text' },
-        { name: 'description', type: 'textarea' },
+        { name: 'authority', type: 'text' },
+        { name: 'estimatedValuePLN', type: 'number' },
+        { name: 'publicationDate', type: 'date' },
         { name: 'deadline', type: 'date' },
+        {
+          name: 'status',
+          type: 'select',
+          options: [
+            { label: 'Open', value: 'open' },
+            { label: 'Closed', value: 'closed' },
+            { label: 'Awarded', value: 'awarded' },
+          ],
+        },
         { name: 'url', type: 'text' },
+        {
+          name: 'matchType',
+          type: 'select',
+          options: [
+            { label: 'Auto-matched', value: 'auto-matched' },
+            { label: 'Confirmed', value: 'confirmed' },
+          ],
+        },
       ],
     },
     {
