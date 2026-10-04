@@ -68,6 +68,7 @@ import geo772 from "./geometry/772.json";
 import geo973 from "./geometry/973.json";
 import geo778 from "./geometry/778.json";
 import geo779 from "./geometry/779.json";
+import geo974 from "./geometry/974.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2609,6 +2610,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bardzo krótki, pierwszorzędny łącznik między posterunkami odgałęźnymi Studniska i Las, objęty europejską umową AGTC o liniach kolejowych ważnych dla transportu kombinowanego. Brak punktu stacyjnego Las w danych OSM — prawdopodobnie oznacza wyłącznie posterunek torowy bez nazwanej infrastruktury.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "974",
+    number: "974",
+    name: "Rakowice Żwirownia – Rakowice ZKGM",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 2.78,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "Górażdże Kruszywa", "Kopalnia Kruszywa Rakowice Wielkie"],
+    passengerServices: [],
+    endStations: ["Rakowice Żwirownia", "Rakowice ZKGM"],
+    stations: [
+      { id: "osm-4077924182", name: "Rakowice Żwirownia", coordinates: [15.5548, 51.12689] },
+      { id: "osm-11107239757", name: "Rakowice ZKGM", coordinates: [15.55558, 51.12701] },
+    ],
+    geometry: geo974 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bocznica przemysłowa obsługująca żwirownię i kopalnię kruszywa w Rakowicach Wielkich koło Bolesławca, podobnie jak pobliska linia 973 do Zakładów Chemicznych Wizów. Wyłącznie ruch towarowy.",
       photos: [],
     },
     tenders: [],
