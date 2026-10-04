@@ -143,13 +143,37 @@ npm run dev
    did use; it's now stitched in along with the short official
    cross-border connector **481** (Lichkov – granica państwa), so 276's
    geometry runs all the way into the Czech Republic even though the
-   line itself officially ends at Międzylesie. **A systematic re-check
-   after that discovery** (comparing each line's own start point to its
-   farthest point and to its own endpoint) turned up 8 more instances of
-   the same duplicate/there-and-back bug that earlier spot-checks had
-   missed: 752, 754, 758, 759, 761, 763 and 765 (all in the Wrocław
-   freight bypass) plus 276 itself — all fixed the same way, keeping
-   only the genuine outbound leg. Several candidates were deliberately skipped: **272**
+   line itself officially ends at Międzylesie — and the short connector
+   to line 481 is now the exact real OSM track (it turned out to meet
+   481 at the same coordinate with zero gap; an earlier pass had bridged
+   it with an approximate ~4.7km straight line instead). Line 308 was
+   also missing its own named endpoint station, Pisarzowice — added
+   using the real (now-abandoned) halt node; the Pisarzowice–Kamienna
+   Góra continuation some maps show is fully disused/dismantled track,
+   so there's no live connection to line 299 to draw. **A systematic
+   re-check after the 276 discovery** (comparing each line's own start
+   point to its farthest point and to its own endpoint) turned up 8 more
+   instances of the same duplicate/there-and-back bug that earlier
+   spot-checks had missed: 752, 754, 758, 759, 761, 763 and 765 (all in
+   the Wrocław freight bypass) plus 276 itself. **A second, more
+   thorough re-check** then found the first pass had not fully fixed
+   752, 758, 760, 763 and 764, plus newly-introduced regressions in 750
+   and 755 — all 16 Wrocław freight lines (750-765) were rebuilt from
+   raw OSM way members with a stronger pipeline: pairwise duplicate-
+   segment detection, greedy stitching that also minimizes total jump
+   distance when several equally-valid stitch orders exist (this alone
+   fixed 760's visible gap near Wrocław Gądów, where the stitcher was
+   wandering into a dead-end spur before continuing), and a self-revisit
+   loop scanner that catches out-and-back detours pairwise comparison
+   misses. 752/758/763/764 additionally needed a relaxed distance
+   threshold or manual segment exclusion for duplicates spanning a
+   *combined group* of several shorter ways, which simple pairwise
+   comparison doesn't catch. Separately, lines 751/752/753/759/760 all
+   officially terminate at "Wrocław Gądów" but their real OSM endpoints
+   landed in different corners of that freight yard, up to ~1km apart —
+   each was extended with a short connector to the yard's own OSM node
+   (railway=yard, "Wrocław Gądów") so they visibly meet at one point.
+   Several candidates were deliberately skipped: **272**
    Kluczbork–Poznań turned out to barely graze Dolnośląskie at all (<0.1%
    of its path is in-region — it's really an Opolskie/Wielkopolskie line),
    **336** Mirsk–Świeradów-Zdrój is ~67% physically identical to the
@@ -174,3 +198,5 @@ npm run dev
    prone to long stretches of slow/timing-out responses (not just the hard
    rate-limit block from earlier) — expect a single line's fetch to
    occasionally take 10+ minutes even when it eventually succeeds.
+5. **Two more requested lines are not yet added**: Miłkowice–Bolesławiec–
+   Węgliniec–German border, and Siechnice–Jełcz-Laskowice–Karłowice.
