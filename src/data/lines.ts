@@ -1324,7 +1324,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard "Wrocław Gądów").",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
     },
     tenders: [],
@@ -1351,7 +1351,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard "Wrocław Gądów").",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
     },
     tenders: [],
@@ -1378,7 +1378,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard "Wrocław Gądów").",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
     },
     tenders: [],
@@ -1540,7 +1540,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard "Wrocław Gądów").",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
     },
     tenders: [],
@@ -1567,7 +1567,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [],
       narrative:
-        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard "Wrocław Gądów").",
+        "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
     },
     tenders: [],
