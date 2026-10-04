@@ -48,6 +48,7 @@ import geo318 from "./geometry/318.json";
 import geo319 from "./geometry/319.json";
 import geo341 from "./geometry/341.json";
 import geo786 from "./geometry/786.json";
+import geo345 from "./geometry/345.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1961,6 +1962,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Odgałęzienie graniczne obsługujące Kopalnię Węgla Brunatnego i Elektrownię Turów — od przejścia granicznego z Niemcami w Trzcińcu Zgorzeleckim (część korytarza Görlitz–Zittau) przez bocznice kopalni i elektrowni aż po Bogatynię. Mimo formalnego przystanku pasażerskiego w Bogatyni linia pełni dziś przede wszystkim funkcję przemysłową; ostatni, ok. 2-kilometrowy odcinek przed Bogatynią jest nieczynny.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "345",
+    number: "345",
+    name: "Kamienna Góra – Pisarzowice",
+    status: "closed",
+    electrified: false,
+    lengthKm: 5.21,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Kamienna Góra", "Pisarzowice"],
+    stations: [],
+    geometry: geo345 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótkie odgałęzienie od stacji Kamienna Góra w stronę Pisarzowic, formalnie w sieci DSDiK, lecz niemal na całej długości nieczynne — tylko krótki odcinek przy samej stacji Kamienna Góra pozostaje w stanie czynnym jako tor łączący. Linia nie obsługuje dziś ruchu pasażerskiego ani towarowego.",
       photos: [],
     },
     tenders: [],
