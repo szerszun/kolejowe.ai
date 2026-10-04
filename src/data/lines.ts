@@ -65,6 +65,7 @@ import geo344 from "./geometry/344.json";
 import geo766 from "./geometry/766.json";
 import geo771 from "./geometry/771.json";
 import geo772 from "./geometry/772.json";
+import geo973 from "./geometry/973.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2519,6 +2520,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bardzo krótkie (1,2 km), całkowicie nieczynne odgałęzienie do Strzegomia Miasta — tej samej stacji, która występuje też na linii 302. Cały przebieg oznaczony w OSM jako `abandoned`.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "973",
+    number: "973",
+    name: "Bolesławiec – Wizów",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 3.82,
+    tracks: 1,
+    maxSpeedKmh: 20,
+    operators: ["PKP PLK", "Zakłady Chemiczne WIZÓW"],
+    passengerServices: [],
+    endStations: ["Bolesławiec", "Wizów"],
+    stations: [
+      { id: "osm-4073562294", name: "Bolesławiec", coordinates: [15.56953, 51.26608] },
+      { id: "osm-9631242910", name: "Chociszowice", coordinates: [15.59402, 51.29038] },
+    ],
+    geometry: geo973 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bocznica przemysłowa łącząca stację Bolesławiec z Zakładami Chemicznymi Wizów, bez ruchu pasażerskiego i z ograniczeniem prędkości do 20 km/h. Oficjalna długość linii (5,6 km) obejmuje odcinek poza zasięgiem tego zbioru danych.",
       photos: [],
     },
     tenders: [],
