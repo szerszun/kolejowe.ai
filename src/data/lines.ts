@@ -67,6 +67,7 @@ import geo771 from "./geometry/771.json";
 import geo772 from "./geometry/772.json";
 import geo973 from "./geometry/973.json";
 import geo778 from "./geometry/778.json";
+import geo779 from "./geometry/779.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2581,6 +2582,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótka łącznica (dawniej: „Łącznica nr 778 Zgorzelec Miasto – Krysin”) spinająca węzeł stacyjny Zgorzelec. Tagi OSM wskazują na planowaną elektryfikację (`construction:electrified`, `construction:voltage=3000`), choć obecnie odcinek pozostaje niezelektryfikowany i obsługuje wyłącznie ruch towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "779",
+    number: "779",
+    name: "Studniska – Las",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 0.97,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Studniska", "Las"],
+    stations: [{ id: "osm-4022056287", name: "Studniska", coordinates: [15.09309, 51.1009] }],
+    geometry: geo779 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bardzo krótki, pierwszorzędny łącznik między posterunkami odgałęźnymi Studniska i Las, objęty europejską umową AGTC o liniach kolejowych ważnych dla transportu kombinowanego. Brak punktu stacyjnego Las w danych OSM — prawdopodobnie oznacza wyłącznie posterunek torowy bez nazwanej infrastruktury.",
       photos: [],
     },
     tenders: [],
