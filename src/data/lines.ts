@@ -63,6 +63,7 @@ import geo334 from "./geometry/334.json";
 import geo335 from "./geometry/335.json";
 import geo344 from "./geometry/344.json";
 import geo766 from "./geometry/766.json";
+import geo771 from "./geometry/771.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2457,6 +2458,36 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1975, label: "Elektryfikacja" }],
       narrative:
         "Krótkie, pierwszorzędne i zelektryfikowane (1975) połączenie między posterunkami odgałęźnymi Łukanów i Dąbrowa Oleśnicka w rejonie Oleśnicy, krzyżujące linie 143 i 281 — obie już ujęte w bazie. Jeden przystanek pasażerski, Oleśnica Rataje, potwierdza mieszany ruch pasażersko-towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "771",
+    number: "771",
+    name: "Świdnica Przedmieście – Świdnica Miasto",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 3.52,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Świdnica Przedmieście", "Świdnica Miasto"],
+    stations: [
+      { id: "osm-7110814864", name: "Świdnica Przedmieście", coordinates: [16.50391, 50.83504] },
+      { id: "osm-3682511205", name: "Świdnica Miasto", coordinates: [16.48151, 50.84122] },
+    ],
+    geometry: geo771 as [number, number][],
+    history: {
+      timeline: [{ year: 2000, label: "Zamknięcie dla ruchu pasażerskiego" }, { year: 2022, label: "Wznowienie ruchu pasażerskiego" }],
+      narrative:
+        "Krótki odcinek łączący dwa dworce w Świdnicy. Zamknięty dla pasażerów w 2000 roku, od 12 czerwca 2022 roku ponownie kursują nim pociągi osobowe w relacji Wrocław – Sobótka – Świdnica.",
       photos: [],
     },
     tenders: [],
