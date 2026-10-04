@@ -26,7 +26,7 @@ npm run dev
 
 ## What's implemented (draft scope)
 
-- Interactive map of 44 lines across Lower Silesia, most with **real
+- Interactive map of 45 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (45-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -67,7 +67,7 @@ npm run dev
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 44 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 45 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -121,12 +121,23 @@ npm run dev
 
 ## Suggested next steps
 
-1. Stand up the FastAPI + PostgreSQL/PostGIS backend and replace
-   `src/data/lines.ts` with real API calls
-2. Wire the Notion sync job for line overview/history/tenders
+**Update:** the backend direction below (FastAPI + PostgreSQL + a Notion
+sync job) has been superseded by `backend/` -- a Payload CMS instance with
+`stations`/`lines` collections, draft/publish versioning, and a scheduled
+agent job that re-fetches geometry from OSM and writes drafts for a human
+to review. See `backend/README.md`. It's seeded with everything currently
+in `src/data/lines.ts`, but the frontend doesn't read from it yet -- that
+wiring is the next real step, not a new FastAPI service.
+
+1. ~~Stand up the FastAPI + PostgreSQL/PostGIS backend~~ -- see `backend/`
+   instead. Still to do: point the frontend at it (replace the
+   `src/data/lines.ts` import with API calls) instead of the static file.
+2. ~~Wire the Notion sync job~~ -- superseded by `backend/`'s agent job
+   (currently geometry-only; station details/tenders/sources are still
+   seeded from the static files, not kept in sync with anything external).
 3. Replace `mockAssistant.ts` with real retrieval (pgvector) + an LLM call
    behind the backend (key never in the frontend)
-4. **Keep expanding line coverage.** The app now has 44 real lines running
+4. **Keep expanding line coverage.** The app now has 45 real lines running
    through Dolnośląskie (10 original + 9 passenger lines added in a second
    pass: 271, 276, 286, 309, 322, 326, 340, 283, 284 + 132 Bytom–Wrocław and
    143 Wrocław Mikołajów–Namysłów in a third pass, plus 289 and 317
