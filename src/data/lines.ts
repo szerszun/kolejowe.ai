@@ -69,6 +69,7 @@ import geo973 from "./geometry/973.json";
 import geo778 from "./geometry/778.json";
 import geo779 from "./geometry/779.json";
 import geo974 from "./geometry/974.json";
+import geo749 from "./geometry/749.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2640,6 +2641,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bocznica przemysłowa obsługująca żwirownię i kopalnię kruszywa w Rakowicach Wielkich koło Bolesławca, podobnie jak pobliska linia 973 do Zakładów Chemicznych Wizów. Wyłącznie ruch towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "749",
+    number: "749",
+    name: "Legnica Wschód – Legnica",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 2.33,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Legnica Wschód", "Legnica"],
+    stations: [{ id: "osm-3685074404", name: "Legnica Wschód", coordinates: [16.1903, 51.21525] }],
+    geometry: geo749 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótki, zelektryfikowany łącznik wprowadzający ruch od wschodniej strony węzła legnickiego na stację Legnica. Pierwszorzędna linia o projektowanej prędkości 120 km/h, obecnie ograniczona do 40 km/h.",
       photos: [],
     },
     tenders: [],
