@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine, Station } from "../../types";
-import { stationDetails } from "../../data/stationDetails";
+import { useStationDetails } from "../../hooks/useStationDetails";
 import { StationOverviewTab } from "./StationOverviewTab";
 import { StationTimetableTab } from "./StationTimetableTab";
 import { StationDeparturesTab } from "./StationDeparturesTab";
@@ -26,7 +26,7 @@ interface StationDetailsPanelProps {
 export function StationDetailsPanel({ station, servingLines, onClose, onSelectLine }: StationDetailsPanelProps) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("overview");
-  const details = stationDetails[station.id];
+  const { details } = useStationDetails(station.id);
 
   return (
     <aside className="details-panel" aria-label={station.name}>
@@ -40,7 +40,7 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
       </header>
 
       <div className="tabs" role="tablist">
-        {(["overview", "timetable", "arrivals", "departures"] as Tab[]).map((tabId) => (
+        {(["overview", "arrivals", "departures", "timetable"] as Tab[]).map((tabId) => (
           <button
             key={tabId}
             role="tab"

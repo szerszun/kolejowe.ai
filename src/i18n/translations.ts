@@ -4,6 +4,8 @@ export const translations = {
     appSubtitle: "Twoje źródło informacji o kolei",
     demoBanner:
       "Wersja robocza — dane przykładowe do celów demonstracyjnych, geometria linii jest uproszczona.",
+    loadingLines: "Wczytywanie linii…",
+    loadErrorLines: "Nie udało się wczytać danych z backendu.",
     searchPlaceholder: "Szukaj linii lub stacji",
     listViewToggle: "Lista linii",
     mapViewToggle: "Mapa",
@@ -110,6 +112,8 @@ export const translations = {
     appTitle: "kolejowe.ai",
     appSubtitle: "Your source for railway information",
     demoBanner: "Draft build — sample data for demonstration purposes, line geometry is simplified.",
+    loadingLines: "Loading lines…",
+    loadErrorLines: "Couldn't load data from the backend.",
     searchPlaceholder: "Search line or station",
     listViewToggle: "Line list",
     mapViewToggle: "Map",

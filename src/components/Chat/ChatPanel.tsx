@@ -58,9 +58,10 @@ interface ChatPanelProps {
   contextLine: RailwayLine | null;
   onClearContext: () => void;
   onHighlightLines: (ids: string[]) => void;
+  lines: RailwayLine[];
 }
 
-export function ChatPanel({ isOpen, onClose, contextLine, onClearContext, onHighlightLines }: ChatPanelProps) {
+export function ChatPanel({ isOpen, onClose, contextLine, onClearContext, onHighlightLines, lines }: ChatPanelProps) {
   const { t, language } = useI18n();
   const [messages, setMessages] = useState<ChatMessage[]>(loadMessages);
   const [input, setInput] = useState("");
@@ -93,7 +94,7 @@ export function ChatPanel({ isOpen, onClose, contextLine, onClearContext, onHigh
     setRateLimited(false);
 
     const userMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", text };
-    const answer = answerQuestion(text, detectQuestionLanguage(text, language), contextLine?.id ?? null);
+    const answer = answerQuestion(lines, text, detectQuestionLanguage(text, language), contextLine?.id ?? null);
     const assistantId = crypto.randomUUID();
     const assistantMsg: ChatMessage = { id: assistantId, role: "assistant", text: "", sources: answer.sources, streaming: true };
 

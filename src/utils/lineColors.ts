@@ -1,5 +1,3 @@
-import { lines } from "../data/lines";
-
 // A qualitative palette with 20 mutually distinguishable hues -- one per
 // line, so every line on the map/sidebar is identifiable at a glance
 // instead of several lines sharing one status colour. No yellows: the
@@ -53,10 +51,18 @@ const PALETTE = [
   "#37474F",
 ];
 
-const LINE_COLORS: Record<string, string> = Object.fromEntries(
-  lines.map((line, i) => [line.id, PALETTE[i % PALETTE.length]]),
-);
+// Deterministic hash instead of a file-order index so a color doesn't
+// depend on having the full `lines` list loaded (or its order) -- needed
+// once lines come from an async API fetch rather than a static import.
+function hashString(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) {
+    h = (Math.imul(h, 31) + s.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
 
 export function getLineColor(lineId: string): string {
-  return LINE_COLORS[lineId] ?? "#374151";
+  if (!lineId) return "#374151";
+  return PALETTE[hashString(lineId) % PALETTE.length];
 }

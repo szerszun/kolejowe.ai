@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useI18n } from "../i18n/I18nContext";
-import { lines } from "../data/lines";
+import { useLines } from "../hooks/useLines";
 import { useLineFilters } from "../hooks/useLineFilters";
 import { Header } from "../components/Header";
 import { RailwayMap } from "../components/Map/RailwayMap";
@@ -16,18 +16,22 @@ export function HomePage() {
   const { t } = useI18n();
   const navigate = useNavigate();
   const { number, stationId } = useParams();
+  const { lines, loading, error } = useLines();
   const { query, setQuery, filters, setFilters, filteredLines, filteredStations, visibleLineIds } = useLineFilters(lines);
 
   const [highlightedLineIds, setHighlightedLineIds] = useState<string[]>([]);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatContextLineId, setChatContextLineId] = useState<string | null>(null);
 
-  const selectedLine = useMemo(() => lines.find((l) => l.number === number), [number]);
-  const chatContextLine = useMemo(() => lines.find((l) => l.id === chatContextLineId) ?? null, [chatContextLineId]);
+  const selectedLine = useMemo(() => lines.find((l) => l.number === number), [lines, number]);
+  const chatContextLine = useMemo(
+    () => lines.find((l) => l.id === chatContextLineId) ?? null,
+    [lines, chatContextLineId],
+  );
 
   const linesForStation = useMemo(
     () => (stationId ? lines.filter((l) => l.stations.some((s) => s.id === stationId)) : []),
-    [stationId],
+    [lines, stationId],
   );
   const selectedStation = linesForStation[0]?.stations.find((s) => s.id === stationId) ?? null;
 
@@ -37,6 +41,24 @@ export function HomePage() {
   };
 
   const selectStation = (id: string) => navigate(`/station/${id}`);
+
+  if (loading) {
+    return (
+      <div className="app-shell">
+        <Header />
+        <div className="app-loading-state">{t("loadingLines")}</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="app-shell">
+        <Header />
+        <div className="app-loading-state app-loading-state--error">{error || t("loadErrorLines")}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-shell">
@@ -95,6 +117,7 @@ export function HomePage() {
         contextLine={chatContextLine}
         onClearContext={() => setChatContextLineId(null)}
         onHighlightLines={setHighlightedLineIds}
+        lines={lines}
       />
     </div>
   );
