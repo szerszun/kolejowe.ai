@@ -691,7 +691,7 @@ export const lines: RailwayLine[] = [
     name: "Wrocław Główny – Międzylesie",
     status: "active_passenger",
     electrified: true,
-    lengthKm: 137.6,
+    lengthKm: 138.6,
     tracks: 1,
     maxSpeedKmh: 90,
     operators: ["PKP PLK"],
@@ -730,7 +730,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [{ year: 1874, label: "Otwarcie linii Wrocław – Kłodzko – Międzylesie" }],
       narrative:
-        "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie. Wcześniejsza wersja geometrii kończyła się na Strzelinie zamiast dochodzić do Wrocławia Głównego — surowa relacja OSM zawierała odcinek Strzelin–Wrocław zapisany tam i z powrotem (ten sam rodzaj błędu co w liniach 271/286/132/289/298); poprawiono, zostawiając tylko przejazd w jedną stronę. Brakował też cały odcinek na południe od Kłodzka, przez Bystrzycę Kłodzką i Międzylesie aż do granicy z Czechami — dodano go, łącząc w jedną wizualizację linię 276 z krótkim transgranicznym łącznikiem nr 481 (Lichkov – granica państwa), więc geometria sięga teraz faktycznie do Republiki Czeskiej, mimo że oficjalnie linia 276 kończy się w Międzylesiu.",
+        "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie. Wcześniejsza wersja geometrii kończyła się na Strzelinie zamiast dochodzić do Wrocławia Głównego — surowa relacja OSM zawierała odcinek Strzelin–Wrocław zapisany tam i z powrotem (ten sam rodzaj błędu co w liniach 271/286/132/289/298); poprawiono, zostawiając tylko przejazd w jedną stronę. Brakował też cały odcinek na południe od Kłodzka, przez Bystrzycę Kłodzką i Międzylesie aż do granicy z Czechami — dodano go, łącząc w jedną wizualizację linię 276 z krótkim transgranicznym łącznikiem nr 481 (Lichkov – granica państwa), więc geometria sięga teraz faktycznie do Republiki Czeskiej, mimo że oficjalnie linia 276 kończy się w Międzylesiu. Łącznik do Lichkova był początkowo doklejony do reszty trasy linią prostą (~4,7 km) zamiast rzeczywistym torem — poprawiono, podmieniając tę linię prostą na faktyczny przebieg toru z OSM między granicą a Międzylesiem (odcinek ten styka się z linią 481 idealnie w tym samym punkcie geograficznym, bez żadnej przerwy).",
       photos: [],
     },
     tenders: [],
@@ -1149,6 +1149,7 @@ export const lines: RailwayLine[] = [
     passengerServices: ["Koleje Dolnośląskie"],
     endStations: ["Jelenia Góra", "Pisarzowice"],
     stations: [
+      { id: "osm-7460339637", name: "Pisarzowice", coordinates: [15.96211, 50.7852] },
       { id: "osm-13198835795", name: "Kowary", coordinates: [15.82578, 50.79806] },
       { id: "osm-13197976817", name: "Kostrzyca", coordinates: [15.79829, 50.81454] },
       { id: "osm-12871928025", name: "Mysłakowice Orzeł", coordinates: [15.78641, 50.82508] },
@@ -1165,7 +1166,7 @@ export const lines: RailwayLine[] = [
         { year: 2022, label: "Reaktywacja ruchu pasażerskiego" },
       ],
       narrative:
-        "Linia łącząca Jelenią Górę z Kowarami i Mysłakowicami u podnóża Karkonoszy, skąd linia 340 prowadzi dalej do Karpacza — razem tworzą popularną trasę turystyczną z Jeleniej Góry na narty/w góry.",
+        "Linia łącząca Jelenią Górę z Kowarami i Mysłakowicami u podnóża Karkonoszy, skąd linia 340 prowadzi dalej do Karpacza — razem tworzą popularną trasę turystyczną z Jeleniej Góry na narty/w góry. Przystanek Pisarzowice na południowym krańcu linii jest dziś nieczynny (abandoned:railway=halt w OSM) — dawniej prowadził stąd dalej tor do Kamiennej Góry, ale ten odcinek jest całkowicie rozebrany/nieużywany, więc nie ma dziś czynnego połączenia z linią 299.",
       photos: [],
     },
     tenders: [],
