@@ -71,6 +71,7 @@ import geo779 from "./geometry/779.json";
 import geo974 from "./geometry/974.json";
 import geo749 from "./geometry/749.json";
 import geo773 from "./geometry/773.json";
+import geo976 from "./geometry/976.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2699,6 +2700,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótki łącznik ze stacji pasażerskiej Boguszów-Gorce do terminalu towarowego Boguszów-Gorce Towarowy (znanego też jako Boguszów-Gorce Wschód). Pierwszorzędna linia, wyłącznie ruch towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "976",
+    number: "976",
+    name: "Boguszów Gorce Zachód – Czarny Bór",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 1.49,
+    tracks: 1,
+    maxSpeedKmh: 30,
+    operators: ["PKP PLK", "Mineral Polska"],
+    passengerServices: [],
+    endStations: ["Boguszów-Gorce Zachód", "Czarny Bór"],
+    stations: [
+      { id: "osm-420072902", name: "Boguszów-Gorce Zachód", coordinates: [16.16723, 50.76238] },
+      { id: "osm-4012854714", name: "Czarny Bór", coordinates: [16.15299, 50.76851] },
+    ],
+    geometry: geo976 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bocznica przemysłowa do Czarnego Boru, obsługiwana wspólnie z firmą Mineral Polska — prawdopodobnie na potrzeby pobliskiego wydobycia surowców mineralnych w rejonie Wałbrzycha. Wyłącznie ruch towarowy.",
       photos: [],
     },
     tenders: [],
