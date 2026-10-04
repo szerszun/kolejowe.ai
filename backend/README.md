@@ -77,10 +77,50 @@ existing data will fail on duplicate ids. `src/seed/verify.ts` does a
 quick sanity read-back afterward (counts, one line, one station) if you
 want to check it worked without opening the admin UI.
 
+## Scheduled agent job
+
+```bash
+npm run agent:setup        # one-time: creates the agent user + API key, paste the key into .env
+npm run agent:sync -- 762  # sync specific line refs (sequential, never concurrent -- see src/jobs/overpass.ts)
+npm run agent:sync         # no refs given -> syncs a small built-in demo set
+```
+
+`src/jobs/overpass.ts` is a TS port of this project's Overpass fetch +
+duplicate-parallel-track dedup + stitch pipeline, scoped for drift
+*detection* against an already-published geometry rather than building one
+from scratch (no region-border clipping -- a line that legitimately
+crosses the Dolnoslaskie border, like 271/273/275/277/282, will always
+look "changed" here even with no real update).
+
+`src/jobs/syncLineGeometry.ts` re-fetches a line, compares it to what's
+published, and -- if different -- PATCHes a draft update, authenticated
+over REST with the agent's own API key (not the trusted Local API, the
+same constraint a real external cron/GitHub Action would have). Verified
+end-to-end against a deliberately mutated line: an admin's "Publish
+changes" works; the agent's write always lands as a draft; a plain GET
+keeps serving the old published content untouched while the draft sits in
+version history pending review.
+
+**Two gotchas found getting that verification to actually pass**, both
+fixed in `src/jobs/overpass.ts` / `syncLineGeometry.ts`:
+- A `fetch()` with no timeout can hang forever on a connection that just
+  never responds, which silently defeats a retry loop that only triggers
+  on rejection -- added `AbortSignal.timeout`.
+- Sending `draft=true` (save as draft) and `_status: 'published'` (the
+  agent's nominal publish request, which `requireAdminToPublish` demotes
+  anyway) in the same PATCH is a contradictory pair of signals -- it left
+  the live document pointing at the new unapproved content instead of the
+  still-current published version. Only ever request `draft=true`, don't
+  also send `_status`.
+
+(Separate from the above: see the Seeding section below for a *different*
+gotcha with Local API create/update specifically.)
+
 ## Not done yet
 
-- No scheduled agent job (Overpass re-fetch -> dedup/stitch -> draft write).
 - Frontend still reads the static `src/data/lines.ts`, not this API.
 - No production deploy config (Docker/hosting) -- removed the template's
   Mongo-flavoured `docker-compose.yml` and a `Dockerfile` that assumed
   `output: 'standalone'`, which isn't set yet.
+- The agent job only checks geometry drift. Nothing re-checks station
+  details, tenders, or anything else sourced outside OSM.
