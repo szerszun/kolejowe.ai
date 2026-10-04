@@ -7,7 +7,15 @@ const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields
   { name: 'lineId', type: 'relationship', relationTo: 'lines', required: true },
   { name: 'operator', type: 'text' },
   { name: 'platform', type: 'text' },
-  { name: 'daysOfOperation', type: 'text', admin: { description: 'e.g. "codziennie", "pon-pt"' } },
+  {
+    name: 'daysOfOperation',
+    type: 'select',
+    options: [
+      { label: 'Daily', value: 'daily' },
+      { label: 'Weekdays', value: 'weekdays' },
+      { label: 'Weekend', value: 'weekend' },
+    ],
+  },
   {
     name: kind === 'departure' ? 'destination' : 'origin',
     type: 'text',
