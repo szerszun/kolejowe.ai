@@ -53,6 +53,7 @@ import geo302 from "./geometry/302.json";
 import geo337 from "./geometry/337.json";
 import geo349 from "./geometry/349.json";
 import geo290 from "./geometry/290.json";
+import geo296 from "./geometry/296.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2127,6 +2128,33 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2000, label: "Zawieszenie ruchu pasażerskiego" }],
       narrative:
         "Linia graniczna biegnąca od Mikułowa przez Sulików i Wilkę do przejścia granicznego z Niemcami w Krzewinie Zgorzeleckiej, gdzie — podobnie jak w pobliskim Trzcińcu Zgorzeleckim na linii 786 — łączy się z korytarzem Görlitz–Zittau (Neißetalbahn). Ruch pasażerski zawieszono w 2000 roku; dziś linia obsługuje wyłącznie ruch towarowy, ze stacjami w Sulikowie i Wilce czynnymi tylko w ograniczonych godzinach.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "296",
+    number: "296",
+    name: "Wielkie Piekary – Miłkowice",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 10.5,
+    tracks: 2,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Wielkie Piekary", "Miłkowice"],
+    stations: [],
+    geometry: geo296 as [number, number][],
+    history: {
+      timeline: [{ year: 1925, label: "Otwarcie linii" }],
+      narrative:
+        "Zelektryfikowana, w większości dwutorowa towarowa obwodnica węzła legnickiego, otwarta w 1925 roku, odciążająca pasażerską linię 275. Pociągi towarowe kierują się nią m.in. w stronę Żagania, Forst, Węglińca (dalej do Turoszowa i Zawidowa) oraz Horki, a w drugą stronę do Wrocławia Gądowa. Surowe dane OSM dla tej linii zawierały dwie pętle zawracania (martwe odgałęzienia wracające niemal do własnego punktu startowego) — obie usunięto, co skróciło zmierzoną długość z ok. 17 km do rzeczywistego przebiegu głównego toru.",
       photos: [],
     },
     tenders: [],
