@@ -64,6 +64,7 @@ import geo335 from "./geometry/335.json";
 import geo344 from "./geometry/344.json";
 import geo766 from "./geometry/766.json";
 import geo771 from "./geometry/771.json";
+import geo772 from "./geometry/772.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2488,6 +2489,36 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2000, label: "Zamknięcie dla ruchu pasażerskiego" }, { year: 2022, label: "Wznowienie ruchu pasażerskiego" }],
       narrative:
         "Krótki odcinek łączący dwa dworce w Świdnicy. Zamknięty dla pasażerów w 2000 roku, od 12 czerwca 2022 roku ponownie kursują nim pociągi osobowe w relacji Wrocław – Sobótka – Świdnica.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "772",
+    number: "772",
+    name: "Strzegom Międzyrzecze – Strzegom Miasto",
+    status: "closed",
+    electrified: false,
+    lengthKm: 1.22,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Strzegom Międzyrzecze", "Strzegom Miasto"],
+    stations: [
+      { id: "osm-9177686358", name: "Strzegom Międzyrzecze", coordinates: [16.36171, 50.96163] },
+      { id: "osm-574335394", name: "Strzegom Miasto", coordinates: [16.35122, 50.96095] },
+    ],
+    geometry: geo772 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bardzo krótkie (1,2 km), całkowicie nieczynne odgałęzienie do Strzegomia Miasta — tej samej stacji, która występuje też na linii 302. Cały przebieg oznaczony w OSM jako `abandoned`.",
       photos: [],
     },
     tenders: [],
