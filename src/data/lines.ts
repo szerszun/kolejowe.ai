@@ -75,6 +75,7 @@ import geo976 from "./geometry/976.json";
 import geo869 from "./geometry/869.json";
 import geo774 from "./geometry/774.json";
 import geo776 from "./geometry/776.json";
+import geo970 from "./geometry/970.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2821,6 +2822,33 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1995, label: "Zawieszenie ruchu" }, { year: 2008, label: "Wznowienie ruchu" }],
       narrative:
         "Lokalna linia łącząca Marciszów (ten sam punkt, co na linii 302) z Wojcieszowem Górnym przez Kaczorów i Płoninę — jeden z niewielu wciąż czynnych fragmentów dawnej trasy Marciszów–Jerzmanice-Zdrój. Zawieszona w 1995 roku, wznowiona w 2008 — podobnie jak linia 337 — głównie dla obsługi bocznicy kamieniołomu w Wojcieszowie; mimo historycznego przystanku osobowego w Wojcieszowie Górnym brak potwierdzenia regularnego ruchu pasażerskiego.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "970",
+    number: "970",
+    name: "Mietków – Mietków Bocznica Majkoltrans",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 2.98,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "Majkoltrans"],
+    passengerServices: [],
+    endStations: ["Mietków", "Mietków Bocznica Majkoltrans"],
+    stations: [{ id: "osm-2333184869", name: "Mietków", coordinates: [16.65609, 50.98519] }],
+    geometry: geo970 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bocznica przemysłowa w Mietkowie, na zachód od Wrocławia, obsługiwana wspólnie z firmą logistyczną Majkoltrans. Wyłącznie ruch towarowy.",
       photos: [],
     },
     tenders: [],
