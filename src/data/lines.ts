@@ -56,6 +56,7 @@ import geo290 from "./geometry/290.json";
 import geo296 from "./geometry/296.json";
 import geo303 from "./geometry/303.json";
 import geo310 from "./geometry/310.json";
+import geo324 from "./geometry/324.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2236,6 +2237,33 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1995, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2001, label: "Zawieszenie ruchu towarowego" }, { year: 2019, label: "Przejęcie linii przez samorząd województwa (DSDiK)" }],
       narrative:
         "Długa linia łącząca Kobierzyce z Piławą Górną przez Jordanów Śląski, Niemczę i Łagiewniki Dzierżoniowskie. Ruch pasażerski wstrzymano w 1995 roku, towarowy w czerwcu 2001. Samorząd województwa (DSDiK) przejął linię 29 kwietnia 2019 roku i prowadzi jej rewitalizację — przebudowa odcinka Łagiewniki Dzierżoniowskie–Piława Górna (17,3 km, docelowo 80 km/h) miała zakończyć się w maju 2024, co potwierdzają surowe dane OSM: większość torów na tym południowym odcinku ma status `construction`, podczas gdy dalej na północ przeważa już `disused`/`razed`. Na dzień aktualizacji brak potwierdzenia uruchomienia regularnych przewozów.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "324",
+    number: "324",
+    name: "Ręczyn – Granica Państwa (Hagenwerder)",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 0.69,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Ręczyn", "Granica Państwa (Hagenwerder)"],
+    stations: [],
+    geometry: geo324 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Bardzo krótki, lokalny łącznik odgałęziający się od linii 290 na stacji Krzewina Zgorzelecka w stronę przejścia granicznego z Niemcami w Hagenwerder — trzecie, obok Trzcińca Zgorzeleckiego (linia 786) i Krzewiny Zgorzeleckiej (linia 290), przejście graniczne w tym rejonie, wszystkie w ramach dawnego korytarza Görlitz–Zittau.",
       photos: [],
     },
     tenders: [],
