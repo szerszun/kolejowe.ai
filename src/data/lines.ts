@@ -73,6 +73,7 @@ import geo749 from "./geometry/749.json";
 import geo773 from "./geometry/773.json";
 import geo976 from "./geometry/976.json";
 import geo869 from "./geometry/869.json";
+import geo774 from "./geometry/774.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2758,6 +2759,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Niewielki fragment dawnej, dłuższej linii sięgającej niegdyś Mieroszowa — dziś łącznik lokalnego znaczenia ze stacji Wałbrzych Szczawienko do zespołu trzech bocznic przemysłowych (m.in. Green Metals Poland, PEC SA i składu paliw), obsługiwany pociągami towarowymi z kierunku Świebodzic i Boguszowa-Gorc.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "774",
+    number: "774",
+    name: "Krużyn – Marciszów Górny",
+    status: "closed",
+    electrified: false,
+    lengthKm: 1.76,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Krużyn", "Marciszów Górny"],
+    stations: [
+      { id: "osm-10982580489", name: "Krużyn", coordinates: [16.03191, 50.80903] },
+      { id: "osm-4014439224", name: "Marciszów Górny", coordinates: [16.03963, 50.82487] },
+    ],
+    geometry: geo774 as [number, number][],
+    history: {
+      timeline: [{ year: 2004, label: "Zawieszenie ruchu" }],
+      narrative:
+        "Nieczynny od 2004 roku odcinek łączący dawne posterunki Krużyn i Marciszów Górny (odrębny punkt od stacji Marciszów na linii 302, mimo bliskiego sąsiedztwa w tym samym rejonie u podnóża Rudaw Janowickich).",
       photos: [],
     },
     tenders: [],
