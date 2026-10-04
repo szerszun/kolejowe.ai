@@ -43,6 +43,7 @@ import geo764 from "./geometry/764.json";
 import geo765 from "./geometry/765.json";
 import geo277 from "./geometry/277.json";
 import geo282 from "./geometry/282.json";
+import geo279 from "./geometry/279.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1792,6 +1793,38 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Linia łącząca Miłkowice (pod Legnicą) z Żarami przez Chojnów, Bolesławiec i Węgliniec — ważny towarowy ciąg równoległy do magistrali przez Jelenią Górę (linia 274), obsługujący m.in. duży węzeł rozrządowy w Węglińcu. Nie dociąga bezpośrednio do granicy z Niemcami (Żary leżą ok. 20 km od granicy) — przejście graniczne w tym rejonie, w Zgorzelcu, jest już pokryte przez linię 274 inną trasą. Surowa relacja OSM dla linii 282 obejmowała tylko odcinek Węgliniec–Bolesławiec–Żary, pomijając w swoim składzie człony wschodnie do Miłkowic mimo że są otagowane tym samym numerem referencyjnym — dociągnięto geometrię, scalając wszystkie odcinki toru oznaczone ref=282 w regionie i usuwając przy tym dwa równoległe, zdublowane fragmenty (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277).",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "279",
+    number: "279",
+    name: "Lubań Śląski – Węgliniec",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 22.01,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Lubań Śląski", "Węgliniec"],
+    stations: [
+      { id: "osm-459395485", name: "Lubań Śląski", coordinates: [15.29354, 51.11136] },
+      { id: "osm-484724571", name: "Gierałtów", coordinates: [15.29986, 51.19206] },
+      { id: "osm-2477849748", name: "Gierałtów Wykroty", coordinates: [15.28457, 51.21681] },
+      { id: "osm-410697138", name: "Węgliniec", coordinates: [15.22297, 51.2901] },
+    ],
+    geometry: geo279 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótkie połączenie między Lubaniem Śląskim (na linii 274) a dużym węzłem rozrządowym w Węglińcu. OSM opisuje ją jako dawniej szybką trasę międzymiastową (do 160 km/h), dziś zdegradowaną do dużo niższych prędkości (50-80 km/h) i wykorzystywaną głównie w ruchu towarowym. Surowa relacja OSM zawierała dwa zdublowane odcinki toru (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277/282); pokazany jest tylko faktyczny, pojedynczy przebieg.",
       photos: [],
     },
     tenders: [],
