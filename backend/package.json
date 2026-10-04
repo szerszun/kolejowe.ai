@@ -13,7 +13,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/seed.ts"
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/seed.ts",
+    "agent:setup": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/setupAgentUser.ts",
+    "agent:sync": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "3.90.2",
