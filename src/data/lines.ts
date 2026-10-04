@@ -54,6 +54,7 @@ import geo337 from "./geometry/337.json";
 import geo349 from "./geometry/349.json";
 import geo290 from "./geometry/290.json";
 import geo296 from "./geometry/296.json";
+import geo303 from "./geometry/303.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2155,6 +2156,43 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1925, label: "Otwarcie linii" }],
       narrative:
         "Zelektryfikowana, w większości dwutorowa towarowa obwodnica węzła legnickiego, otwarta w 1925 roku, odciążająca pasażerską linię 275. Pociągi towarowe kierują się nią m.in. w stronę Żagania, Forst, Węglińca (dalej do Turoszowa i Zawidowa) oraz Horki, a w drugą stronę do Wrocławia Gądowa. Surowe dane OSM dla tej linii zawierały dwie pętle zawracania (martwe odgałęzienia wracające niemal do własnego punktu startowego) — obie usunięto, co skróciło zmierzoną długość z ok. 17 km do rzeczywistego przebiegu głównego toru.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "303",
+    number: "303",
+    name: "Rokitki – Niegosławice",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 39.33,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Rokitki", "Niegosławice"],
+    stations: [
+      { id: "osm-2146569078", name: "Rokitki", coordinates: [15.89325, 51.33543] },
+      { id: "osm-2211307556", name: "Duninów", coordinates: [15.89552, 51.38596] },
+      { id: "osm-9177835387", name: "Chocianów", coordinates: [15.91207, 51.41642] },
+      { id: "osm-9143005006", name: "Jakubowo Lubińskie", coordinates: [15.87411, 51.45145] },
+      { id: "osm-9143005007", name: "Wysoka Szprotawska", coordinates: [15.85323, 51.47312] },
+      { id: "osm-9143005008", name: "Wilkocin", coordinates: [15.83153, 51.48618] },
+      { id: "osm-1931220312", name: "Przemków Miasto", coordinates: [15.7888, 51.53279] },
+      { id: "osm-9143005009", name: "Rudziny", coordinates: [15.72368, 51.56002] },
+      { id: "osm-3459149297", name: "Niegosławice", coordinates: [15.70142, 51.60013] },
+    ],
+    geometry: geo303 as [number, number][],
+    history: {
+      timeline: [{ year: 1992, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2022, label: "Reaktywacja odcinka Rokitki–Chocianów" }],
+      narrative:
+        "Linia kolejowa nr 303 w OSM jest podzielona na dwie relacje — Rokitki–Przemków (via Chocianów) i Chocianów–Niegosławice — które łączą się bez przerwy w jeden ciągły przebieg; potraktowano je tu jako jedną geometrię. Ruch pasażerski zawieszono na przełomie 1991/1992; po przebudowie odcinka Duninów–Chocianów (przejętego przez DSDiK w 2020) Koleje Dolnośląskie reaktywowały 6 grudnia 2022 roku regularne połączenia Rokitki–Chocianów (8 par dziennie, dalej do Legnicy i Wrocławia). Odcinek za Chocianowem w stronę Przemkowa i Niegosławic pozostaje nieczynny — na części torów w stronę Niegosławic linia jest wręcz fizycznie rozebrana.",
       photos: [],
     },
     tenders: [],
