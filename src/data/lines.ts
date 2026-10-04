@@ -41,6 +41,8 @@ import geo762 from "./geometry/762.json";
 import geo763 from "./geometry/763.json";
 import geo764 from "./geometry/764.json";
 import geo765 from "./geometry/765.json";
+import geo277 from "./geometry/277.json";
+import geo282 from "./geometry/282.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1710,6 +1712,93 @@ export const lines: RailwayLine[] = [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
       { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+    ],
+  },
+  {
+    id: "277",
+    number: "277",
+    name: "Wrocław Brochów – Opole Groszowice",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 51.51,
+    tracks: 1,
+    maxSpeedKmh: 100,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Wrocław Brochów", "Opole Groszowice"],
+    stations: [
+      { id: "osm-3885915223", name: "Siechnice", coordinates: [17.14254, 51.03826] },
+      { id: "osm-1779319907", name: "Zakrzów Kotowice", coordinates: [17.21007, 51.03575] },
+      { id: "osm-967207655", name: "Czernica Wrocławska", coordinates: [17.23581, 51.04968] },
+      { id: "osm-3547734926", name: "Jelcz Miłoszyce", coordinates: [17.3054, 51.04457] },
+      { id: "osm-1508748545", name: "Jelcz-Laskowice", coordinates: [17.34541, 51.03702] },
+      { id: "osm-967301950", name: "Kopalina", coordinates: [17.40412, 51.02108] },
+      { id: "osm-967301818", name: "Minkowice Oławskie", coordinates: [17.45706, 51.01183] },
+      { id: "osm-1508746056", name: "Biskupice Oławskie", coordinates: [17.51554, 50.99399] },
+      { id: "osm-967302195", name: "Borucice", coordinates: [17.5568, 50.98194] },
+      { id: "osm-1472963320", name: "Rogalice", coordinates: [17.59801, 50.96342] },
+      { id: "osm-1508699649", name: "Mąkoszyce", coordinates: [17.63116, 50.93951] },
+      { id: "osm-1472963303", name: "Tarnowiec Brzeski", coordinates: [17.65222, 50.91389] },
+      { id: "osm-1472963338", name: "Karłowice", coordinates: [17.69905, 50.88026] },
+    ],
+    geometry: geo277 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Linia łącząca węzeł Wrocław Brochów z Opolem Groszowicami przez Siechnice, Jełcz-Laskowice i Karłowice — dziś wykorzystywana głównie do ruchu towarowego, choć infrastruktura (dwutorowa trakcja elektryczna, nazwane przystanki co kilka kilometrów) wskazuje na dawne regularne połączenia pasażerskie; nie potwierdzono aktualnego rozkładu pasażerskiego, więc linia jest oznaczona jako czysto towarowa do czasu weryfikacji. Surowa relacja OSM zawierała trasę zapisaną tam i z powrotem na części odcinka (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764); pokazany jest tylko faktyczny, pojedynczy przebieg toru. Geometria jest ucięta na granicy województwa dolnośląskiego od strony Opola (jak w liniach 271/273/275) i kończy się ok. 2,5 km przed samym Wrocławiem Brochowem — surowe dane OSM dla tej linii urywają się w tym miejscu, prawdopodobnie łącząc się dalej z już zmapowaną infrastrukturą węzła Brochów (linie 750/763/764/765) bez odrębnego, w pełni otagowanego odcinka.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "282",
+    number: "282",
+    name: "Miłkowice – Żary",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 110.87,
+    tracks: 1,
+    maxSpeedKmh: 100,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Miłkowice", "Żary"],
+    stations: [
+      { id: "osm-2003255314", name: "Miłkowice", coordinates: [16.05461, 51.25556] },
+      { id: "osm-1089058672", name: "Chojnów", coordinates: [15.93766, 51.27769] },
+      { id: "osm-1843449478", name: "Osetnica", coordinates: [15.84727, 51.26181] },
+      { id: "osm-1843449477", name: "Okmiany", coordinates: [15.77857, 51.27096] },
+      { id: "osm-484882007", name: "Tomaszów Bolesławiecki", coordinates: [15.68007, 51.28608] },
+      { id: "osm-4073562294", name: "Bolesławiec", coordinates: [15.56953, 51.26608] },
+      { id: "osm-484742029", name: "Zebrzydowa", coordinates: [15.38917, 51.25468] },
+      { id: "osm-1571318418", name: "Zagajnik", coordinates: [15.29948, 51.27012] },
+      { id: "osm-410697138", name: "Węgliniec", coordinates: [15.22297, 51.2901] },
+      { id: "osm-2146605465", name: "Stary Węgliniec", coordinates: [15.1951, 51.30765] },
+      { id: "osm-2146607462", name: "Jagodzin", coordinates: [15.17027, 51.35588] },
+      { id: "osm-1870143073", name: "Ruszów", coordinates: [15.17663, 51.40106] },
+      { id: "osm-2146611600", name: "Okrąglica", coordinates: [15.18161, 51.4372] },
+      { id: "osm-1789761810", name: "Iłowa Żagańska", coordinates: [15.18864, 51.50209] },
+      { id: "osm-1793312768", name: "Konin Żagański", coordinates: [15.19151, 51.54596] },
+      { id: "osm-3760026008", name: "Jankowa Żagańska", coordinates: [15.18086, 51.56733] },
+      { id: "osm-2146617105", name: "Żary Kunice", coordinates: [15.16569, 51.59934] },
+      { id: "osm-2123759465", name: "Żary", coordinates: [15.1377, 51.63447] },
+    ],
+    geometry: geo282 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Linia łącząca Miłkowice (pod Legnicą) z Żarami przez Chojnów, Bolesławiec i Węgliniec — ważny towarowy ciąg równoległy do magistrali przez Jelenią Górę (linia 274), obsługujący m.in. duży węzeł rozrządowy w Węglińcu. Nie dociąga bezpośrednio do granicy z Niemcami (Żary leżą ok. 20 km od granicy) — przejście graniczne w tym rejonie, w Zgorzelcu, jest już pokryte przez linię 274 inną trasą. Surowa relacja OSM dla linii 282 obejmowała tylko odcinek Węgliniec–Bolesławiec–Żary, pomijając w swoim składzie człony wschodnie do Miłkowic mimo że są otagowane tym samym numerem referencyjnym — dociągnięto geometrię, scalając wszystkie odcinki toru oznaczone ref=282 w regionie i usuwając przy tym dwa równoległe, zdublowane fragmenty (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277).",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
 ];
