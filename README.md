@@ -39,7 +39,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 
 ## What's implemented (draft scope)
 
-- Interactive map of 45 lines across Lower Silesia, most with **real
+- Interactive map of 53 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (45-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -80,7 +80,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 45 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 53 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -239,3 +239,39 @@ to review. See `backend/README.md`. The frontend now reads from it live
    already-mapped line nowhere near Siechnice; geometry is cut at the
    region border toward Opole and falls ~2.5km short of Wrocław Brochów
    itself where the source OSM tagging ends).
+6. A sixth pass added eight more lines (**318** Bielawa Zachodnia–Srebrna
+   Góra, **319** Strzelin–Łagiewniki, **341** Dzierżoniów Śląski–Bielawa
+   Zachodnia, **786** Granica Państwa (Trzciniec Zgorzelecki)–Bogatynia,
+   **345** Kamienna Góra–Pisarzowice, **302** Malczyce–Marciszów, **337**
+   Lubań Śląski–Leśna and **349** Święta Katarzyna–Wrocław Kuźniki), plus a
+   correction to the existing **322**: fetching a candidate "D92" turned out
+   to be line 322 under a different working label (the *relation's* own
+   `ref` tag said "D92", but every individual way member was tagged
+   `ref=322`) — checking way-level refs against the relation ref like this
+   is now standard practice before trusting any fetch as genuinely new.
+   322 itself was missing its entire northern ~7km and had a fictional
+   endpoint name ("Kłodzko Nowe"); fixed to the real endpoint **Kłodzko
+   Główne**, with 2 real stations added. 318/319/341 are a small
+   DSDiK-run passenger cluster around Dzierżoniów/Bielawa (341 and 318
+   share the Bielawa Zachodnia endpoint); finding their stations required
+   broadening the Overpass station query from `railway~"^(station|halt)$"`
+   to any named `railway=*`-tagged node, since several real via-stations
+   on these lines are tagged `disused:`/`construction:railway=halt` rather
+   than a plain `halt`. **786** serves the Turów lignite mine/power plant
+   via the German border crossing at Trzciniec Zgorzelecki — freight-only
+   despite a nominal passenger stop at Bogatynia, with its final ~2km into
+   town disused. **345** and **302** are both effectively **closed**:
+   345 is a short Kamienna Góra branch, disused except for a short
+   connecting spur; 302 is a 74km former passenger line to Marciszów,
+   passenger service ended in 1996 and all traffic was suspended in 2014,
+   though DSDiK took over its southern half in Dec. 2022 (a possible
+   future tourist reactivation) — both statuses, plus 337's 2008
+   freight reactivation for basalt quarry traffic, were confirmed via a
+   live web lookup rather than inferred from OSM tags alone. **349** is a
+   double-track electrified segment of the Wrocław freight ring (same
+   family as 750–765) whose raw OSM geometry had a genuine duplicate
+   "there and back" artifact near the Wrocław Kuźniki end that the
+   automatic pairwise dedup missed — caught by the self-revisit loop
+   scanner (a 3km loop with endpoints only ~90m apart, well outside the
+   normal ~90-100m curvature-noise range every other candidate in this
+   pass also triggered) and confirmed with a zoomed before/after plot.
