@@ -76,6 +76,7 @@ import geo869 from "./geometry/869.json";
 import geo774 from "./geometry/774.json";
 import geo776 from "./geometry/776.json";
 import geo970 from "./geometry/970.json";
+import geo971 from "./geometry/971.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2849,6 +2850,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bocznica przemysłowa w Mietkowie, na zachód od Wrocławia, obsługiwana wspólnie z firmą logistyczną Majkoltrans. Wyłącznie ruch towarowy.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "971",
+    number: "971",
+    name: "Lubin – Rudna Główna",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 7.16,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "PMT Linie Kolejowe"],
+    passengerServices: [],
+    endStations: ["Lubin", "Rudna Główna"],
+    stations: [
+      { id: "osm-5356872372", name: "Lubin", coordinates: [16.19344, 51.39578] },
+      { id: "osm-11003080970", name: "Lubin Kopalnia", coordinates: [16.18198, 51.41733] },
+    ],
+    geometry: geo971 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Zelektryfikowana bocznica KGHM odgałęziająca się od tej samej stacji Lubin, przez którą przebiega też linia 289, ale w przeciwnym kierunku — ku kopalni (Lubin Kopalnia) i dalej, oficjalnie via Lubin Zachodni i Polkowice Główne KGHM, do punktu Rudna Główna (odrębnego od Rudnej Gwizdanów na linii 289). Zmapowany w OSM odcinek sięga tylko do okolic Lubina Kopalni — dalsza część trasy do Polkowic i Rudnej Głównej nie ma jeszcze cyfrowej geometrii.",
       photos: [],
     },
     tenders: [],
