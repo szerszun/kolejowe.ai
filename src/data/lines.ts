@@ -46,6 +46,7 @@ import geo282 from "./geometry/282.json";
 import geo279 from "./geometry/279.json";
 import geo318 from "./geometry/318.json";
 import geo319 from "./geometry/319.json";
+import geo341 from "./geometry/341.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1899,6 +1900,39 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Linia łącząca Strzelin z Łagiewnikami, utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK) — tę samą instytucję, która zarządza kilkoma innymi liniami turystycznymi w regionie.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "341",
+    number: "341",
+    name: "Dzierżoniów Śląski – Bielawa Zachodnia",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 6.51,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Dzierżoniów Śląski", "Bielawa Zachodnia"],
+    stations: [
+      { id: "osm-9646559766", name: "Dzierżoniów Dworzec Mały", coordinates: [16.63771, 50.72662] },
+      { id: "osm-11745761126", name: "Dzierżoniów Śląski", coordinates: [16.64058, 50.72431] },
+      { id: "osm-9634228048", name: "Bielawa Wschodnia", coordinates: [16.63428, 50.69677] },
+      { id: "osm-13261841200", name: "Bielawa Centralna", coordinates: [16.62078, 50.69278] },
+      { id: "osm-6239225577", name: "Bielawa Zachodnia", coordinates: [16.60675, 50.68585] },
+    ],
+    geometry: geo341 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótka linia łącząca Dzierżoniów z Bielawą, gdzie styka się z linią 318 do Srebrnej Góry. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK).",
       photos: [],
     },
     tenders: [],
