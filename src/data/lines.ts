@@ -70,6 +70,7 @@ import geo778 from "./geometry/778.json";
 import geo779 from "./geometry/779.json";
 import geo974 from "./geometry/974.json";
 import geo749 from "./geometry/749.json";
+import geo773 from "./geometry/773.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2668,6 +2669,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótki, zelektryfikowany łącznik wprowadzający ruch od wschodniej strony węzła legnickiego na stację Legnica. Pierwszorzędna linia o projektowanej prędkości 120 km/h, obecnie ograniczona do 40 km/h.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "773",
+    number: "773",
+    name: "Boguszów-Gorce – Boguszów-Gorce Towarowy",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 1.99,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Boguszów-Gorce", "Boguszów-Gorce Towarowy"],
+    stations: [
+      { id: "osm-420072866", name: "Boguszów-Gorce", coordinates: [16.20172, 50.75038] },
+      { id: "osm-1883950733", name: "Boguszów-Gorce Towarowy", coordinates: [16.22091, 50.74119] },
+    ],
+    geometry: geo773 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótki łącznik ze stacji pasażerskiej Boguszów-Gorce do terminalu towarowego Boguszów-Gorce Towarowy (znanego też jako Boguszów-Gorce Wschód). Pierwszorzędna linia, wyłącznie ruch towarowy.",
       photos: [],
     },
     tenders: [],
