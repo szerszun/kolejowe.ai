@@ -60,6 +60,7 @@ import geo324 from "./geometry/324.json";
 import geo327 from "./geometry/327.json";
 import geo331 from "./geometry/331.json";
 import geo334 from "./geometry/334.json";
+import geo335 from "./geometry/335.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2363,6 +2364,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Nieczynna linia łącząca Kamieniec Ząbkowicki ze Złotym Stokiem przez Byczeń, Sosnową Śląską i Płonicę Śląską. Oznaczona w OSM jako „wykreślona z ewidencji PKP PLK” (na podstawie Regulaminu sieci 2003/2004) — formalnie zdjęta z rejestru infrastruktury, bez ruchu pasażerskiego ani towarowego.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "335",
+    number: "335",
+    name: "Henryków – Ciepłowody",
+    status: "closed",
+    electrified: false,
+    lengthKm: 9.9,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Henryków", "Ciepłowody"],
+    stations: [
+      { id: "osm-487097036", name: "Henryków", coordinates: [17.03014, 50.66308] },
+      { id: "osm-2165156608", name: "Stary Henryków", coordinates: [16.97897, 50.66938] },
+    ],
+    geometry: geo335 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Nieczynna linia łącząca Henryków z Ciepłowodami przez Stary Henryków. Podobnie jak sąsiednia linia 334, oznaczona w OSM jako „wykreślona z ewidencji PKP PLK”; cały przebieg stanowią tory oznaczone jako `abandoned` — w okolicach samych Ciepłowód nie zachował się już żaden nazwany punkt stacyjny w danych OSM.",
       photos: [],
     },
     tenders: [],
