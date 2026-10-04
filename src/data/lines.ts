@@ -44,6 +44,7 @@ import geo765 from "./geometry/765.json";
 import geo277 from "./geometry/277.json";
 import geo282 from "./geometry/282.json";
 import geo279 from "./geometry/279.json";
+import geo318 from "./geometry/318.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1827,6 +1828,42 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótkie połączenie między Lubaniem Śląskim (na linii 274) a dużym węzłem rozrządowym w Węglińcu. OSM opisuje ją jako dawniej szybką trasę międzymiastową (do 160 km/h), dziś zdegradowaną do dużo niższych prędkości (50-80 km/h) i wykorzystywaną głównie w ruchu towarowym. Surowa relacja OSM zawierała dwa zdublowane odcinki toru (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277/282); pokazany jest tylko faktyczny, pojedynczy przebieg.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "318",
+    number: "318",
+    name: "Bielawa Zachodnia – Srebrna Góra",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 15.41,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Bielawa Zachodnia", "Srebrna Góra"],
+    stations: [
+      { id: "osm-6239225577", name: "Bielawa Zachodnia", coordinates: [16.60675, 50.68585] },
+      { id: "osm-12520450150", name: "Bielawa Jezioro", coordinates: [16.58848, 50.67938] },
+      { id: "osm-9631993672", name: "Kamieniczki", coordinates: [16.58986, 50.67501] },
+      { id: "osm-1794301542", name: "Bielawa Góry Sowie", coordinates: [16.59966, 50.66316] },
+      { id: "osm-9641738457", name: "Ostroszowice", coordinates: [16.62831, 50.64513] },
+      { id: "osm-1794301684", name: "Grodziszcze", coordinates: [16.64827, 50.62294] },
+      { id: "osm-1794305877", name: "Jemna", coordinates: [16.65443, 50.5919] },
+      { id: "osm-9644368685", name: "Srebrna Góra", coordinates: [16.66788, 50.57624] },
+    ],
+    geometry: geo318 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Górska linia przez Góry Sowie, prowadząca do Srebrnej Góry znanej z największej twierdzy górskiej w Europie Środkowej. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK) — tę samą instytucję, która zarządza kilkoma innymi liniami turystycznymi w regionie.",
       photos: [],
     },
     tenders: [],
