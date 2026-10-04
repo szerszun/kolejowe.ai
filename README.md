@@ -39,7 +39,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 
 ## What's implemented (draft scope)
 
-- Interactive map of 53 lines across Lower Silesia, most with **real
+- Interactive map of 67 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (45-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -80,7 +80,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 53 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 67 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -275,3 +275,56 @@ to review. See `backend/README.md`. The frontend now reads from it live
    scanner (a 3km loop with endpoints only ~90m apart, well outside the
    normal ~90-100m curvature-noise range every other candidate in this
    pass also triggered) and confirmed with a zoomed before/after plot.
+7. A seventh pass worked through the full medium-tier shortlist (14
+   lines): **290** Mikułowa–Granica Państwa (Krzewina Zgorzelecka),
+   **296** Wielkie Piekary–Miłkowice, **303** Rokitki–Niegosławice,
+   **310** Kobierzyce–Piława Górna, **324** Ręczyn–Granica Państwa
+   (Hagenwerder), **327** Wolibórz–Radków, **331** Jawor–Roztoka,
+   **334** Kamieniec Ząbkowicki–Złoty Stok, **335** Henryków–Ciepłowody,
+   **344** Wilka–Zawidów, **766** Łukanów–Dąbrowa Oleśnicka, **771**
+   Świdnica Przedmieście–Świdnica Miasto, **772** Strzegom
+   Międzyrzecze–Strzegom Miasto, and **973** Bolesławiec–Wizów (bumping
+   the total from 53 to 67). Several form small real-world clusters
+   with lines already in the app: 290, 324 and 786 are three separate
+   German border crossings within a few km of each other, all part of
+   the old Görlitz–Zittau corridor (Neißetalbahn); 331 branches off 302
+   at the exact same Roztoka junction node (confirmed by matching OSM
+   id), both taken over by DSDiK on the Strzegom–Marciszów section in
+   Dec. 2022; 772 is a short abandoned spur into the same Strzegom
+   Miasto station that 302 already documents; 766 crosses both 143 and
+   281. Status was mostly settled by a live web lookup rather than OSM
+   tags alone, since several of these lines are only *partially* active
+   and the split matters: 296 and 349-style "whole route re-tagged
+   construction/disused" cases don't arise here, but 303 (only
+   Rokitki–Chocianów reactivated by DSDiK/Koleje Dolnośląskie in Dec.
+   2022, rest closed), 310 (DSDiK rebuilding the Łagiewniki
+   Dzierżoniowskie–Piława Górna section toward a 2024 target, not yet
+   confirmed reopened), 327 and 331 (each has one genuinely active
+   freight stub plus a closed remainder) all needed the nuance spelled
+   out in their narratives rather than a single blanket status. 334 and
+   335 both carry an explicit OSM `note` that they were formally struck
+   off the PKP PLK infrastructure register. **296 surfaced a new
+   geometry bug distinct from the parallel-track duplication seen
+   before**: the self-revisit loop scanner found an 89-point,
+   4.9km-path loop anchored at the chain's own start point (endpoints
+   only 54m apart) — a dead-end balloon/spur at the Wielkie Piekary
+   junction, not a second digitized copy of the same track. Trimming it
+   with the usual apex-based start-loop fix was *wrong*: it kept the
+   long "out" leg as if it were the real route and replaced the "back"
+   leg with a straight-line jump across a genuine 2.4km gap where no
+   track exists, barely changing the total length (17.0km → 16.96km,
+   when the true fix should cut much more). The correct fix for a
+   dead-end loop is to collapse the *entire* span to a single point
+   (keep only the chain's own start, then resume immediately after the
+   loop closes) — verified here by cross-checking against the line's
+   official 12.685km length, which the wrong fix was nowhere near and
+   the right one landed within 4% of (after a second, smaller dead-end
+   spur further along got the same treatment). **303** additionally
+   needed a cross-relation stitch: PKP line 303 is split across two
+   separate OSM route relations (Rokitki–Przemków via Chocianów, and a
+   separately-tagged Chocianów–Niegosławice continuation) that connect
+   at an exact zero-gap coordinate match — fetched individually by
+   relation id (`fetch_line.py` only picks the first ref match when
+   several relations share a ref) and combined into one 39.33km
+   geometry. No candidates were skipped in this pass; all 14 researched
+   refs turned out to be genuine, distinct lines.
