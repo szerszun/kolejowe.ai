@@ -58,6 +58,7 @@ import geo303 from "./geometry/303.json";
 import geo310 from "./geometry/310.json";
 import geo324 from "./geometry/324.json";
 import geo327 from "./geometry/327.json";
+import geo331 from "./geometry/331.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2297,6 +2298,37 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1987, label: "Zawieszenie ruchu na odcinku Ścinawka Średnia–Radków" }, { year: 1999, label: "Rozbiórka toru na tym odcinku" }],
       narrative:
         "Linia łącząca Wolibórz z Radkowem przez Nową Rudę Słupiec i Ścinawkę Średnią. Odcinek Nowa Ruda Słupiec–Ścinawka Średnia pozostaje czynny wyłącznie w ruchu towarowym; dalszy odcinek Ścinawka Średnia–Radków zawieszono w 1987 roku, a tor fizycznie rozebrano we wrześniu 1999. Regularny ruch pasażerski nie funkcjonuje na żadnym odcinku.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "331",
+    number: "331",
+    name: "Jawor – Roztoka",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 14.56,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Jawor", "Roztoka"],
+    stations: [
+      { id: "osm-2126723884", name: "Jawor", coordinates: [16.19844, 51.05505] },
+      { id: "osm-1612039718", name: "Siekierzyce", coordinates: [16.23731, 51.02753] },
+      { id: "osm-12737036607", name: "Roztoka", coordinates: [16.24207, 50.95084] },
+    ],
+    geometry: geo331 as [number, number][],
+    history: {
+      timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }],
+      narrative:
+        "Odgałęzienie od Jawora do Roztoki, gdzie styka się z linią 302 (obie na odcinku ku Marciszowowi przejęte przez DSDiK w grudniu 2022). Ruch pasażerski i towarowy zawieszono w 1991 roku; dziś przejezdny jest wyłącznie odcinek Jawor–Borów, wykorzystywany do wywozu kruszyw z kamieniołomów w rejonie Gniewkowa i Borowa, podczas gdy dalszy odcinek Borów–Roztoka jest nieprzejezdny.",
       photos: [],
     },
     tenders: [],
