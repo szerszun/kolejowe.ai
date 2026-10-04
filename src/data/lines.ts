@@ -57,6 +57,7 @@ import geo296 from "./geometry/296.json";
 import geo303 from "./geometry/303.json";
 import geo310 from "./geometry/310.json";
 import geo324 from "./geometry/324.json";
+import geo327 from "./geometry/327.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2264,6 +2265,38 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bardzo krótki, lokalny łącznik odgałęziający się od linii 290 na stacji Krzewina Zgorzelecka w stronę przejścia granicznego z Niemcami w Hagenwerder — trzecie, obok Trzcińca Zgorzeleckiego (linia 786) i Krzewiny Zgorzeleckiej (linia 290), przejście graniczne w tym rejonie, wszystkie w ramach dawnego korytarza Görlitz–Zittau.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "327",
+    number: "327",
+    name: "Wolibórz – Radków",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 20.34,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Wolibórz", "Radków"],
+    stations: [
+      { id: "osm-10591669008", name: "Wolibórz", coordinates: [16.57766, 50.58575] },
+      { id: "osm-9186674851", name: "Nowa Ruda Słupiec", coordinates: [16.54579, 50.54842] },
+      { id: "osm-1280940818", name: "Ścinawka Średnia", coordinates: [16.50544, 50.52636] },
+      { id: "osm-1883723737", name: "Radków", coordinates: [16.40314, 50.50227] },
+    ],
+    geometry: geo327 as [number, number][],
+    history: {
+      timeline: [{ year: 1987, label: "Zawieszenie ruchu na odcinku Ścinawka Średnia–Radków" }, { year: 1999, label: "Rozbiórka toru na tym odcinku" }],
+      narrative:
+        "Linia łącząca Wolibórz z Radkowem przez Nową Rudę Słupiec i Ścinawkę Średnią. Odcinek Nowa Ruda Słupiec–Ścinawka Średnia pozostaje czynny wyłącznie w ruchu towarowym; dalszy odcinek Ścinawka Średnia–Radków zawieszono w 1987 roku, a tor fizycznie rozebrano we wrześniu 1999. Regularny ruch pasażerski nie funkcjonuje na żadnym odcinku.",
       photos: [],
     },
     tenders: [],
