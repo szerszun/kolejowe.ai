@@ -828,16 +828,18 @@ export const lines: RailwayLine[] = [
   {
     id: "322",
     number: "322",
-    name: "Kłodzko Nowe – Stronie Śląskie",
+    name: "Kłodzko Główne – Stronie Śląskie",
     status: "active_passenger",
     electrified: false,
-    lengthKm: 27.3,
+    lengthKm: 31.11,
     tracks: 1,
     maxSpeedKmh: 50,
     operators: ["PKP PLK"],
     passengerServices: ["Koleje Dolnośląskie"],
-    endStations: ["Kłodzko Nowe", "Stronie Śląskie"],
+    endStations: ["Kłodzko Główne", "Stronie Śląskie"],
     stations: [
+      { id: "osm-1854218754", name: "Kłodzko Główne", coordinates: [16.65677, 50.45133] },
+      { id: "osm-1854224907", name: "Kłodzko Miasto", coordinates: [16.65824, 50.4346] },
       { id: "osm-700897059", name: "Krosnowice Kłodzkie", coordinates: [16.63689, 50.39235] },
       { id: "osm-410273695", name: "Żelazno", coordinates: [16.66783, 50.37101] },
       { id: "osm-1809455402", name: "Ołdrzychowice Kłodzkie", coordinates: [16.7079, 50.35864] },
@@ -851,7 +853,7 @@ export const lines: RailwayLine[] = [
     history: {
       timeline: [{ year: 1897, label: "Otwarcie linii w kierunku Lądka-Zdroju" }],
       narrative:
-        "Linia biegnąca doliną Białej Lądeckiej przez uzdrowisko Lądek-Zdrój do Stronia Śląskiego u podnóża Masywu Śnieżnika.",
+        "Linia biegnąca doliną Białej Lądeckiej przez uzdrowisko Lądek-Zdrój do Stronia Śląskiego u podnóża Masywu Śnieżnika. Wcześniejsza wersja geometrii zaczynała się dopiero koło Krosnowic Kłodzkich, pomijając rzeczywisty, czynny odcinek od Kłodzka Głównego przez Kłodzko Miasto (~7 km) — dociągnięto go, łącząc dane z relacji OSM oznaczonej roboczo jako „D92”, którą DSDiK i PKP PLK współdzielą z oficjalnym numerem 322. Odcinek Trzebieszowice–Lądek-Zdrój–Stronie Śląskie jest w danych OSM wciąż oznaczony jako „construction” (w trakcie rewitalizacji), w odróżnieniu od w pełni czynnego odcinka Kłodzko Główne–Trzebieszowice (żywy tor, tag „rail”) — mimo to cała linia jest tu pokazana jako jedna całość zgodnie z wcześniejszym podejściem do innych reaktywowanych linii (np. 284, 340).",
       photos: [],
     },
     tenders: [],
