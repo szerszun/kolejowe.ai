@@ -51,6 +51,7 @@ import geo786 from "./geometry/786.json";
 import geo345 from "./geometry/345.json";
 import geo302 from "./geometry/302.json";
 import geo337 from "./geometry/337.json";
+import geo349 from "./geometry/349.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2065,6 +2066,33 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2008, label: "Reaktywacja w ruchu towarowym" }],
       narrative:
         "Linia łącząca Lubań Śląski z Leśną w dolinie Kwisy. Ruch pasażerski zawieszono w 1991 roku, a towarowy w 1994; po remoncie w 2008 roku linię reaktywowano wyłącznie dla przewozów towarowych — bazaltu z kamieniołomów w Grabiszycach Górnych i Miłoszowie. Koleje Dolnośląskie organizowały okazjonalne przejazdy okolicznościowe (m.in. w 2015 roku z okazji 150-lecia kolei w Lubaniu), ale nie ma stałego ruchu pasażerskiego.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "349",
+    number: "349",
+    name: "Święta Katarzyna – Wrocław Kuźniki",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 22.82,
+    tracks: 2,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Święta Katarzyna", "Wrocław Kuźniki"],
+    stations: [],
+    geometry: geo349 as [number, number][],
+    history: {
+      timeline: [{ year: 1896, label: "Otwarcie linii" }],
+      narrative:
+        "Element Towarowej Obwodnicy Wrocławia — dwutorowa, zelektryfikowana linia okrężna omijająca centrum Wrocławia od południa i zachodu, łącząca stacje rozrządowe Wrocław Brochów i Wrocław Gądów (podobnie jak sąsiednie odcinki tej obwodnicy, linie 750–765, już ujęte w bazie). Wyłącznie ruch towarowy, bez przystanków pasażerskich; zbudowana w 1896 roku z myślą o odciążeniu śródmiejskiej sieci kolejowej.",
       photos: [],
     },
     tenders: [],
