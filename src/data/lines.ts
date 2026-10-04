@@ -55,6 +55,7 @@ import geo349 from "./geometry/349.json";
 import geo290 from "./geometry/290.json";
 import geo296 from "./geometry/296.json";
 import geo303 from "./geometry/303.json";
+import geo310 from "./geometry/310.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2193,6 +2194,48 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1992, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2022, label: "Reaktywacja odcinka Rokitki–Chocianów" }],
       narrative:
         "Linia kolejowa nr 303 w OSM jest podzielona na dwie relacje — Rokitki–Przemków (via Chocianów) i Chocianów–Niegosławice — które łączą się bez przerwy w jeden ciągły przebieg; potraktowano je tu jako jedną geometrię. Ruch pasażerski zawieszono na przełomie 1991/1992; po przebudowie odcinka Duninów–Chocianów (przejętego przez DSDiK w 2020) Koleje Dolnośląskie reaktywowały 6 grudnia 2022 roku regularne połączenia Rokitki–Chocianów (8 par dziennie, dalej do Legnicy i Wrocławia). Odcinek za Chocianowem w stronę Przemkowa i Niegosławic pozostaje nieczynny — na części torów w stronę Niegosławic linia jest wręcz fizycznie rozebrana.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "310",
+    number: "310",
+    name: "Kobierzyce – Piława Górna",
+    status: "closed",
+    electrified: false,
+    lengthKm: 39.03,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Kobierzyce", "Piława Górna"],
+    stations: [
+      { id: "osm-438208370", name: "Kobierzyce", coordinates: [16.92659, 50.97426] },
+      { id: "osm-13675143643", name: "Szczepankowice Wrocławskie", coordinates: [16.92112, 50.94224] },
+      { id: "osm-13675143642", name: "Budziszów", coordinates: [16.91197, 50.925] },
+      { id: "osm-13675143645", name: "Pustków Wilczkowski", coordinates: [16.89375, 50.89997] },
+      { id: "osm-13675143644", name: "Wilczkowice", coordinates: [16.87862, 50.8889] },
+      { id: "osm-13675143646", name: "Jordanów Śląski", coordinates: [16.86448, 50.86219] },
+      { id: "osm-13675143647", name: "Trzebnik", coordinates: [16.85817, 50.82282] },
+      { id: "osm-13675143641", name: "Łagiewniki Dzierżoniowskie", coordinates: [16.84589, 50.79772] },
+      { id: "osm-12520400866", name: "Łagiewniki", coordinates: [16.84986, 50.79003] },
+      { id: "osm-11624848797", name: "Przystronie Śląskie", coordinates: [16.84177, 50.76666] },
+      { id: "osm-12520400894", name: "Wilków Wielki", coordinates: [16.84423, 50.74975] },
+      { id: "osm-12520409304", name: "Niemcza", coordinates: [16.83721, 50.71498] },
+      { id: "osm-12520409318", name: "Przerzeczyn Zdrój", coordinates: [16.81965, 50.68918] },
+      { id: "osm-1744509719", name: "Piława Górna", coordinates: [16.77326, 50.67877] },
+    ],
+    geometry: geo310 as [number, number][],
+    history: {
+      timeline: [{ year: 1995, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2001, label: "Zawieszenie ruchu towarowego" }, { year: 2019, label: "Przejęcie linii przez samorząd województwa (DSDiK)" }],
+      narrative:
+        "Długa linia łącząca Kobierzyce z Piławą Górną przez Jordanów Śląski, Niemczę i Łagiewniki Dzierżoniowskie. Ruch pasażerski wstrzymano w 1995 roku, towarowy w czerwcu 2001. Samorząd województwa (DSDiK) przejął linię 29 kwietnia 2019 roku i prowadzi jej rewitalizację — przebudowa odcinka Łagiewniki Dzierżoniowskie–Piława Górna (17,3 km, docelowo 80 km/h) miała zakończyć się w maju 2024, co potwierdzają surowe dane OSM: większość torów na tym południowym odcinku ma status `construction`, podczas gdy dalej na północ przeważa już `disused`/`razed`. Na dzień aktualizacji brak potwierdzenia uruchomienia regularnych przewozów.",
       photos: [],
     },
     tenders: [],
