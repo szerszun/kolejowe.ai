@@ -47,6 +47,7 @@ import geo279 from "./geometry/279.json";
 import geo318 from "./geometry/318.json";
 import geo319 from "./geometry/319.json";
 import geo341 from "./geometry/341.json";
+import geo786 from "./geometry/786.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1933,6 +1934,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótka linia łącząca Dzierżoniów z Bielawą, gdzie styka się z linią 318 do Srebrnej Góry. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK).",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "786",
+    number: "786",
+    name: "Granica Państwa (Trzciniec Zgorzelecki) – Bogatynia",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 8.35,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Trzciniec Zgorzelecki (Gr)", "Bogatynia"],
+    stations: [],
+    geometry: geo786 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Odgałęzienie graniczne obsługujące Kopalnię Węgla Brunatnego i Elektrownię Turów — od przejścia granicznego z Niemcami w Trzcińcu Zgorzeleckim (część korytarza Görlitz–Zittau) przez bocznice kopalni i elektrowni aż po Bogatynię. Mimo formalnego przystanku pasażerskiego w Bogatyni linia pełni dziś przede wszystkim funkcję przemysłową; ostatni, ok. 2-kilometrowy odcinek przed Bogatynią jest nieczynny.",
       photos: [],
     },
     tenders: [],
