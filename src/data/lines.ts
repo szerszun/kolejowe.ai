@@ -66,6 +66,7 @@ import geo766 from "./geometry/766.json";
 import geo771 from "./geometry/771.json";
 import geo772 from "./geometry/772.json";
 import geo973 from "./geometry/973.json";
+import geo778 from "./geometry/778.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2550,6 +2551,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bocznica przemysłowa łącząca stację Bolesławiec z Zakładami Chemicznymi Wizów, bez ruchu pasażerskiego i z ograniczeniem prędkości do 20 km/h. Oficjalna długość linii (5,6 km) obejmuje odcinek poza zasięgiem tego zbioru danych.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "778",
+    number: "778",
+    name: "Zgorzelec R1 – Zgorzelec R11",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 1.17,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Zgorzelec Krysin", "Zgorzelec Miasto"],
+    stations: [
+      { id: "osm-4023200678", name: "Zgorzelec Krysin", coordinates: [15.02646, 51.1417] },
+      { id: "osm-4023273598", name: "Zgorzelec Miasto", coordinates: [15.0177, 51.14707] },
+    ],
+    geometry: geo778 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Krótka łącznica (dawniej: „Łącznica nr 778 Zgorzelec Miasto – Krysin”) spinająca węzeł stacyjny Zgorzelec. Tagi OSM wskazują na planowaną elektryfikację (`construction:electrified`, `construction:voltage=3000`), choć obecnie odcinek pozostaje niezelektryfikowany i obsługuje wyłącznie ruch towarowy.",
       photos: [],
     },
     tenders: [],
