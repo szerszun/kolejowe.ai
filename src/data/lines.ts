@@ -45,6 +45,7 @@ import geo277 from "./geometry/277.json";
 import geo282 from "./geometry/282.json";
 import geo279 from "./geometry/279.json";
 import geo318 from "./geometry/318.json";
+import geo319 from "./geometry/319.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -1864,6 +1865,40 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Górska linia przez Góry Sowie, prowadząca do Srebrnej Góry znanej z największej twierdzy górskiej w Europie Środkowej. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK) — tę samą instytucję, która zarządza kilkoma innymi liniami turystycznymi w regionie.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "319",
+    number: "319",
+    name: "Strzelin – Łagiewniki",
+    status: "active_passenger",
+    electrified: false,
+    lengthKm: 16.89,
+    tracks: 1,
+    maxSpeedKmh: 50,
+    operators: ["PKP PLK", "Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: ["Koleje Dolnośląskie"],
+    endStations: ["Strzelin", "Łagiewniki"],
+    stations: [
+      { id: "osm-10980663173", name: "Strzelin", coordinates: [17.06044, 50.78449] },
+      { id: "osm-2230919506", name: "Mikoszów", coordinates: [17.03451, 50.77908] },
+      { id: "osm-12733564743", name: "Karszów", coordinates: [17.00739, 50.77174] },
+      { id: "osm-12733564744", name: "Kondratowice", coordinates: [16.92899, 50.77096] },
+      { id: "osm-12520400866", name: "Łagiewniki", coordinates: [16.84986, 50.79003] },
+      { id: "osm-13675143641", name: "Łagiewniki Dzierżoniowskie", coordinates: [16.84589, 50.79772] },
+    ],
+    geometry: geo319 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Linia łącząca Strzelin z Łagiewnikami, utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK) — tę samą instytucję, która zarządza kilkoma innymi liniami turystycznymi w regionie.",
       photos: [],
     },
     tenders: [],
