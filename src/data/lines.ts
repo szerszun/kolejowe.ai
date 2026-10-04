@@ -50,6 +50,7 @@ import geo341 from "./geometry/341.json";
 import geo786 from "./geometry/786.json";
 import geo345 from "./geometry/345.json";
 import geo302 from "./geometry/302.json";
+import geo337 from "./geometry/337.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2029,6 +2030,41 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2014, label: "Zawieszenie ruchu pociągów" }, { year: 2022, label: "Przejęcie odcinka Grabina Śląska – Marciszów przez DSDiK" }],
       narrative:
         "Długa linia łącząca Malczyce ze Strzegomiem, Bolkowem i Marciszowem u podnóża Rudaw Janowickich. Ruch pasażerski zlikwidowano w 1996 roku, a mimo modernizacji w 2013 roku cały ruch pociągów wstrzymano w 2014. Od grudnia 2022 odcinek Grabina Śląska – Marciszów zarządza Dolnośląska Służba Dróg i Kolei we Wrocławiu, co otwiera możliwość przyszłej reaktywacji (m.in. ruchu turystycznego); większość trasy pozostaje dziś fizycznie nieczynna.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "337",
+    number: "337",
+    name: "Lubań Śląski – Leśna",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 11.16,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Lubań Śląski", "Leśna"],
+    stations: [
+      { id: "osm-459395485", name: "Lubań Śląski", coordinates: [15.29354, 51.11136] },
+      { id: "osm-12736987263", name: "Księginki", coordinates: [15.29531, 51.10013] },
+      { id: "osm-12736987264", name: "Kościelnik", coordinates: [15.29476, 51.08716] },
+      { id: "osm-12736987265", name: "Kościelniki Średnie", coordinates: [15.29142, 51.06893] },
+      { id: "osm-12736987266", name: "Kościelniki Dolne", coordinates: [15.28443, 51.06105] },
+      { id: "osm-679181346", name: "Kościelniki Górne", coordinates: [15.27077, 51.04609] },
+      { id: "osm-4095927345", name: "Leśna", coordinates: [15.26272, 51.02691] },
+    ],
+    geometry: geo337 as [number, number][],
+    history: {
+      timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2008, label: "Reaktywacja w ruchu towarowym" }],
+      narrative:
+        "Linia łącząca Lubań Śląski z Leśną w dolinie Kwisy. Ruch pasażerski zawieszono w 1991 roku, a towarowy w 1994; po remoncie w 2008 roku linię reaktywowano wyłącznie dla przewozów towarowych — bazaltu z kamieniołomów w Grabiszycach Górnych i Miłoszowie. Koleje Dolnośląskie organizowały okazjonalne przejazdy okolicznościowe (m.in. w 2015 roku z okazji 150-lecia kolei w Lubaniu), ale nie ma stałego ruchu pasażerskiego.",
       photos: [],
     },
     tenders: [],
