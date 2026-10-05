@@ -80,6 +80,7 @@ import geo971 from "./geometry/971.json";
 import geo972 from "./geometry/972.json";
 import geo975 from "./geometry/975.json";
 import geo181 from "./geometry/181.json";
+import geo278 from "./geometry/278.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2974,6 +2975,40 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2016, label: "Reaktywacja odcinka Kępno–Oleśnica" }, { year: 2024, label: "Rozpoczęcie elektryfikacji" }],
       narrative:
         "Odcinek Oleśnica–Syców dużej, ponad 149-kilometrowej linii nr 181 Herby Nowe–Oleśnica, która na dalekim południu (Herby Nowe–Wieluń Dąbrowa) działa nieprzerwanie, ale na odcinku Kępno–Oleśnica (obejmującym ten fragment) była zawieszona i wznowiona dopiero w 2016 roku. Od marca 2024 trwa kompleksowa rewitalizacja i elektryfikacja tego odcinka (53 km toru, 46 km sieci trakcyjnej), z planowanym uruchomieniem w 2026 roku — stąd mieszane tagi OSM (`construction` obok `rail`). Brak potwierdzenia regularnego ruchu pasażerskiego. Uwaga: dane OSM dla tej linii zawierały też odrębne odcinki fizycznie otagowane numerem 281 (już ujętym w bazie) w ramach tej samej, zbiorczej relacji „D71” — wydzielono z niej tylko fragment rzeczywiście należący do linii 181.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "278",
+    number: "278",
+    name: "Węgliniec – Zgorzelec",
+    status: "active_passenger",
+    electrified: true,
+    lengthKm: 26.64,
+    tracks: 2,
+    maxSpeedKmh: 160,
+    operators: ["PKP PLK"],
+    passengerServices: ["Koleje Dolnośląskie", "Polregio", "PKP Intercity"],
+    endStations: ["Węgliniec", "Zgorzelec"],
+    stations: [
+      { id: "osm-10801934389", name: "Węgliniec", coordinates: [15.22026, 51.29038] },
+      { id: "osm-4052947162", name: "Pieńsk", coordinates: [15.04658, 51.24496] },
+      { id: "osm-7683087720", name: "Lasów", coordinates: [15.03571, 51.22635] },
+      { id: "osm-1418047034", name: "Jędrzychowice", coordinates: [15.01778, 51.17339] },
+      { id: "osm-7680920539", name: "Zgorzelec Miasto", coordinates: [15.02009, 51.1553] },
+      { id: "osm-2920851838", name: "Zgorzelec", coordinates: [15.00304, 51.14017] },
+    ],
+    geometry: geo278 as [number, number][],
+    history: {
+      timeline: [{ year: 2019, label: "Elektryfikacja" }],
+      narrative:
+        "Magistralna linia znaczenia państwowego łącząca Węgliniec ze Zgorzelcem przez Pieńsk, Lasów, Jędrzychowice i Zgorzelec Miasto — fragment europejskiego korytarza E30 Görlitz–Mościska. Zelektryfikowana 15 grudnia 2019 roku; obsługują ją Koleje Dolnośląskie, Polregio i PKP Intercity. Surowe dane OSM dla tej dwutorowej linii zawierały klasyczne artefakty podwójnego toru (37 z 54 odcinków odrzucono jako duplikaty) oraz dwa niewielkie, lokalne zygzaki — jeden z nich (ok. 0,5 km) wyglądał na nietypowo duży jak na zwykły szum krzywizny, więc przed scaleniem zweryfikowano go wizualnie.",
       photos: [],
     },
     tenders: [],
