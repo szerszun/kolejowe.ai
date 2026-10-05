@@ -186,20 +186,31 @@ export const lines: RailwayLine[] = [
     tenders: [
       {
         id: "t-274-1",
-        title: "Modernizacja peronów na odcinku Legnica – Chojnów",
+        title: "Wałbrzych – dwie zmodernizowane stacje i nowy przystanek (Świebodzice, Wałbrzych Szczawienko, Wałbrzych Śródmieście)",
         authority: "PKP Polskie Linie Kolejowe S.A.",
-        estimatedValuePLN: 42_000_000,
-        publicationDate: "2026-08-01",
-        deadline: "2026-10-15",
-        status: "open",
-        url: "https://przetargi.plk-sa.pl/example-274-1",
+        estimatedValuePLN: 77_563_000,
+        publicationDate: "2017-09-29",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.plk-sa.pl/o-spolce/biuro-prasowe/informacje-prasowe/szczegoly/walbrzych-dwie-zmodernizowane-stacje-i-nowy-przystanek-3494",
+        matchType: "confirmed",
+      },
+      {
+        id: "t-274-2",
+        title: "Rewitalizacja tunelu liniowego w km 118,700 wraz z infrastrukturą towarzyszącą (tunel w Trzcińsku)",
+        authority: "PKP Polskie Linie Kolejowe S.A.",
+        estimatedValuePLN: 85_000_000,
+        publicationDate: "2023-03-10",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.plk-sa.pl/o-spolce/biuro-prasowe/informacje-prasowe/szczegoly/dolny-slask-dla-wiekszych-mozliwosci-kolei-plk-sa-rozpoczynaja-prace-w-tunelu-w-trzcinsku-8063",
         matchType: "confirmed",
       },
     ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-20" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -257,7 +268,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-05" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-05" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -329,20 +340,20 @@ export const lines: RailwayLine[] = [
     tenders: [
       {
         id: "t-137-1",
-        title: "Przebudowa stacji Wałbrzych Główny — etap II",
+        title: "Remont Magistrali Podsudeckiej (Kamieniec Ząbkowicki – Dzierżoniów Śląski)",
         authority: "PKP Polskie Linie Kolejowe S.A.",
-        estimatedValuePLN: 128_000_000,
-        publicationDate: "2026-07-12",
-        deadline: "2026-11-30",
-        status: "open",
-        url: "https://przetargi.plk-sa.pl/example-137-1",
-        matchType: "auto-matched",
+        estimatedValuePLN: 102_000_000,
+        publicationDate: "2026-05-07",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.nakolei.pl/remont-magistrali-podsudeckiej/",
+        matchType: "confirmed",
       },
     ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-18" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -402,7 +413,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-15" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -452,7 +463,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-10" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -500,7 +511,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-08-30" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -534,7 +545,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-12" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -587,7 +598,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -634,7 +645,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-05" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-08-20" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -679,7 +690,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -725,7 +736,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -776,11 +787,23 @@ export const lines: RailwayLine[] = [
         "Główna linia łącząca Wrocław z Kotliną Kłodzką i granicą czeską przez Strzelin, Ząbkowice Śląskie i Kłodzko, obsługiwana regularnie przez Koleje Dolnośląskie. Wcześniejsza wersja geometrii kończyła się na Strzelinie zamiast dochodzić do Wrocławia Głównego — surowa relacja OSM zawierała odcinek Strzelin–Wrocław zapisany tam i z powrotem (ten sam rodzaj błędu co w liniach 271/286/132/289/298); poprawiono, zostawiając tylko przejazd w jedną stronę. Brakował też cały odcinek na południe od Kłodzka, przez Bystrzycę Kłodzką i Międzylesie aż do granicy z Czechami — dodano go, łącząc w jedną wizualizację linię 276 z krótkim transgranicznym łącznikiem nr 481 (Lichkov – granica państwa), więc geometria sięga teraz faktycznie do Republiki Czeskiej, mimo że oficjalnie linia 276 kończy się w Międzylesiu. Łącznik do Lichkova był początkowo doklejony do reszty trasy linią prostą (~4,7 km) zamiast rzeczywistym torem — poprawiono, podmieniając tę linię prostą na faktyczny przebieg toru z OSM między granicą a Międzylesiem (odcinek ten styka się z linią 481 idealnie w tym samym punkcie geograficznym, bez żadnej przerwy).",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-276-1",
+        title: "Prace na linii kolejowej nr 276 Wrocław – Międzylesie – rewitalizacja torów wraz z robotami towarzyszącymi",
+        authority: "PKP Polskie Linie Kolejowe S.A.",
+        estimatedValuePLN: 117_000_000,
+        publicationDate: "2024-07-10",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.plk-sa.pl/o-spolce/biuro-prasowe/informacje-prasowe/szczegoly/szybsze-podroze-z-wroclawia-do-klodzka-i-czech-9877",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -825,7 +848,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -862,7 +885,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -896,11 +919,23 @@ export const lines: RailwayLine[] = [
         "Linia biegnąca doliną Białej Lądeckiej przez uzdrowisko Lądek-Zdrój do Stronia Śląskiego u podnóża Masywu Śnieżnika. Wcześniejsza wersja geometrii zaczynała się dopiero koło Krosnowic Kłodzkich, pomijając rzeczywisty, czynny odcinek od Kłodzka Głównego przez Kłodzko Miasto (~7 km) — dociągnięto go, łącząc dane z relacji OSM oznaczonej roboczo jako „D92”, którą DSDiK i PKP PLK współdzielą z oficjalnym numerem 322. Odcinek Trzebieszowice–Lądek-Zdrój–Stronie Śląskie jest w danych OSM wciąż oznaczony jako „construction” (w trakcie rewitalizacji), w odróżnieniu od w pełni czynnego odcinka Kłodzko Główne–Trzebieszowice (żywy tor, tag „rail”) — mimo to cała linia jest tu pokazana jako jedna całość zgodnie z wcześniejszym podejściem do innych reaktywowanych linii (np. 284, 340).",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-322-1",
+        title: "Rewitalizacja linii kolejowej nr 322 (Kłodzko – Lądek-Zdrój – Stronie Śląskie)",
+        authority: "Dolnośląska Służba Dróg i Kolei we Wrocławiu",
+        estimatedValuePLN: 70_000_000,
+        publicationDate: "2025-08-28",
+        deadline: null,
+        status: "awarded",
+        url: "https://tvklodzka.pl/po-20-latach-wroca-pociagi-do-ladka-zdroju-i-stronia-slaskiego-umowa-na-rewitalizacje-linii-kolejowej-nr-322-podpisana/",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -937,7 +972,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -968,11 +1003,23 @@ export const lines: RailwayLine[] = [
         "Krótka górska linia do popularnego kurortu narciarskiego Karpacz u podnóża Śnieżki, po latach zawieszenia przywrócona do ruchu sezonowego dla turystów.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-340-1",
+        title: "Rewitalizacja linii kolejowej nr 340 (Mysłakowice – Karpacz)",
+        authority: "Dolnośląska Służba Dróg i Kolei we Wrocławiu",
+        estimatedValuePLN: null,
+        publicationDate: "2023-09-15",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.rynek-kolejowy.pl/wiadomosci/dsdik-wybrala-wykonawce-rewitalizacji-linii-do-karpacza-115222.html",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -1019,7 +1066,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -1059,7 +1106,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-23" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-23" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
   },
   {
@@ -1095,7 +1142,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-25" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-25" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-25" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-25" },
     ],
   },
   {
@@ -1136,7 +1183,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-25" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-25" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-25" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-25" },
     ],
   },
   {
@@ -1178,7 +1225,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1214,11 +1261,23 @@ export const lines: RailwayLine[] = [
         "Linia łącząca Jelenią Górę z Kowarami i Mysłakowicami u podnóża Karkonoszy, skąd linia 340 prowadzi dalej do Karpacza — razem tworzą popularną trasę turystyczną z Jeleniej Góry na narty/w góry. Przystanek Pisarzowice na południowym krańcu linii jest dziś nieczynny (abandoned:railway=halt w OSM) — dawniej prowadził stąd dalej tor do Kamiennej Góry, ale ten odcinek jest całkowicie rozebrany/nieużywany, więc nie ma dziś czynnego połączenia z linią 299.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-308-1",
+        title: "Rewitalizacja linii kolejowej Mysłakowice – Kowary",
+        authority: "Dolnośląska Służba Dróg i Kolei we Wrocławiu",
+        estimatedValuePLN: 12_450_000,
+        publicationDate: "2024-08-08",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.jelonka.com/wybrany-wykonawca-rewitalizacji-linii-myslakowice-kowary-126457",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1249,7 +1308,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1285,7 +1344,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1322,7 +1381,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1349,7 +1408,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1376,7 +1435,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1403,7 +1462,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1430,7 +1489,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1457,7 +1516,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1484,7 +1543,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1511,7 +1570,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1538,7 +1597,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1565,7 +1624,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1592,7 +1651,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1619,7 +1678,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1646,7 +1705,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1673,7 +1732,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1700,7 +1759,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1727,7 +1786,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1754,7 +1813,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-09-26" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-09-26" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-26" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-09-26" },
     ],
   },
   {
@@ -1795,7 +1854,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -1841,7 +1900,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -1873,7 +1932,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -1909,7 +1968,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -1943,7 +2002,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -1976,7 +2035,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2003,7 +2062,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2030,7 +2089,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2069,7 +2128,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2104,7 +2163,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2131,7 +2190,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2164,7 +2223,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2191,7 +2250,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2224,11 +2283,23 @@ export const lines: RailwayLine[] = [
         "Linia kolejowa nr 303 w OSM jest podzielona na dwie relacje — Rokitki–Przemków (via Chocianów) i Chocianów–Niegosławice — które łączą się bez przerwy w jeden ciągły przebieg; potraktowano je tu jako jedną geometrię. Ruch pasażerski zawieszono na przełomie 1991/1992; po przebudowie odcinka Duninów–Chocianów (przejętego przez DSDiK w 2020) Koleje Dolnośląskie reaktywowały 6 grudnia 2022 roku regularne połączenia Rokitki–Chocianów (8 par dziennie, dalej do Legnicy i Wrocławia). Odcinek za Chocianowem w stronę Przemkowa i Niegosławic pozostaje nieczynny — na części torów w stronę Niegosławic linia jest wręcz fizycznie rozebrana.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-303-1",
+        title: "Rewitalizacja linii kolejowej z Chocianowa do Przemkowa Odlewni",
+        authority: "Dolnośląska Służba Dróg i Kolei we Wrocławiu",
+        estimatedValuePLN: 74_900_000,
+        publicationDate: "2025-07-25",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.rynek-kolejowy.pl/wiadomosci/kolej-wroci-do-przemkowa-jest-umowa-124161.html",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2266,11 +2337,23 @@ export const lines: RailwayLine[] = [
         "Długa linia łącząca Kobierzyce z Piławą Górną przez Jordanów Śląski, Niemczę i Łagiewniki Dzierżoniowskie. Ruch pasażerski wstrzymano w 1995 roku, towarowy w czerwcu 2001. Samorząd województwa (DSDiK) przejął linię 29 kwietnia 2019 roku i prowadzi jej rewitalizację — przebudowa odcinka Łagiewniki Dzierżoniowskie–Piława Górna (17,3 km, docelowo 80 km/h) miała zakończyć się w maju 2024, co potwierdzają surowe dane OSM: większość torów na tym południowym odcinku ma status `construction`, podczas gdy dalej na północ przeważa już `disused`/`razed`. Na dzień aktualizacji brak potwierdzenia uruchomienia regularnych przewozów.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-310-1",
+        title: "Rewitalizacja linii kolejowej nr 310 Kobierzyce – Piława Górna na odcinku Łagiewniki Dzierżoniowskie – Piława Górna – II etap",
+        authority: "Dolnośląska Służba Dróg i Kolei we Wrocławiu",
+        estimatedValuePLN: 45_300_000,
+        publicationDate: "2023-05-18",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.nakolei.pl/dsdik-wybrala-wykonawce-odbudowy-linii-kolejowej-nr-310-kobierzyce-pilawa-glowna/",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2297,7 +2380,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2329,7 +2412,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2360,7 +2443,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2393,7 +2476,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2423,7 +2506,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2453,7 +2536,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2484,7 +2567,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2514,7 +2597,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2544,7 +2627,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2574,7 +2657,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2604,7 +2687,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2631,7 +2714,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2661,7 +2744,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2688,7 +2771,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2718,7 +2801,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2748,7 +2831,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2775,7 +2858,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2805,7 +2888,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2836,7 +2919,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2863,7 +2946,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2893,7 +2976,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2923,7 +3006,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2950,7 +3033,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -2980,11 +3063,23 @@ export const lines: RailwayLine[] = [
         "Odcinek Oleśnica–Syców dużej, ponad 149-kilometrowej linii nr 181 Herby Nowe–Oleśnica, która na dalekim południu (Herby Nowe–Wieluń Dąbrowa) działa nieprzerwanie, ale na odcinku Kępno–Oleśnica (obejmującym ten fragment) była zawieszona i wznowiona dopiero w 2016 roku. Od marca 2024 trwa kompleksowa rewitalizacja i elektryfikacja tego odcinka (53 km toru, 46 km sieci trakcyjnej), z planowanym uruchomieniem w 2026 roku — stąd mieszane tagi OSM (`construction` obok `rail`). Brak potwierdzenia regularnego ruchu pasażerskiego. Uwaga: dane OSM dla tej linii zawierały też odrębne odcinki fizycznie otagowane numerem 281 (już ujętym w bazie) w ramach tej samej, zbiorczej relacji „D71” — wydzielono z niej tylko fragment rzeczywiście należący do linii 181.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-181-1",
+        title: "Rewitalizacja linii kolejowej nr 181 na odcinku Kępno – Oleśnica wraz z elektryfikacją",
+        authority: "PKP Polskie Linie Kolejowe S.A.",
+        estimatedValuePLN: 578_094_398,
+        publicationDate: "2023-10-13",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.plk-sa.pl/o-spolce/biuro-prasowe/informacje-prasowe/szczegoly/plk-sa-przywroca-polaczenia-pasazerskie-na-odcinku-olesnica-kepno-8899",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -3014,11 +3109,23 @@ export const lines: RailwayLine[] = [
         "Magistralna linia znaczenia państwowego łącząca Węgliniec ze Zgorzelcem przez Pieńsk, Lasów, Jędrzychowice i Zgorzelec Miasto — fragment europejskiego korytarza E30 Görlitz–Mościska. Zelektryfikowana 15 grudnia 2019 roku; obsługują ją Koleje Dolnośląskie, Polregio i PKP Intercity. Surowe dane OSM dla tej dwutorowej linii zawierały klasyczne artefakty podwójnego toru (37 z 54 odcinków odrzucono jako duplikaty) oraz dwa niewielkie, lokalne zygzaki — jeden z nich (ok. 0,5 km) wyglądał na nietypowo duży jak na zwykły szum krzywizny, więc przed scaleniem zweryfikowano go wizualnie.",
       photos: [],
     },
-    tenders: [],
+    tenders: [
+      {
+        id: "t-278-1",
+        title: "Elektryfikacja linii kolejowych nr 274, 278 na odcinku Węgliniec – Zgorzelec",
+        authority: "PKP Polskie Linie Kolejowe S.A.",
+        estimatedValuePLN: 70_000_000,
+        publicationDate: "2017-02-18",
+        deadline: null,
+        status: "awarded",
+        url: "https://www.plk-sa.pl/o-spolce/biuro-prasowe/informacje-prasowe/szczegoly/nowe-mozliwosci-kolei-na-dolnym-slasku-elektryfikacja-linii-wegliniec-zgorzelec-3299",
+        matchType: "confirmed",
+      },
+    ],
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -3049,7 +3156,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -3076,7 +3183,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -3106,7 +3213,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
   {
@@ -3139,7 +3246,7 @@ export const lines: RailwayLine[] = [
     sources: [
       { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
       { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
-      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://platformazakupowa.plk-sa.pl", lastUpdated: "2026-10-04" },
     ],
   },
 ];
