@@ -79,6 +79,7 @@ import geo970 from "./geometry/970.json";
 import geo971 from "./geometry/971.json";
 import geo972 from "./geometry/972.json";
 import geo975 from "./geometry/975.json";
+import geo181 from "./geometry/181.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2939,6 +2940,40 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Wewnętrzny, zelektryfikowany łącznik torowy w obrębie dużego węzła kolejowego Węgliniec (oznaczenia posterunków SKP i Wg), pierwszorzędnego znaczenia dla ruchu towarowego w regionie — tego samego węzła, który pojawia się już w opisie linii 282.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "181",
+    number: "181",
+    name: "Oleśnica – Syców",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 25.86,
+    tracks: 1,
+    maxSpeedKmh: 80,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Oleśnica", "Syców"],
+    stations: [
+      { id: "osm-295374333", name: "Oleśnica", coordinates: [17.38592, 51.20066] },
+      { id: "osm-3755696923", name: "Cieśle", coordinates: [17.47172, 51.21562] },
+      { id: "osm-3755689741", name: "Poniatowice", coordinates: [17.53614, 51.22507] },
+      { id: "osm-3755667318", name: "Jemielna Oleśnicka", coordinates: [17.57888, 51.24033] },
+      { id: "osm-3755647560", name: "Stradomia", coordinates: [17.641, 51.26597] },
+      { id: "osm-3755619569", name: "Syców", coordinates: [17.71078, 51.28958] },
+    ],
+    geometry: geo181 as [number, number][],
+    history: {
+      timeline: [{ year: 2016, label: "Reaktywacja odcinka Kępno–Oleśnica" }, { year: 2024, label: "Rozpoczęcie elektryfikacji" }],
+      narrative:
+        "Odcinek Oleśnica–Syców dużej, ponad 149-kilometrowej linii nr 181 Herby Nowe–Oleśnica, która na dalekim południu (Herby Nowe–Wieluń Dąbrowa) działa nieprzerwanie, ale na odcinku Kępno–Oleśnica (obejmującym ten fragment) była zawieszona i wznowiona dopiero w 2016 roku. Od marca 2024 trwa kompleksowa rewitalizacja i elektryfikacja tego odcinka (53 km toru, 46 km sieci trakcyjnej), z planowanym uruchomieniem w 2026 roku — stąd mieszane tagi OSM (`construction` obok `rail`). Brak potwierdzenia regularnego ruchu pasażerskiego. Uwaga: dane OSM dla tej linii zawierały też odrębne odcinki fizycznie otagowane numerem 281 (już ujętym w bazie) w ramach tej samej, zbiorczej relacji „D71” — wydzielono z niej tylko fragment rzeczywiście należący do linii 181.",
       photos: [],
     },
     tenders: [],
