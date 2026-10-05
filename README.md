@@ -39,7 +39,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 
 ## What's implemented (draft scope)
 
-- Interactive map of 81 lines across Lower Silesia, most with **real
+- Interactive map of 86 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (45-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -80,7 +80,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 81 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 86 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -385,3 +385,41 @@ to review. See `backend/README.md`. The frontend now reads from it live
    pass, but every candidate's self-revisit loops were checked against
    it (anchored-at-start, large loop_len relative to hop count) before
    being dismissed as normal curvature noise.
+9. A final round went back through the full `survey_all.json` dump
+   from pass 8 (453 relations) looking for any remaining genuine,
+   in-region refs that hadn't been checked yet, by name-matching
+   against Lower Silesian towns and cross-referencing against the now
+   81 covered line numbers. Five more real additions came out of it —
+   **278** Węgliniec–Zgorzelec, **291** Wałbrzych Szczawienko–
+   Boguszów-Gorce Wschód, **348** Trzciniec Zgorzelecki–Granica Państwa
+   (Zittau), **382** Pątnów Legnicki–Legnica, and **372** Bojanowo–Góra
+   Śląska — bringing the total from 81 to 86. **278** turned out to be
+   a genuinely significant find: a double-track, electrified mainline
+   carrying Koleje Dolnośląskie, Polregio and PKP Intercity as part of
+   the European E30 corridor (Görlitz–Mościska) — its raw OSM geometry
+   had the expected double-track duplication (37 of 54 ways dropped as
+   pairwise dups) plus two small local zigzags, one of which (~0.5km)
+   was well outside the usual ~100m curvature-noise range and got the
+   same zoomed-plot scrutiny as line 296's dead-end spur before being
+   confirmed as a genuine small duplicate-track artifact and trimmed.
+   **291** shares both of its endpoint towns (Wałbrzych Szczawienko,
+   Boguszów-Gorce) with the already-covered industrial spurs 869 and
+   976, but turned out to be a completely different, much longer
+   (14.76km) scenic mountain route through Szczawno-Zdrój — confirmed
+   distinct before adding, not a duplicate. **348** sits right next to
+   the previously-skipped relation 785 (the mislabeled German "6589"
+   stub) and shares its Trzciniec Zgorzelecki junction with line 786,
+   but this time way-level ref tags confirmed it genuinely is PKP line
+   348 — in fact 786 branches off from 348 at that junction. A sixth
+   candidate, the unreffed **"Kolej Sowiogórska"** heritage-branded
+   relation (Dzierżoniów Dworzec Mały–Radków), turned out to be pure
+   overlap: its 76 way members split cleanly between two lines already
+   in the app (327: 57 ways, 318: 16 ways), so it contributed nothing
+   new and was skipped. Four more leads from the survey (288 Nysa–
+   Brzeg, 301 Opole–Namysłów, 304 Brzeg–Małujowice, 370 Zielona Góra–
+   Żary) were checked by bounding box and confirmed centered in
+   Opolskie or Lubuskie, not Dolnośląskie, and skipped without
+   fetching. With this round done, the realistic candidate list for
+   the region appears largely exhausted — the remaining gaps are
+   mostly very obscure industrial sidings or lines with no OSM
+   route-relation coverage at all.
