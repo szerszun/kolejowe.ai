@@ -81,6 +81,7 @@ import geo972 from "./geometry/972.json";
 import geo975 from "./geometry/975.json";
 import geo181 from "./geometry/181.json";
 import geo278 from "./geometry/278.json";
+import geo291 from "./geometry/291.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -3009,6 +3010,37 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 2019, label: "Elektryfikacja" }],
       narrative:
         "Magistralna linia znaczenia państwowego łącząca Węgliniec ze Zgorzelcem przez Pieńsk, Lasów, Jędrzychowice i Zgorzelec Miasto — fragment europejskiego korytarza E30 Görlitz–Mościska. Zelektryfikowana 15 grudnia 2019 roku; obsługują ją Koleje Dolnośląskie, Polregio i PKP Intercity. Surowe dane OSM dla tej dwutorowej linii zawierały klasyczne artefakty podwójnego toru (37 z 54 odcinków odrzucono jako duplikaty) oraz dwa niewielkie, lokalne zygzaki — jeden z nich (ok. 0,5 km) wyglądał na nietypowo duży jak na zwykły szum krzywizny, więc przed scaleniem zweryfikowano go wizualnie.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "291",
+    number: "291",
+    name: "Wałbrzych Szczawienko – Boguszów-Gorce Wschód",
+    status: "closed",
+    electrified: false,
+    lengthKm: 14.76,
+    tracks: 1,
+    maxSpeedKmh: 30,
+    operators: ["Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Wałbrzych Szczawienko", "Boguszów-Gorce Wschód"],
+    stations: [
+      { id: "osm-1883961325", name: "Szczawno Śląskie Zdrój", coordinates: [16.24962, 50.81216] },
+      { id: "osm-1883959844", name: "Biały Kamień", coordinates: [16.24081, 50.79456] },
+      { id: "osm-12810654082", name: "Boguszów-Gorce Wschód", coordinates: [16.22357, 50.74865] },
+    ],
+    geometry: geo291 as [number, number][],
+    history: {
+      timeline: [{ year: 1994, label: "Rozbiórka odcinka Wałbrzych Szczawienko–Boguszów-Gorce Wschód" }, { year: 2002, label: "Formalna likwidacja" }],
+      narrative:
+        "Malownicza, kręta górska linia przez Szczawno-Zdrój i Biały Kamień — odrębna trasa od krótkich bocznic przemysłowych 869 i 976, które obsługują te same miejscowości (Wałbrzych Szczawienko, Boguszów-Gorce Zachód) inną, znacznie krótszą trasą. Tor rozebrano latem 1994 roku, linię formalnie zlikwidowano 23 stycznia 2002. W 2019 roku samorząd województwa przejął odcinek Szczawno Zdrój–Sobięcin, rozważając jego przyszłe wykorzystanie jako szlaku turystycznego lub rowerowego.",
       photos: [],
     },
     tenders: [],
