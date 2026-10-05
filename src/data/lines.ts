@@ -245,21 +245,20 @@ export const lines: RailwayLine[] = [
     geometry: geo275 as [number, number][],
     history: {
       timeline: [
-        { year: 1886, label: "Otwarcie linii towarowej w kierunku Żagania" },
+        { year: 1846, label: "Otwarcie pierwotnej magistrali Wrocław – Berlin" },
+        { year: 1875, label: "Otwarcie skrótu Miłkowice – Jasień, dzisiejszy przebieg linii 275" },
         { year: 1945, label: "Zmiana zarządcy po II wojnie światowej" },
-        { year: 2023, label: "Rozpoczęcie prac administratora nad dedykowanym opisem linii" },
       ],
       narrative:
-        "Linia 275 łączy wrocławski węzeł Muchobór z Gubinkiem przy granicy niemieckiej, obsługując głównie ruch towarowy w zachodniej części regionu. Ze względu na złożoność danych historycznych tej linii, informacje są prowadzone ręcznie przez administratora serwisu w dedykowanej strukturze Notion, niezależnie od automatycznego procesu synchronizacji stosowanego dla pozostałych linii — zgodnie z wymaganiem specyfikacji v1.",
+        "Linia 275 łączy wrocławski węzeł Muchobór z Gubinkiem przy granicy niemieckiej, obsługując głównie ruch towarowy w zachodniej części regionu. Pierwotna magistrala Wrocław–Berlin (budowana przez Dolnośląsko-Marchijską Kolej Żelazną) powstała w latach 1844–1846; dzisiejszy przebieg linii 275 ustalił się po otwarciu skróconego odcinka Miłkowice–Jasień 15 maja 1875 roku.",
       photos: [],
     },
     tenders: [],
     sources: [
-      { section: "overview", label: "Notion — struktura dedykowana (administrator)", lastUpdated: "2026-09-22" },
-      { section: "history", label: "Notion — struktura dedykowana (administrator)", lastUpdated: "2026-09-22" },
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-05" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-05" },
       { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-09-23" },
     ],
-    manuallyCurated: true,
   },
   {
     id: "137",
@@ -1341,7 +1340,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo750 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1368,7 +1367,7 @@ export const lines: RailwayLine[] = [
     stations: [{ id: "osm-386577386", name: "Wrocław Gądów", coordinates: [16.97554, 51.11628] }],
     geometry: geo751 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
@@ -1395,7 +1394,7 @@ export const lines: RailwayLine[] = [
     stations: [{ id: "osm-386577386", name: "Wrocław Gądów", coordinates: [16.97554, 51.11628] }],
     geometry: geo752 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
@@ -1422,7 +1421,7 @@ export const lines: RailwayLine[] = [
     stations: [{ id: "osm-386577386", name: "Wrocław Gądów", coordinates: [16.97554, 51.11628] }],
     geometry: geo753 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
@@ -1449,7 +1448,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo754 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1476,7 +1475,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo755 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu.",
       photos: [],
@@ -1503,7 +1502,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo756 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1530,7 +1529,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo757 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1927, label: "Budowa nowego odcinka Muchobór–Gądów–Muchobór Wielki" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Trasa zweryfikowana pod kątem typowego błędu podwójnego toru (trasa zapisana tam i z powrotem) — w tym przypadku dane OSM nie zawierały duplikatu.",
       photos: [],
@@ -1557,7 +1556,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo758 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1927, label: "Budowa nowego odcinka Muchobór–Gądów–Muchobór Wielki" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1584,7 +1583,7 @@ export const lines: RailwayLine[] = [
     stations: [{ id: "osm-386577386", name: "Wrocław Gądów", coordinates: [16.97554, 51.11628] }],
     geometry: geo759 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
@@ -1611,7 +1610,7 @@ export const lines: RailwayLine[] = [
     stations: [{ id: "osm-386577386", name: "Wrocław Gądów", coordinates: [16.97554, 51.11628] }],
     geometry: geo760 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru. Końcówki tych 5 linii dochodzących do stacji rozrządowej Wrocław Gądów (751, 752, 753, 759, 760) były w danych OSM rozrzucone po różnych krańcach rozległego węzła (do ~1 km od siebie), co na mapie wyglądało jak brak połączenia — dociągnięto każdą z nich prostym odcinkiem do wspólnego, rzeczywistego punktu węzła (OSM railway=yard „Wrocław Gądów”).",
       photos: [],
@@ -1638,7 +1637,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo761 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1665,7 +1664,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo762 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich.",
       photos: [],
@@ -1692,7 +1691,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo763 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1719,7 +1718,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo764 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1746,7 +1745,7 @@ export const lines: RailwayLine[] = [
     stations: [],
     geometry: geo765 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1896, label: "Otwarcie Obwodnicy Towarowej Wrocławia" }, { year: 1945, label: "Zniszczenia wojenne i rozbiórka części torów" }],
       narrative:
         "Fragment Wrocławskiego Węzła Kolejowego (Obwodnicy Towarowej Wrocławia) — techniczne połączenie międzystacyjne dla ruchu towarowego, bez przystanków pasażerskich. Surowe dane OSM dla tego odcinka zawierały trasę zapisaną tam i z powrotem (ten sam błąd co w liniach 271/286/132/276/289/298); po dwóch turach weryfikacji (porównanie par odcinków + wykrywanie pętli powrotnych w już połączonej trasie) pokazany jest tylko faktyczny, pojedynczy przebieg toru.",
       photos: [],
@@ -1833,7 +1832,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo282 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1844, label: "Otwarcie odcinka Miłkowice–Bolesławiec" }, { year: 1846, label: "Przedłużenie przez Węgliniec i Żary do Jasienia" }],
       narrative:
         "Linia łącząca Miłkowice (pod Legnicą) z Żarami przez Chojnów, Bolesławiec i Węgliniec — ważny towarowy ciąg równoległy do magistrali przez Jelenią Górę (linia 274), obsługujący m.in. duży węzeł rozrządowy w Węglińcu. Nie dociąga bezpośrednio do granicy z Niemcami (Żary leżą ok. 20 km od granicy) — przejście graniczne w tym rejonie, w Zgorzelcu, jest już pokryte przez linię 274 inną trasą. Surowa relacja OSM dla linii 282 obejmowała tylko odcinek Węgliniec–Bolesławiec–Żary, pomijając w swoim składzie człony wschodnie do Miłkowic mimo że są otagowane tym samym numerem referencyjnym — dociągnięto geometrię, scalając wszystkie odcinki toru oznaczone ref=282 w regionie i usuwając przy tym dwa równoległe, zdublowane fragmenty (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277).",
       photos: [],
@@ -1865,7 +1864,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo279 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1865, label: "Otwarcie linii (20 września)" }],
       narrative:
         "Krótkie połączenie między Lubaniem Śląskim (na linii 274) a dużym węzłem rozrządowym w Węglińcu. OSM opisuje ją jako dawniej szybką trasę międzymiastową (do 160 km/h), dziś zdegradowaną do dużo niższych prędkości (50-80 km/h) i wykorzystywaną głównie w ruchu towarowym. Surowa relacja OSM zawierała dwa zdublowane odcinki toru (ten sam błąd co w liniach 271/286/132/276/289/298/752/758/763/764/277/282); pokazany jest tylko faktyczny, pojedynczy przebieg.",
       photos: [],
@@ -1901,7 +1900,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo318 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1900, label: "Otwarcie odcinka Bielawa Zachodnia – Srebrna Góra (15 grudnia)" }],
       narrative:
         "Górska linia przez Góry Sowie, prowadząca do Srebrnej Góry znanej z największej twierdzy górskiej w Europie Środkowej. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK) — tę samą instytucję, która zarządza kilkoma innymi liniami turystycznymi w regionie.",
       photos: [],
@@ -1968,7 +1967,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo341 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1891, label: "Otwarcie linii" }],
       narrative:
         "Krótka linia łącząca Dzierżoniów z Bielawą, gdzie styka się z linią 318 do Srebrnej Góry. Utrzymywana przez Dolnośląską Służbę Dróg i Kolei we Wrocławiu (DSDiK).",
       photos: [],
@@ -2096,7 +2095,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo337 as [number, number][],
     history: {
-      timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2008, label: "Reaktywacja w ruchu towarowym" }],
+      timeline: [{ year: 1896, label: "Otwarcie linii (15 maja)" }, { year: 1991, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2008, label: "Reaktywacja w ruchu towarowym" }],
       narrative:
         "Linia łącząca Lubań Śląski z Leśną w dolinie Kwisy. Ruch pasażerski zawieszono w 1991 roku, a towarowy w 1994; po remoncie w 2008 roku linię reaktywowano wyłącznie dla przewozów towarowych — bazaltu z kamieniołomów w Grabiszycach Górnych i Miłoszowie. Koleje Dolnośląskie organizowały okazjonalne przejazdy okolicznościowe (m.in. w 2015 roku z okazji 150-lecia kolei w Lubaniu), ale nie ma stałego ruchu pasażerskiego.",
       photos: [],
@@ -2220,7 +2219,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo303 as [number, number][],
     history: {
-      timeline: [{ year: 1992, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2022, label: "Reaktywacja odcinka Rokitki–Chocianów" }],
+      timeline: [{ year: 1890, label: "Otwarcie odcinka Rokitki–Niegosławice" }, { year: 1892, label: "Dokończenie budowy całej linii" }, { year: 1992, label: "Zawieszenie ruchu pasażerskiego" }, { year: 2022, label: "Reaktywacja odcinka Rokitki–Chocianów" }],
       narrative:
         "Linia kolejowa nr 303 w OSM jest podzielona na dwie relacje — Rokitki–Przemków (via Chocianów) i Chocianów–Niegosławice — które łączą się bez przerwy w jeden ciągły przebieg; potraktowano je tu jako jedną geometrię. Ruch pasażerski zawieszono na przełomie 1991/1992; po przebudowie odcinka Duninów–Chocianów (przejętego przez DSDiK w 2020) Koleje Dolnośląskie reaktywowały 6 grudnia 2022 roku regularne połączenia Rokitki–Chocianów (8 par dziennie, dalej do Legnicy i Wrocławia). Odcinek za Chocianowem w stronę Przemkowa i Niegosławic pozostaje nieczynny — na części torów w stronę Niegosławic linia jest wręcz fizycznie rozebrana.",
       photos: [],
@@ -2321,7 +2320,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo327 as [number, number][],
     history: {
-      timeline: [{ year: 1987, label: "Zawieszenie ruchu na odcinku Ścinawka Średnia–Radków" }, { year: 1999, label: "Rozbiórka toru na tym odcinku" }],
+      timeline: [{ year: 1900, label: "Otwarcie stacji Nowa Ruda Słupiec" }, { year: 1987, label: "Zawieszenie ruchu na odcinku Ścinawka Średnia–Radków" }, { year: 1999, label: "Rozbiórka toru na tym odcinku" }],
       narrative:
         "Linia łącząca Wolibórz z Radkowem przez Nową Rudę Słupiec i Ścinawkę Średnią. Odcinek Nowa Ruda Słupiec–Ścinawka Średnia pozostaje czynny wyłącznie w ruchu towarowym; dalszy odcinek Ścinawka Średnia–Radków zawieszono w 1987 roku, a tor fizycznie rozebrano we wrześniu 1999. Regularny ruch pasażerski nie funkcjonuje na żadnym odcinku.",
       photos: [],
@@ -2352,7 +2351,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo331 as [number, number][],
     history: {
-      timeline: [{ year: 1991, label: "Zawieszenie ruchu pasażerskiego" }],
+      timeline: [{ year: 1896, label: "Otwarcie linii" }, { year: 1991, label: "Zawieszenie ruchu pasażerskiego" }],
       narrative:
         "Odgałęzienie od Jawora do Roztoki, gdzie styka się z linią 302 (obie na odcinku ku Marciszowowi przejęte przez DSDiK w grudniu 2022). Ruch pasażerski i towarowy zawieszono w 1991 roku; dziś przejezdny jest wyłącznie odcinek Jawor–Borów, wykorzystywany do wywozu kruszyw z kamieniołomów w rejonie Gniewkowa i Borowa, podczas gdy dalszy odcinek Borów–Roztoka jest nieprzejezdny.",
       photos: [],
@@ -2385,7 +2384,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo334 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1900, label: "Otwarcie linii" }],
       narrative:
         "Nieczynna linia łącząca Kamieniec Ząbkowicki ze Złotym Stokiem przez Byczeń, Sosnową Śląską i Płonicę Śląską. Oznaczona w OSM jako „wykreślona z ewidencji PKP PLK” (na podstawie Regulaminu sieci 2003/2004) — formalnie zdjęta z rejestru infrastruktury, bez ruchu pasażerskiego ani towarowego.",
       photos: [],
@@ -2415,7 +2414,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo335 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1908, label: "Otwarcie linii" }],
       narrative:
         "Nieczynna linia łącząca Henryków z Ciepłowodami przez Stary Henryków. Podobnie jak sąsiednia linia 334, oznaczona w OSM jako „wykreślona z ewidencji PKP PLK”; cały przebieg stanowią tory oznaczone jako `abandoned` — w okolicach samych Ciepłowód nie zachował się już żaden nazwany punkt stacyjny w danych OSM.",
       photos: [],
@@ -2506,7 +2505,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo771 as [number, number][],
     history: {
-      timeline: [{ year: 2000, label: "Zamknięcie dla ruchu pasażerskiego" }, { year: 2022, label: "Wznowienie ruchu pasażerskiego" }],
+      timeline: [{ year: 1898, label: "Otwarcie linii (15 sierpnia), budowa przez Pruskie Koleje Państwowe" }, { year: 2000, label: "Zamknięcie dla ruchu pasażerskiego" }, { year: 2022, label: "Wznowienie ruchu pasażerskiego" }],
       narrative:
         "Krótki odcinek łączący dwa dworce w Świdnicy. Zamknięty dla pasażerów w 2000 roku, od 12 czerwca 2022 roku ponownie kursują nim pociągi osobowe w relacji Wrocław – Sobótka – Świdnica.",
       photos: [],
@@ -2976,7 +2975,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo181 as [number, number][],
     history: {
-      timeline: [{ year: 2016, label: "Reaktywacja odcinka Kępno–Oleśnica" }, { year: 2024, label: "Rozpoczęcie elektryfikacji" }],
+      timeline: [{ year: 1871, label: "Otwarcie odcinka Oleśnica–Syców (10 listopada)" }, { year: 2016, label: "Reaktywacja odcinka Kępno–Oleśnica" }, { year: 2024, label: "Rozpoczęcie elektryfikacji" }],
       narrative:
         "Odcinek Oleśnica–Syców dużej, ponad 149-kilometrowej linii nr 181 Herby Nowe–Oleśnica, która na dalekim południu (Herby Nowe–Wieluń Dąbrowa) działa nieprzerwanie, ale na odcinku Kępno–Oleśnica (obejmującym ten fragment) była zawieszona i wznowiona dopiero w 2016 roku. Od marca 2024 trwa kompleksowa rewitalizacja i elektryfikacja tego odcinka (53 km toru, 46 km sieci trakcyjnej), z planowanym uruchomieniem w 2026 roku — stąd mieszane tagi OSM (`construction` obok `rail`). Brak potwierdzenia regularnego ruchu pasażerskiego. Uwaga: dane OSM dla tej linii zawierały też odrębne odcinki fizycznie otagowane numerem 281 (już ujętym w bazie) w ramach tej samej, zbiorczej relacji „D71” — wydzielono z niej tylko fragment rzeczywiście należący do linii 181.",
       photos: [],
@@ -3010,7 +3009,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo278 as [number, number][],
     history: {
-      timeline: [{ year: 2019, label: "Elektryfikacja" }],
+      timeline: [{ year: 1846, label: "Otwarcie odcinka Węgliniec–Jędrzychowice" }, { year: 1847, label: "Otwarcie odcinka Jędrzychowice–Zgorzelec" }, { year: 2019, label: "Elektryfikacja" }],
       narrative:
         "Magistralna linia znaczenia państwowego łącząca Węgliniec ze Zgorzelcem przez Pieńsk, Lasów, Jędrzychowice i Zgorzelec Miasto — fragment europejskiego korytarza E30 Görlitz–Mościska. Zelektryfikowana 15 grudnia 2019 roku; obsługują ją Koleje Dolnośląskie, Polregio i PKP Intercity. Surowe dane OSM dla tej dwutorowej linii zawierały klasyczne artefakty podwójnego toru (37 z 54 odcinków odrzucono jako duplikaty) oraz dwa niewielkie, lokalne zygzaki — jeden z nich (ok. 0,5 km) wyglądał na nietypowo duży jak na zwykły szum krzywizny, więc przed scaleniem zweryfikowano go wizualnie.",
       photos: [],
@@ -3131,7 +3130,7 @@ export const lines: RailwayLine[] = [
     ],
     geometry: geo372 as [number, number][],
     history: {
-      timeline: [],
+      timeline: [{ year: 1885, label: "Otwarcie linii (4 grudnia)" }],
       narrative:
         "Nieczynna linia w powiecie górowskim, przez Zaborowice, Borszyn Wielki i Borszyn Mały do Góry Śląskiej (dawna nazwa dzisiejszej Góry). Podobnie jak linie 334 i 335, oznaczona w OSM jako „wykreślona z ewidencji PKP PLK”. Ten lokalny Bojanowo (koło Góry) nie należy mylić z większą miejscowością Bojanowo w Wielkopolsce.",
       photos: [],
