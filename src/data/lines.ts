@@ -78,6 +78,7 @@ import geo776 from "./geometry/776.json";
 import geo970 from "./geometry/970.json";
 import geo971 from "./geometry/971.json";
 import geo972 from "./geometry/972.json";
+import geo975 from "./geometry/975.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -2911,6 +2912,33 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Krótka, wolno jezdna bocznica (10 km/h) zapewniająca dostęp kolejowy do Huty Miedzi Legnica — kolejnego obiektu przemysłowego związanego z zagłębiem miedziowym KGHM, podobnie jak linie 289 i 971. Wyłącznie ruch towarowy, pociągi towarowe docierają z kierunku Złotoryi.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "975",
+    number: "975",
+    name: "Węgliniec SKP – Węgliniec Wg",
+    status: "freight_only",
+    electrified: true,
+    lengthKm: 2.39,
+    tracks: 1,
+    maxSpeedKmh: 60,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Węgliniec SKP", "Węgliniec Wg"],
+    stations: [{ id: "osm-410697138", name: "Węgliniec", coordinates: [15.22297, 51.2901] }],
+    geometry: geo975 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Wewnętrzny, zelektryfikowany łącznik torowy w obrębie dużego węzła kolejowego Węgliniec (oznaczenia posterunków SKP i Wg), pierwszorzędnego znaczenia dla ruchu towarowego w regionie — tego samego węzła, który pojawia się już w opisie linii 282.",
       photos: [],
     },
     tenders: [],
