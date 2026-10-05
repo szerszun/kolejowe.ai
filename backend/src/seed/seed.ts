@@ -21,6 +21,7 @@ import config from '../payload.config'
 import { lines as frontendLines } from '../../../src/data/lines'
 import { stationDetails } from '../../../src/data/stationDetails'
 import type { Station } from '../../../src/types'
+import { ensureUsers } from './ensureUsers'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -195,7 +196,11 @@ async function run() {
       overrideAccess: true,
     })
   }
-  payload.logger.info('Station timetables backfilled. Seed complete.')
+  payload.logger.info('Station timetables backfilled.')
+
+  // --- 4. admin + agent accounts, with stable credentials across re-seeds ---
+  await ensureUsers(payload)
+  payload.logger.info('Seed complete.')
 
   process.exit(0)
 }
