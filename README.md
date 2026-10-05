@@ -39,7 +39,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 
 ## What's implemented (draft scope)
 
-- Interactive map of 67 lines across Lower Silesia, most with **real
+- Interactive map of 81 lines across Lower Silesia, most with **real
   OpenStreetMap-derived alignments** (see Data below), each with its own
   distinguishable colour (45-colour palette, no yellow — it disappears
   against the basemap); status (active passenger / freight only / planned /
@@ -80,7 +80,7 @@ The frontend shows a loading/error state if it can't reach the backend at
 ## Explicitly stubbed / not yet real
 
 - **Line geometry**: `src/data/geometry/*.json` holds real OpenStreetMap
-  alignments (© OpenStreetMap contributors, ODbL) for **all 67 lines** — the
+  alignments (© OpenStreetMap contributors, ODbL) for **all 81 lines** — the
   two that used to be hand-drawn fictional geometry (293, 321) have been
   replaced: 293's ref didn't actually belong to the "Legnica–Głogów" pairing
   it was assigned (that ref is an unrelated line in Opolskie), so that entry
@@ -328,3 +328,60 @@ to review. See `backend/README.md`. The frontend now reads from it live
    several relations share a ref) and combined into one 39.33km
    geometry. No candidates were skipped in this pass; all 14 researched
    refs turned out to be genuine, distinct lines.
+8. An eighth pass went looking for whatever remained beyond the first
+   two shortlists: a broad, unfiltered Overpass query for every
+   `route=railway` relation touching a generous bounding box (453
+   relations — most in Upper Silesia, Czechia, Greater Poland and
+   elsewhere, filtered down by name/geography to Lower Silesia
+   candidates) turned up 15 more refs genuinely in-region and not yet
+   covered. 14 became real additions — **778** Zgorzelec R1–R11,
+   **779** Studniska–Las, **974** Rakowice Żwirownia–Rakowice ZKGM
+   (near existing line 973), **749** Legnica Wschód–Legnica, **773**
+   Boguszów-Gorce–Boguszów-Gorce Towarowy, **976** Boguszów Gorce
+   Zachód–Czarny Bór, **869** Wałbrzych Szczawienko–Wałbrzych Zespół
+   Bocznic, **774** Krużyn–Marciszów Górny (closed since 2004), **776**
+   Marciszów–Wojcieszów Górny (reopened 2008 for quarry freight, same
+   pattern as line 337), **970** Mietków–Mietków Bocznica Majkoltrans,
+   **971** Lubin–Rudna Główna and **972** Pawłowice Małe–Pawłowice Małe
+   Fabryczny (both KGHM copper-belt siblings of existing line 289,
+   serving the Lubin mine and the Legnica smelter respectively), **975**
+   Węgliniec SKP–Węgliniec Wg, and **181** Oleśnica–Syców — bringing the
+   total from 67 to 81. Several form clusters with lines already in the
+   app: 778/779 sit in the same Zgorzelec border complex as 786/290/324;
+   773/976/869 are three separate Wałbrzych-area freight spurs; 774/776
+   are two unrelated lines that happen to both touch "Marciszów" (774's
+   endpoint, Marciszów Górny, is a distinct point from both 302's
+   Marciszów and 776's own Marciszów start — all three are different
+   named locations in the same small area); 971/972 extend the KGHM
+   copper-mining network already represented by 289; 975 is internal
+   yard trackage in the same Węgliniec hub referenced in 282's
+   narrative. One candidate, **785** (Granica Państwa Trzciniec
+   Zgorzelecki–Granica Państwa Krzewina Zgorzelecka), was fetched but
+   turned out to be the same D92/322 mislabeling pattern one layer
+   deeper: its relation tags said "785," but every way member was
+   actually tagged with the *German* DB Netz reference "6589"
+   (Neißetalbahn) — and its geometry sat exactly on top of where lines
+   786 and 290 already meet, so it was correctly identified as already
+   covered rather than added as a phantom duplicate. Line **774** hit a
+   second, different kind of ref collision: OSM has *two* separate
+   relations both tagged `ref=774` — this Polish Krużyn–Marciszów Górny
+   line, and an unrelated Czech line (Mikulovice–Hanušovice);
+   `fetch_line.py`'s bbox restriction picked the correct Polish one
+   automatically, but it was confirmed explicitly before trusting the
+   result. The trickiest case was **D71** (nominally "Oleśnica
+   Rataje–Syców"): way-level ref tags showed its 21 members were
+   actually split between two *different* real PKP lines, 281 (8 ways,
+   already in the app) and 181 (13 ways, genuinely new) — the "D71"
+   label was an OSM-only convenience grouping, not a real PKP line
+   number. The 281-tagged ways were discarded as already covered; the
+   181-tagged ways were extracted into their own synthetic raw-data
+   file and processed normally, yielding the Oleśnica–Syców segment of
+   the much longer (149km) Herby Nowe–Oleśnica line, reactivated in
+   2016 and now mid-electrification (contract signed March 2024,
+   targeting 2026 — explaining its mixed `construction`/`rail` way
+   tags). Line **296** from the previous pass had already surfaced a
+   "dead-end spur" geometry bug distinct from parallel-track
+   duplication; no new instance of that specific bug turned up in this
+   pass, but every candidate's self-revisit loops were checked against
+   it (anchored-at-start, large loop_len relative to hop count) before
+   being dismissed as normal curvature noise.
