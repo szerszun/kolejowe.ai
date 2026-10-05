@@ -83,6 +83,7 @@ import geo181 from "./geometry/181.json";
 import geo278 from "./geometry/278.json";
 import geo291 from "./geometry/291.json";
 import geo348 from "./geometry/348.json";
+import geo382 from "./geometry/382.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -3069,6 +3070,36 @@ export const lines: RailwayLine[] = [
       timeline: [],
       narrative:
         "Bardzo krótki odcinek graniczny w kierunku Zittau/Hirschfelde, część korytarza Görlitz–Zittau wzdłuż Nysy Łużyckiej — linia 786 do Bogatyni odgałęzia się właśnie od linii 348 na posterunku Trzciniec Zgorzelecki.",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "382",
+    number: "382",
+    name: "Pątnów Legnicki – Legnica Lg5",
+    status: "freight_only",
+    electrified: false,
+    lengthKm: 3.84,
+    tracks: 1,
+    maxSpeedKmh: 10,
+    operators: ["PKP PLK"],
+    passengerServices: [],
+    endStations: ["Pątnów Legnicki", "Legnica"],
+    stations: [
+      { id: "osm-4027715808", name: "Legnica Północna", coordinates: [16.1705, 51.21626] },
+      { id: "osm-9172599345", name: "Pątnów Legnicki WPEC", coordinates: [16.19661, 51.23688] },
+    ],
+    geometry: geo382 as [number, number][],
+    history: {
+      timeline: [{ year: 1898, label: "Otwarcie jako prywatna Kolej Legnicko-Rawicka" }],
+      narrative:
+        "Ostatni czynny fragment dawnej Kolei Legnicko-Rawickiej (otwartej w 1898 roku) — środkowy odcinek Pątnów Legnicki–Rawicz jest już formalnie zlikwidowany, ale ten fragment od strony Legnicy wciąż obsługuje sporadycznym ruchem towarowym bocznicę do elektrociepłowni w Pątnowie Legnickim (WPEC).",
       photos: [],
     },
     tenders: [],
