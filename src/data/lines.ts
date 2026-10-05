@@ -84,6 +84,7 @@ import geo278 from "./geometry/278.json";
 import geo291 from "./geometry/291.json";
 import geo348 from "./geometry/348.json";
 import geo382 from "./geometry/382.json";
+import geo372 from "./geometry/372.json";
 
 /**
  * Line geometry for 274, 275, 137, 273, 285, 292, 316, 311, 271, 276, 286,
@@ -3100,6 +3101,39 @@ export const lines: RailwayLine[] = [
       timeline: [{ year: 1898, label: "Otwarcie jako prywatna Kolej Legnicko-Rawicka" }],
       narrative:
         "Ostatni czynny fragment dawnej Kolei Legnicko-Rawickiej (otwartej w 1898 roku) — środkowy odcinek Pątnów Legnicki–Rawicz jest już formalnie zlikwidowany, ale ten fragment od strony Legnicy wciąż obsługuje sporadycznym ruchem towarowym bocznicę do elektrociepłowni w Pątnowie Legnickim (WPEC).",
+      photos: [],
+    },
+    tenders: [],
+    sources: [
+      { section: "overview", label: "PKP PLK — wykaz linii kolejowych", lastUpdated: "2026-10-04" },
+      { section: "history", label: "Atlas linii kolejowych w Polsce", lastUpdated: "2026-10-04" },
+      { section: "tenders", label: "Platforma zakupowa PLK", url: "https://przetargi.plk-sa.pl", lastUpdated: "2026-10-04" },
+    ],
+  },
+  {
+    id: "372",
+    number: "372",
+    name: "Bojanowo – Góra Śląska",
+    status: "closed",
+    electrified: false,
+    lengthKm: 16.38,
+    tracks: 1,
+    maxSpeedKmh: 40,
+    operators: ["Dolnośląska Służba Dróg i Kolei"],
+    passengerServices: [],
+    endStations: ["Bojanowo", "Góra Śląska"],
+    stations: [
+      { id: "osm-9814638561", name: "Bojanowo", coordinates: [16.744, 51.70068] },
+      { id: "osm-9169526937", name: "Zaborowice", coordinates: [16.67567, 51.68908] },
+      { id: "osm-9169526938", name: "Borszyn Wielki", coordinates: [16.63179, 51.68104] },
+      { id: "osm-9169526939", name: "Borszyn Mały", coordinates: [16.59862, 51.67927] },
+      { id: "osm-413331834", name: "Góra Śląska", coordinates: [16.54252, 51.67462] },
+    ],
+    geometry: geo372 as [number, number][],
+    history: {
+      timeline: [],
+      narrative:
+        "Nieczynna linia w powiecie górowskim, przez Zaborowice, Borszyn Wielki i Borszyn Mały do Góry Śląskiej (dawna nazwa dzisiejszej Góry). Podobnie jak linie 334 i 335, oznaczona w OSM jako „wykreślona z ewidencji PKP PLK”. Ten lokalny Bojanowo (koło Góry) nie należy mylić z większą miejscowością Bojanowo w Wielkopolsce.",
       photos: [],
     },
     tenders: [],
