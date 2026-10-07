@@ -224,8 +224,9 @@ function greedyStitch(
   startIdx: number,
   startEnd: 'start' | 'end',
   maxGapKm = 1.6,
+  excluded: Set<number> = new Set(),
 ): { chain: LonLat[]; used: number[]; jumpKm: number } {
-  const remaining = coordsList.map((_, i) => i).filter((i) => i !== startIdx)
+  const remaining = coordsList.map((_, i) => i).filter((i) => i !== startIdx && !excluded.has(i))
   let chain = [...coordsList[startIdx]]
   if (startEnd === 'start') chain = [...chain].reverse()
   const used = [startIdx]
@@ -271,6 +272,15 @@ export type BuiltLine = {
   segsUsedInChain: number
   segsUnused: number
   totalJumpKm: number
+  // Every contiguous chain the deduplicated segments naturally form, largest
+  // first (index 0 is the one actually used as `chain` above). Normally
+  // length 1. When longer, the "unused" segments weren't necessarily noise
+  // -- on line 274 they turned out to be most of the line, split off by a
+  // single real gap in OSM's way tagging -- so this is surfaced for a human
+  // to inspect per line rather than auto-joined, since blindly stitching
+  // every leftover chain together (tried once) can just as easily glue in
+  // an unrelated branch/siding and produce a worse, zigzagging result.
+  allChains: { points: number; lengthKm: number }[]
 }
 
 export function buildLine(segs: WaySegment[], threshKm = 0.08, fracThresh = 0.85): BuiltLine {
@@ -279,18 +289,29 @@ export function buildLine(segs: WaySegment[], threshKm = 0.08, fracThresh = 0.85
   const keptSegs = kept.map((i) => segs[i])
   const coordsList = keptSegs.map((s) => s.coords)
 
-  let best: { chain: LonLat[]; used: number[]; jumpKm: number } | null = null
-  for (let startIdx = 0; startIdx < coordsList.length; startIdx++) {
-    for (const startEnd of ['start', 'end'] as const) {
-      const candidate = greedyStitch(coordsList, startIdx, startEnd)
-      const better =
-        !best ||
-        candidate.used.length > best.used.length ||
-        (candidate.used.length === best.used.length && candidate.jumpKm < best.jumpKm)
-      if (better) best = candidate
+  const excluded = new Set<number>()
+  const chains: { chain: LonLat[]; used: number[]; jumpKm: number }[] = []
+  while (excluded.size < coordsList.length) {
+    let best: { chain: LonLat[]; used: number[]; jumpKm: number } | null = null
+    for (let startIdx = 0; startIdx < coordsList.length; startIdx++) {
+      if (excluded.has(startIdx)) continue
+      for (const startEnd of ['start', 'end'] as const) {
+        const candidate = greedyStitch(coordsList, startIdx, startEnd, 1.6, excluded)
+        const better =
+          !best ||
+          candidate.used.length > best.used.length ||
+          (candidate.used.length === best.used.length && candidate.jumpKm < best.jumpKm)
+        if (better) best = candidate
+      }
     }
+    if (!best) break
+    chains.push(best)
+    for (const i of best.used) excluded.add(i)
   }
-  if (!best) throw new Error('buildLine: no segments to stitch')
+  if (chains.length === 0) throw new Error('buildLine: no segments to stitch')
+
+  chains.sort((a, b) => b.used.length - a.used.length)
+  const best = chains[0]
 
   return {
     chain: best.chain,
@@ -301,5 +322,9 @@ export function buildLine(segs: WaySegment[], threshKm = 0.08, fracThresh = 0.85
     segsUsedInChain: best.used.length,
     segsUnused: coordsList.length - best.used.length,
     totalJumpKm: Math.round(best.jumpKm * 1000) / 1000,
+    allChains: chains.map((c) => ({
+      points: c.chain.length,
+      lengthKm: Math.round(segLength(c.chain) * 100) / 100,
+    })),
   }
 }
