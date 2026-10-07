@@ -35,7 +35,6 @@ interface RailwayMapProps {
   lines: RailwayLine[];
   visibleLineIds: Set<string>;
   selectedLineId: string | null;
-  highlightedLineIds: string[];
   selectedStationId: string | null;
   onSelectLine: (id: string) => void;
   onSelectStation: (id: string) => void;
@@ -95,7 +94,6 @@ export function RailwayMap({
   lines,
   visibleLineIds,
   selectedLineId,
-  highlightedLineIds,
   selectedStationId,
   onSelectLine,
   onSelectStation,
@@ -293,14 +291,13 @@ export function RailwayMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lines, visibleLineIds, ready]);
 
-  // Highlight layer (selected + chat-mentioned lines)
+  // Highlight layer (selected line)
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    const ids = new Set(highlightedLineIds);
-    if (selectedLineId) ids.add(selectedLineId);
-    map.setFilter("lines-highlight", ["in", ["get", "id"], ["literal", Array.from(ids)]]);
-  }, [selectedLineId, highlightedLineIds, ready]);
+    const ids = selectedLineId ? [selectedLineId] : [];
+    map.setFilter("lines-highlight", ["in", ["get", "id"], ["literal", ids]]);
+  }, [selectedLineId, ready]);
 
   // Fit bounds on selection
   useEffect(() => {

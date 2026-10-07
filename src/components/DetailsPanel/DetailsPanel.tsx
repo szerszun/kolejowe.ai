@@ -12,11 +12,10 @@ type Tab = "overview" | "history" | "tenders";
 interface DetailsPanelProps {
   line: RailwayLine;
   onClose: () => void;
-  onAskAboutLine: () => void;
   onSelectStation: (id: string) => void;
 }
 
-export function DetailsPanel({ line, onClose, onAskAboutLine, onSelectStation }: DetailsPanelProps) {
+export function DetailsPanel({ line, onClose, onSelectStation }: DetailsPanelProps) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("overview");
 
@@ -55,12 +54,6 @@ export function DetailsPanel({ line, onClose, onAskAboutLine, onSelectStation }:
         {tab === "history" && <HistoryTab line={line} />}
         {tab === "tenders" && <TendersTab line={line} />}
       </div>
-
-      <footer className="details-panel-footer">
-        <button type="button" className="primary-button" onClick={onAskAboutLine}>
-          💬 {t("askAboutLine")}
-        </button>
-      </footer>
     </aside>
   );
 }
