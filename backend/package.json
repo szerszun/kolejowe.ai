@@ -16,7 +16,12 @@
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/seed.ts",
     "admin:setup": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/runEnsureUsers.ts",
     "agent:setup": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/setupAgentUser.ts",
-    "agent:sync": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts"
+    "agent:sync": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts",
+    "agent:sync:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts -- --all",
+    "agent:verify-overview": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runVerifyOverview.ts",
+    "agent:verify-overview:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runVerifyOverview.ts -- --all",
+    "agent:verify-history": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runVerifyHistory.ts",
+    "agent:verify-history:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runVerifyHistory.ts -- --all"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "3.90.2",

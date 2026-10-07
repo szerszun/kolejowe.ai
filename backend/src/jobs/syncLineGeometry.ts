@@ -7,19 +7,7 @@
  * no filesystem access to the Payload process.
  */
 import { buildLine, fetchRouteWays, type LonLat } from './overpass'
-
-const PAYLOAD_URL = process.env.PAYLOAD_URL || 'http://localhost:3000'
-
-function authHeaders(): Record<string, string> {
-  const key = process.env.AGENT_API_KEY
-  if (!key) {
-    throw new Error('AGENT_API_KEY is not set -- run `npm run agent:setup` first and add it to .env')
-  }
-  return {
-    Authorization: `users API-Key ${key}`,
-    'Content-Type': 'application/json',
-  }
-}
+import { getLine, patchLine } from './payloadClient'
 
 type LineDoc = {
   id: string
@@ -30,9 +18,7 @@ type LineDoc = {
 }
 
 async function getPublishedLine(ref: string): Promise<LineDoc> {
-  const res = await fetch(`${PAYLOAD_URL}/api/lines/${ref}`, { headers: authHeaders() })
-  if (!res.ok) throw new Error(`GET /api/lines/${ref} -> ${res.status}`)
-  return (await res.json()) as LineDoc
+  return (await getLine(ref)) as unknown as LineDoc
 }
 
 function roundCoord([lon, lat]: LonLat): LonLat {
@@ -106,19 +92,11 @@ export async function syncLineGeometry(ref: string): Promise<SyncResult> {
   // current published one. Just asking for a draft plainly avoids the
   // conflict; requireAdminToPublish stays in place as a backstop for the
   // case where draft=true is omitted entirely.
-  const patchRes = await fetch(`${PAYLOAD_URL}/api/lines/${ref}?draft=true`, {
-    method: 'PATCH',
-    headers: authHeaders(),
-    body: JSON.stringify({
-      geometry: roundedChain,
-      lengthKm: built.lengthKm,
-      changeSummary,
-    }),
-  })
-  if (!patchRes.ok) {
-    throw new Error(`PATCH /api/lines/${ref} -> ${patchRes.status}: ${await patchRes.text()}`)
-  }
-  const patched = (await patchRes.json()) as { doc: LineDoc }
+  const patched = (await patchLine(
+    ref,
+    { geometry: roundedChain, lengthKm: built.lengthKm, changeSummary },
+    { draft: true },
+  )) as unknown as { doc: LineDoc }
 
   return {
     ref,

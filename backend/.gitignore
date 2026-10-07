@@ -46,6 +46,9 @@ next-env.d.ts
 *.db
 *.db-journal
 
+# weekly agent sync job logs
+/logs
+
 # Playwright
 node_modules/
 /test-results/
