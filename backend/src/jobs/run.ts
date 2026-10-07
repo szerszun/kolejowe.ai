@@ -7,21 +7,28 @@
  * Usage:
  *   npm run agent:sync -- 762 753          # sync specific line refs
  *   npm run agent:sync                     # sync the default demo set
+ *   npm run agent:sync -- --all            # sync every line in src/data/lines.ts
  *
  * Deliberately does NOT default to "every line" -- Overpass is a shared
  * public service, rate-limits aggressively, and must never be queried
- * concurrently (see src/jobs/overpass.ts), so a full 44-line sweep needs
+ * concurrently (see src/jobs/overpass.ts), so a full 86-line sweep needs
  * to run slowly and sequentially (this does run sequentially -- it's safe
- * to pass every ref at once -- it'll just take a while).
+ * to pass every ref at once -- it'll just take a while). --all opts into
+ * that full sweep explicitly, for a scheduled unattended run.
  */
 import 'dotenv/config'
 import { syncLineGeometry } from './syncLineGeometry'
+import { lines as frontendLines } from '../../../src/data/lines'
 
 const DEFAULT_DEMO_REFS = ['762'] // shortest line in the dataset (0.4km, 2 way members) -- fast to demo
 
 async function run() {
-  const refs = process.argv.slice(2)
-  const targets = refs.length > 0 ? refs : DEFAULT_DEMO_REFS
+  const args = process.argv.slice(2)
+  const targets = args.includes('--all')
+    ? frontendLines.map((line) => line.number)
+    : args.length > 0
+      ? args
+      : DEFAULT_DEMO_REFS
 
   console.log(`Syncing ${targets.length} line(s): ${targets.join(', ')}`)
 

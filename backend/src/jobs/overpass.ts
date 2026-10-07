@@ -49,7 +49,16 @@ async function overpassQuery(
         signal: AbortSignal.timeout(timeoutMs),
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return await res.json()
+      const body = await res.json()
+      // Overpass occasionally returns a 200 with a degraded body under load
+      // (e.g. {"remark": "..."} instead of {"elements": [...]}) -- that
+      // passes the HTTP check above but every call site here assumes
+      // `.elements` exists, so treat a missing one as retryable too instead
+      // of letting it crash downstream as "object is not iterable".
+      if (!body || typeof body !== 'object' || !Array.isArray((body as { elements?: unknown }).elements)) {
+        throw new Error(`Overpass response missing "elements": ${JSON.stringify(body).slice(0, 200)}`)
+      }
+      return body
     } catch (err) {
       lastErr = err
       await sleep(Math.min(baseDelayMs * (attempt + 1), 60_000))
