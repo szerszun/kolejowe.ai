@@ -42,6 +42,28 @@ function unwrapValues(rows: { value: string }[] | null | undefined): string[] {
   return (rows ?? []).map((r) => r.value);
 }
 
+// `geometry` is a loosely-typed `json` field, and some write path in the
+// backend (confirmed: any PATCH at all, even ones that never touch this
+// field) occasionally round-trips each [lon, lat] tuple through Payload's
+// internal merge as a plain object ({"0": lon, "1": lat}) instead of a real
+// array -- same values, wrong shape, invisible in a JSON dump but fatal to
+// anything that iterates coordinates (`for (const [lon, lat] of coords)`
+// throws instead of destructuring a plain object). Normalizing defensively
+// here, once, is far more durable than re-fixing the DB after every write.
+function toCoordinate(p: unknown): [number, number] | null {
+  if (Array.isArray(p) && typeof p[0] === "number" && typeof p[1] === "number") return [p[0], p[1]];
+  if (p && typeof p === "object" && "0" in p && "1" in p) {
+    const obj = p as Record<string, unknown>;
+    if (typeof obj["0"] === "number" && typeof obj["1"] === "number") return [obj["0"], obj["1"]];
+  }
+  return null;
+}
+
+function toGeometry(raw: unknown): [number, number][] {
+  if (!Array.isArray(raw)) return [];
+  return raw.map(toCoordinate).filter((p): p is [number, number] => p !== null);
+}
+
 function toDateOnly(iso: string | null | undefined): string {
   if (!iso) return "";
   return iso.slice(0, 10);
@@ -185,7 +207,7 @@ export function toRailwayLine(doc: PayloadLineDoc): RailwayLine {
     passengerServices: unwrapValues(doc.passengerServices),
     endStations: [endStations[0] ?? "", endStations[1] ?? ""],
     stations: (doc.stations ?? []).map(toStation),
-    geometry: doc.geometry ?? [],
+    geometry: toGeometry(doc.geometry),
     history: {
       timeline: doc.history?.timeline ?? [],
       narrative: doc.history?.narrative ?? "",
