@@ -101,7 +101,8 @@ a {
   border-color: var(--color-primary);
 }
 
-.feedback-toggle {
+.feedback-toggle,
+.about-toggle {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   border-radius: 999px;
@@ -110,7 +111,8 @@ a {
   cursor: pointer;
   color: var(--color-navy);
 }
-.feedback-toggle:hover {
+.feedback-toggle:hover,
+.about-toggle:hover {
   border-color: var(--color-primary);
 }
 
@@ -184,6 +186,31 @@ a {
 
 .feedback-success {
   color: var(--color-text);
+}
+
+.about-section-title {
+  margin: 0.9rem 0 0.4rem;
+  color: var(--color-navy);
+  font-size: 0.85rem;
+}
+
+.about-feature-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.about-disclaimer {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
 }
 
 .feedback-error {
