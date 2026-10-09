@@ -1,10 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { MapLibreMap, NavigationControl, type GeoJSONSource } from "maplibre-gl";
+import { MapLibreMap, NavigationControl, setWorkerUrl, type GeoJSONSource } from "maplibre-gl";
+// `?worker&url` makes Vite bundle this file as its own chunk and give back
+// its built URL. Needed because MapLibre otherwise resolves its worker at
+// runtime via `new URL(...)` relative to its own module -- a pattern Vite's
+// bundler can't statically follow, so the worker chunk is simply never
+// emitted and the production build 404s on it with no error beyond "Worker
+// failed to load" (works fine under `vite dev`, which serves node_modules
+// directly, so this only showed up once actually deployed).
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import type { RailwayLine } from "../../types";
 import { getLineColor } from "../../utils/lineColors";
 import { boundsForCoordinates } from "../../utils/geo";
 import { regionBorder } from "../../data/regionBorder";
+
+setWorkerUrl(maplibreWorkerUrl);
 
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
