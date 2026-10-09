@@ -53,7 +53,7 @@ export function HomePage() {
   return (
     <div className="app-shell">
       <Header />
-      <div className="demo-banner">{t("demoBanner")}</div>
+      <div className="demo-banner" />
       <div className="app-body">
         <ExplorerPanel
           query={query}

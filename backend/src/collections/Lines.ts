@@ -35,6 +35,14 @@ export const Lines: CollectionConfig = {
       name: 'status',
       type: 'select',
       required: true,
+      // Without this, Postgres collides this field's enum type name with
+      // the one Payload generates for the built-in `_status` (draft/
+      // published) field -- both land on "enum_lines_status", and whichever
+      // gets created second silently reuses the first one instead of
+      // failing, so every line write was rejected with "invalid input value
+      // for enum enum_lines_status: active_passenger". SQLite has no named
+      // enum types, so this never showed up locally.
+      enumName: 'line_status',
       options: [
         { label: 'Active passenger', value: 'active_passenger' },
         { label: 'Freight only', value: 'freight_only' },
