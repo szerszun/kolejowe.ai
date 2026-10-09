@@ -11,10 +11,6 @@
  *      (now that line ids exist to relate to)
  */
 import 'dotenv/config'
-import fs from 'fs'
-import https from 'https'
-import os from 'os'
-import path from 'path'
 import { getPayload } from 'payload'
 
 import config from '../payload.config'
@@ -22,56 +18,6 @@ import { lines as frontendLines } from '../../../src/data/lines'
 import { stationDetails } from '../../../src/data/stationDetails'
 import type { Station } from '../../../src/types'
 import { ensureUsers } from './ensureUsers'
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-function downloadOnce(url: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const dest = path.join(os.tmpdir(), `seed-${Date.now()}-${path.basename(url).split('?')[0]}`)
-    const file = fs.createWriteStream(dest)
-    https
-      .get(
-        url,
-        {
-          headers: {
-            'User-Agent':
-              'kolejowe-ai-seed/0.1 (one-off local data import; https://github.com/)',
-          },
-        },
-        (res) => {
-          if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-            file.close()
-            fs.unlink(dest, () => {})
-            downloadOnce(res.headers.location).then(resolve, reject)
-            return
-          }
-          if (res.statusCode !== 200) {
-            file.close()
-            fs.unlink(dest, () => {})
-            reject(new Error(`GET ${url} -> ${res.statusCode}`))
-            return
-          }
-          res.pipe(file)
-          file.on('finish', () => file.close(() => resolve(dest)))
-        },
-      )
-      .on('error', reject)
-  })
-}
-
-async function downloadToTemp(url: string, retries = 5): Promise<string> {
-  for (let attempt = 0; attempt < retries; attempt++) {
-    try {
-      return await downloadOnce(url)
-    } catch (err) {
-      if (attempt === retries - 1) throw err
-      const delay = 2000 * (attempt + 1)
-      console.warn(`  download failed (${(err as Error).message}), retrying in ${delay}ms...`)
-      await sleep(delay)
-    }
-  }
-  throw new Error('unreachable')
-}
 
 async function run() {
   const payload = await getPayload({ config })
@@ -90,22 +36,6 @@ async function run() {
   for (const station of stationMap.values()) {
     const details = stationDetails[station.id]
 
-    let photoId: string | number | undefined
-    if (details?.photo) {
-      const tmpPath = await downloadToTemp(details.photo.url)
-      try {
-        const media = await payload.create({
-          collection: 'media',
-          data: { alt: `${station.name} — dworzec kolejowy`, credit: details.photo.credit },
-          filePath: tmpPath,
-          overrideAccess: true,
-        })
-        photoId = media.id
-      } finally {
-        fs.unlinkSync(tmpPath)
-      }
-    }
-
     await payload.create({
       collection: 'stations',
       data: {
@@ -118,7 +48,9 @@ async function run() {
         platformCount: details?.platformCount,
         accessibility: details?.accessibility,
         amenities: (details?.amenities ?? []).map((label) => ({ label })),
-        photo: photoId,
+        // Links directly to the source image rather than downloading and
+        // re-uploading a local copy -- see the comment on Stations.photo.
+        photo: details?.photo ? { url: details.photo.url, credit: details.photo.credit } : undefined,
         sources: details?.sources ?? [],
         _status: 'published',
       } as never,

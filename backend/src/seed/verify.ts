@@ -8,11 +8,9 @@ async function run() {
 
   const lines = await payload.find({ collection: 'lines', limit: 1000, depth: 0 })
   const stations = await payload.find({ collection: 'stations', limit: 1000, depth: 0 })
-  const media = await payload.find({ collection: 'media', limit: 1000, depth: 0 })
 
   console.log(`lines: ${lines.totalDocs}`)
   console.log(`stations: ${stations.totalDocs}`)
-  console.log(`media: ${media.totalDocs}`)
 
   const line277 = await payload.findByID({ collection: 'lines', id: '277', depth: 1 })
   console.log('\nline 277:', {
@@ -39,10 +37,7 @@ async function run() {
     coordinates: wroclawGlowny.coordinates,
     timetableRows: wroclawGlowny.timetable?.length,
     arrivalRows: wroclawGlowny.arrivals?.length,
-    photo:
-      wroclawGlowny.photo && typeof wroclawGlowny.photo === 'object'
-        ? { filename: wroclawGlowny.photo.filename, credit: (wroclawGlowny.photo as { credit?: string }).credit }
-        : wroclawGlowny.photo,
+    photo: wroclawGlowny.photo,
   })
 
   const line282 = await payload.findByID({ collection: 'lines', id: '282', depth: 0 })

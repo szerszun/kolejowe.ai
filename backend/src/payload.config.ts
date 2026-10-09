@@ -1,14 +1,12 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 import { Stations } from './collections/Stations'
 import { Lines } from './collections/Lines'
 import { Feedback } from './collections/Feedback'
@@ -32,27 +30,6 @@ const databaseUrl = process.env.DATABASE_URL || 'file:./kolejowe.db'
 const db = databaseUrl.startsWith('postgres')
   ? postgresAdapter({ pool: { connectionString: databaseUrl }, push: true })
   : sqliteAdapter({ client: { url: databaseUrl } })
-
-// Same reasoning as the DB: only switches media off local disk once S3-
-// compatible credentials (e.g. a Cloudflare R2 bucket) are actually
-// provided, so local dev is unaffected.
-const s3Plugin = process.env.S3_BUCKET
-  ? [
-      s3Storage({
-        collections: { media: true },
-        bucket: process.env.S3_BUCKET,
-        config: {
-          endpoint: process.env.S3_ENDPOINT,
-          region: process.env.S3_REGION || 'auto',
-          credentials: {
-            accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-            secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-          },
-          forcePathStyle: true, // required by R2 and most non-AWS S3-compatible hosts
-        },
-      }),
-    ]
-  : []
 
 const payloadSecret = process.env.PAYLOAD_SECRET
 if (!payloadSecret && process.env.NODE_ENV === 'production') {
@@ -80,7 +57,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Stations, Lines, Feedback],
+  collections: [Users, Stations, Lines, Feedback],
   globals: [TimetableInfo],
   editor: lexicalEditor(),
   secret: payloadSecret || 'dev-only-insecure-secret-change-me',
@@ -88,6 +65,5 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db,
-  plugins: [...s3Plugin],
   sharp,
 })
