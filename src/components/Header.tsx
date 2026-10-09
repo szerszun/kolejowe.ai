@@ -1,4 +1,5 @@
 import { useI18n } from "../i18n/I18nContext";
+import { FeedbackButton } from "./FeedbackButton";
 
 export function Header() {
   const { t, language, setLanguage } = useI18n();
@@ -8,14 +9,17 @@ export function Header() {
         <span className="app-header-logo">kolejowe.ai</span>
         <span className="app-header-subtitle">{t("appSubtitle")}</span>
       </div>
-      <button
-        type="button"
-        className="lang-toggle"
-        onClick={() => setLanguage(language === "pl" ? "en" : "pl")}
-        aria-label="Toggle language"
-      >
-        {t("langToggle")}
-      </button>
+      <div className="app-header-actions">
+        <FeedbackButton />
+        <button
+          type="button"
+          className="lang-toggle"
+          onClick={() => setLanguage(language === "pl" ? "en" : "pl")}
+          aria-label="Toggle language"
+        >
+          {t("langToggle")}
+        </button>
+      </div>
     </header>
   );
 }

@@ -18,7 +18,7 @@
 
 export type LonLat = [number, number]
 
-const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'
+const OVERPASS_URL = process.env.OVERPASS_URL || 'https://overpass-api.de/api/interpreter'
 const USER_AGENT = 'kolejowe-ai-agent/0.1 (scheduled drift-check; one-off project)'
 const BBOX = '49.0,14.0,52.5,19.0' // generous box covering Dolnoslaskie + neighbours
 
@@ -281,6 +281,8 @@ export type BuiltLine = {
   // every leftover chain together (tried once) can just as easily glue in
   // an unrelated branch/siding and produce a worse, zigzagging result.
   allChains: { points: number; lengthKm: number }[]
+  /** Full coordinates for every chain (same order as allChains), largest first. */
+  allChainsFull: LonLat[][]
 }
 
 export function buildLine(segs: WaySegment[], threshKm = 0.08, fracThresh = 0.85): BuiltLine {
@@ -326,5 +328,6 @@ export function buildLine(segs: WaySegment[], threshKm = 0.08, fracThresh = 0.85
       points: c.chain.length,
       lengthKm: Math.round(segLength(c.chain) * 100) / 100,
     })),
+    allChainsFull: chains.map((c) => c.chain),
   }
 }

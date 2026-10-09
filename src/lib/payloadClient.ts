@@ -9,6 +9,7 @@ import type {
   StationTimetableEntry,
   Tender,
   TenderStatus,
+  TimetableInfo,
 } from "../types";
 
 // Base URL of the Payload backend (see backend/README.md). Configurable via
@@ -86,6 +87,7 @@ interface PayloadStationDoc {
   id: string;
   name: string;
   coordinates: [number, number];
+  description?: string | null;
   category?: string | null;
   address?: string | null;
   yearBuilt?: number | null;
@@ -113,6 +115,8 @@ interface PayloadMovementDoc {
   daysOfOperation?: DaysOfOperation | null;
   destination?: string | null;
   origin?: string | null;
+  trainNumber?: string | null;
+  trainName?: string | null;
 }
 
 interface PayloadSourceDoc {
@@ -238,6 +242,8 @@ function toTimetableEntry(m: PayloadMovementDoc): StationTimetableEntry {
     operator: m.operator ?? "",
     platform: m.platform ?? "",
     daysOfOperation: m.daysOfOperation ?? "daily",
+    trainNumber: m.trainNumber ?? undefined,
+    trainName: m.trainName ?? undefined,
   };
 }
 
@@ -249,6 +255,8 @@ function toArrivalEntry(m: PayloadMovementDoc): StationArrivalEntry {
     origin: m.origin ?? "",
     operator: m.operator ?? "",
     platform: m.platform ?? "",
+    trainNumber: m.trainNumber ?? undefined,
+    trainName: m.trainName ?? undefined,
     daysOfOperation: m.daysOfOperation ?? "daily",
   };
 }
@@ -258,6 +266,7 @@ export function toStationDetails(doc: PayloadStationDoc): StationDetails {
   const photoCredit = typeof doc.photo === "object" && doc.photo ? doc.photo.credit : undefined;
   return {
     stationId: doc.id,
+    description: doc.description ?? undefined,
     category: doc.category ?? undefined,
     address: doc.address ?? undefined,
     yearBuilt: doc.yearBuilt ?? undefined,
@@ -269,6 +278,30 @@ export function toStationDetails(doc: PayloadStationDoc): StationDetails {
     arrivals: (doc.arrivals ?? []).map(toArrivalEntry),
     sources: (doc.sources ?? []).map(toSource),
   };
+}
+
+export async function submitFeedback(input: { message: string; page: string; language: string }): Promise<void> {
+  const res = await fetch(`${PAYLOAD_URL}/api/feedback`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: input.message,
+      page: input.page,
+      language: input.language,
+      userAgent: navigator.userAgent,
+    }),
+  });
+  if (!res.ok) {
+    throw new PayloadFetchError(`${PAYLOAD_URL}/api/feedback -> HTTP ${res.status}`);
+  }
+}
+
+export async function fetchTimetableInfo(): Promise<TimetableInfo | null> {
+  try {
+    return await payloadFetch<TimetableInfo>("/api/globals/timetable-info");
+  } catch {
+    return null;
+  }
 }
 
 export async function fetchStationDetails(stationId: string): Promise<StationDetails | null> {

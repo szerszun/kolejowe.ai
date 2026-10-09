@@ -7,6 +7,8 @@ const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields
   { name: 'lineId', type: 'relationship', relationTo: 'lines', required: true },
   { name: 'operator', type: 'text' },
   { name: 'platform', type: 'text' },
+  { name: 'trainNumber', type: 'text', admin: { description: 'e.g. "66139" or "6128/9"' } },
+  { name: 'trainName', type: 'text', admin: { description: 'Named train, e.g. "Mickiewicz" -- only some trains have one.' } },
   {
     name: 'daysOfOperation',
     type: 'select',
@@ -14,6 +16,7 @@ const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields
       { label: 'Daily', value: 'daily' },
       { label: 'Weekdays', value: 'weekdays' },
       { label: 'Weekend', value: 'weekend' },
+      { label: 'Other / irregular', value: 'other' },
     ],
   },
   {
@@ -59,6 +62,7 @@ export const Stations: CollectionConfig = {
       required: true,
       admin: { description: '[longitude, latitude]' },
     },
+    { name: 'description', type: 'textarea' },
     { name: 'category', type: 'text' },
     { name: 'address', type: 'text' },
     { name: 'yearBuilt', type: 'number' },

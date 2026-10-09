@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     stations: Station;
     lines: Line;
+    feedback: Feedback;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     stations: StationsSelect<false> | StationsSelect<true>;
     lines: LinesSelect<false> | LinesSelect<true>;
+    feedback: FeedbackSelect<false> | FeedbackSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,8 +93,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'timetable-info': TimetableInfo;
+  };
+  globalsSelect: {
+    'timetable-info': TimetableInfoSelect<false> | TimetableInfoSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -195,6 +201,7 @@ export interface Station {
    * @maxItems 2
    */
   coordinates: [number, number];
+  description?: string | null;
   category?: string | null;
   address?: string | null;
   yearBuilt?: number | null;
@@ -216,7 +223,15 @@ export interface Station {
         lineId: string | Line;
         operator?: string | null;
         platform?: string | null;
-        daysOfOperation?: ('daily' | 'weekdays' | 'weekend') | null;
+        /**
+         * e.g. "66139" or "6128/9"
+         */
+        trainNumber?: string | null;
+        /**
+         * Named train, e.g. "Mickiewicz" -- only some trains have one.
+         */
+        trainName?: string | null;
+        daysOfOperation?: ('daily' | 'weekdays' | 'weekend' | 'other') | null;
         destination: string;
         id?: string | null;
       }[]
@@ -230,7 +245,15 @@ export interface Station {
         lineId: string | Line;
         operator?: string | null;
         platform?: string | null;
-        daysOfOperation?: ('daily' | 'weekdays' | 'weekend') | null;
+        /**
+         * e.g. "66139" or "6128/9"
+         */
+        trainNumber?: string | null;
+        /**
+         * Named train, e.g. "Mickiewicz" -- only some trains have one.
+         */
+        trainName?: string | null;
+        daysOfOperation?: ('daily' | 'weekdays' | 'weekend' | 'other') | null;
         origin: string;
         id?: string | null;
       }[]
@@ -345,6 +368,22 @@ export interface Line {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback".
+ */
+export interface Feedback {
+  id: number;
+  message: string;
+  /**
+   * URL path the user was on when they submitted this.
+   */
+  page?: string | null;
+  language?: string | null;
+  userAgent?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -382,6 +421,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lines';
         value: string | Line;
+      } | null)
+    | ({
+        relationTo: 'feedback';
+        value: number | Feedback;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -480,6 +523,7 @@ export interface StationsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   coordinates?: T;
+  description?: T;
   category?: T;
   address?: T;
   yearBuilt?: T;
@@ -499,6 +543,8 @@ export interface StationsSelect<T extends boolean = true> {
         lineId?: T;
         operator?: T;
         platform?: T;
+        trainNumber?: T;
+        trainName?: T;
         daysOfOperation?: T;
         destination?: T;
         id?: T;
@@ -510,6 +556,8 @@ export interface StationsSelect<T extends boolean = true> {
         lineId?: T;
         operator?: T;
         platform?: T;
+        trainNumber?: T;
+        trainName?: T;
         daysOfOperation?: T;
         origin?: T;
         id?: T;
@@ -603,6 +651,18 @@ export interface LinesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback_select".
+ */
+export interface FeedbackSelect<T extends boolean = true> {
+  message?: T;
+  page?: T;
+  language?: T;
+  userAgent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -640,6 +700,39 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "timetable-info".
+ */
+export interface TimetableInfo {
+  id: number;
+  /**
+   * First date the currently loaded timetable data is valid for.
+   */
+  validFrom?: string | null;
+  /**
+   * Last date the currently loaded timetable data is valid for.
+   */
+  validTo?: string | null;
+  /**
+   * Where this timetable data came from, e.g. a GTFS feed name/URL.
+   */
+  source?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "timetable-info_select".
+ */
+export interface TimetableInfoSelect<T extends boolean = true> {
+  validFrom?: T;
+  validTo?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
