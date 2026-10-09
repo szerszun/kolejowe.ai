@@ -18,9 +18,9 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 // Local dev keeps using the SQLite file untouched; set DATABASE_URL to a
-// postgres:// connection string (as Render's managed Postgres provides) to
-// switch -- Render's free web service has an ephemeral filesystem, so a
-// local SQLite file there would be wiped on every redeploy/restart.
+// postgres:// connection string (e.g. from a free Neon project) to switch
+// -- Render's free web service has an ephemeral filesystem, so a local
+// SQLite file there would be wiped on every redeploy/restart.
 const databaseUrl = process.env.DATABASE_URL || 'file:./kolejowe.db'
 // This project has no migration files anywhere (confirmed: `find . -iname
 // "*migrat*"` turns up nothing) -- it has only ever relied on Payload's

@@ -1,7 +1,3 @@
-databases:
-  - name: kolejowe-db
-    plan: free
-
 services:
   - name: kolejowe-backend
     type: web
@@ -11,10 +7,13 @@ services:
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
+      # Postgres connection string from a Neon project (neon.tech, free
+      # tier, no expiry -- unlike Render's own free Postgres, which gets
+      # deleted after 30-90 days). Paste it here in Render's dashboard;
+      # Neon's strings already include `?sslmode=require`, which the pg
+      # driver picks up automatically.
       - key: DATABASE_URL
-        fromDatabase:
-          name: kolejowe-db
-          property: connectionString
+        sync: false
       - key: PAYLOAD_SECRET
         generateValue: true
       - key: NODE_ENV
