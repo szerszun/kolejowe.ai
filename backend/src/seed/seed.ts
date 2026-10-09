@@ -42,6 +42,7 @@ async function run() {
         id: station.id,
         name: station.name,
         coordinates: station.coordinates,
+        description: details?.description,
         category: details?.category,
         address: details?.address,
         yearBuilt: details?.yearBuilt,
