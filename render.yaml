@@ -4,7 +4,11 @@ services:
     runtime: node
     plan: free
     rootDir: backend
-    buildCommand: npm install && npm run build
+    # --include=dev is load-bearing: NODE_ENV=production below (needed at
+    # runtime) also applies during the build, which makes plain `npm
+    # install` skip devDependencies -- including typescript and @types/react,
+    # which `next build`'s typecheck step needs regardless of NODE_ENV.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     envVars:
       # Postgres connection string from a Neon project (neon.tech, free
