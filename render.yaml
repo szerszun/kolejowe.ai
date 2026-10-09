@@ -46,6 +46,14 @@ services:
     rootDir: .
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    # Without this, Render serves its own "Not Found" for any direct hit on
+    # a client-side route (e.g. /station/..., /line/...) or a page refresh
+    # on one -- there's no server-side route for those, only React Router
+    # handling them after index.html has already loaded.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       # See VITE_PAYLOAD_HOST handling in src/lib/payloadClient.ts -- same
       # auto-wiring idea as CORS_HOST above, just in the other direction.
