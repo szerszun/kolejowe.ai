@@ -1,17 +1,23 @@
 /**
- * Idempotent: make sure the admin and agent service accounts exist, with
- * stable credentials that survive wiping and re-seeding the SQLite database.
+ * Idempotent: make sure the agent service account exists, with a stable API
+ * key that survives wiping and re-seeding the database.
  *
- * The database file is gitignored and gets rebuilt from scratch whenever the
- * static line/station data changes (see seed.ts) -- that wipes out any user
- * created by hand through the admin UI. Credentials for both accounts are
- * generated once and persisted in .env (also gitignored, but it lives on
- * disk independently of the DB file), so every re-seed recreates the exact
- * same login rather than a new random one.
+ * The database gets rebuilt from scratch whenever the static line/station
+ * data changes (see seed.ts) -- that wipes out any user created by hand.
+ * The agent's API key is generated once and persisted in .env (gitignored,
+ * lives on disk independently of the DB), so every re-seed recreates the
+ * exact same credential rather than a new random one.
+ *
+ * Does NOT create or touch an admin account -- that bootstrap was removed
+ * (an auto-created admin with a password shared between local and
+ * production was judged a standing security risk now that the backend is
+ * publicly deployed). Create an admin manually through Payload's own
+ * "create first user" flow if the users collection is ever fully empty, or
+ * via a one-off script you delete afterward.
  *
  * Called automatically at the end of `npm run seed`. Safe to run on its own
- * too (`tsx src/seed/ensureUsers.ts`) -- does nothing if both users already
- * exist with current credentials.
+ * too (`tsx src/seed/ensureUsers.ts`) -- does nothing if the agent already
+ * exists with current credentials.
  */
 import fs from 'fs'
 import path from 'path'
@@ -24,7 +30,6 @@ import config from '../payload.config'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ENV_PATH = path.join(__dirname, '../../.env')
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@kolejowe.ai'
 const AGENT_EMAIL = process.env.AGENT_EMAIL || 'line-sync-agent@kolejowe.ai'
 
 function readEnvValue(key: string): string | undefined {
@@ -61,40 +66,9 @@ function ensureEnvSecret(key: string, generate: () => string): { value: string; 
 async function run(existingPayload?: Payload) {
   const payload = existingPayload ?? (await getPayload({ config }))
 
-  const { value: adminPassword, wasGenerated: adminGenerated } = ensureEnvSecret('ADMIN_PASSWORD', () =>
-    crypto.randomBytes(18).toString('base64url'),
-  )
   const { value: agentApiKey, wasGenerated: agentGenerated } = ensureEnvSecret('AGENT_API_KEY', () =>
     crypto.randomBytes(24).toString('hex'),
   )
-
-  // --- admin user (email + password login to /admin) ---
-  const existingAdmin = await payload.find({
-    collection: 'users',
-    where: { email: { equals: ADMIN_EMAIL } },
-    limit: 1,
-    overrideAccess: true,
-  })
-
-  if (existingAdmin.docs.length === 0) {
-    await payload.create({
-      collection: 'users',
-      data: { email: ADMIN_EMAIL, password: adminPassword, role: 'admin' },
-      overrideAccess: true,
-    })
-    console.log(`Created admin user: ${ADMIN_EMAIL}`)
-  } else {
-    // DB was wiped and recreated -- Payload hashes passwords, so a fresh
-    // row never matches the persisted .env password on its own; reset it
-    // explicitly so the same credentials keep working after every re-seed.
-    await payload.update({
-      collection: 'users',
-      id: existingAdmin.docs[0].id,
-      data: { password: adminPassword, role: 'admin' },
-      overrideAccess: true,
-    })
-    console.log(`Admin user already present, password re-synced: ${ADMIN_EMAIL}`)
-  }
 
   // --- agent service account (API key only, used by the sync job) ---
   const existingAgent = await payload.find({
@@ -127,13 +101,9 @@ async function run(existingPayload?: Payload) {
     console.log(`Agent user already present, API key re-synced: ${AGENT_EMAIL}`)
   }
 
-  if (adminGenerated) {
-    console.log(`\nGenerated a new ADMIN_PASSWORD and saved it to .env (not printed again after this).`)
-  }
   if (agentGenerated) {
     console.log(`Generated a new AGENT_API_KEY and saved it to .env.`)
   }
-  console.log(`\nAdmin login: ${ADMIN_EMAIL} / see ADMIN_PASSWORD in backend/.env`)
 }
 
 export { run as ensureUsers }
