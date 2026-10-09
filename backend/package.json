@@ -14,7 +14,7 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/seed.ts",
-    "admin:setup": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/runEnsureUsers.ts",
+    "agent:ensure": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/runEnsureUsers.ts",
     "agent:setup": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/setupAgentUser.ts",
     "agent:sync": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts",
     "agent:sync:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/run.ts -- --all",
