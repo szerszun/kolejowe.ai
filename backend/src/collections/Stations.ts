@@ -63,6 +63,14 @@ export const Stations: CollectionConfig = {
       admin: { description: '[longitude, latitude]' },
     },
     { name: 'description', type: 'textarea' },
+    {
+      name: 'plkStationId',
+      type: 'number',
+      admin: {
+        description:
+          'PKP PLK Open Data API station id, used to fetch live arrivals/departures. Populated by the matchPlkStations job; left empty if no confident name match was found.',
+      },
+    },
     { name: 'category', type: 'text' },
     { name: 'address', type: 'text' },
     { name: 'yearBuilt', type: 'number' },

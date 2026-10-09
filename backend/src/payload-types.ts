@@ -202,6 +202,10 @@ export interface Station {
    */
   coordinates: [number, number];
   description?: string | null;
+  /**
+   * PKP PLK Open Data API station id, used to fetch live arrivals/departures. Populated by the matchPlkStations job; left empty if no confident name match was found.
+   */
+  plkStationId?: number | null;
   category?: string | null;
   address?: string | null;
   yearBuilt?: number | null;
@@ -524,6 +528,7 @@ export interface StationsSelect<T extends boolean = true> {
   name?: T;
   coordinates?: T;
   description?: T;
+  plkStationId?: T;
   category?: T;
   address?: T;
   yearBuilt?: T;

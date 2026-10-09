@@ -1,0 +1,69 @@
+databases:
+  - name: kolejowe-db
+    plan: free
+
+services:
+  - name: kolejowe-backend
+    type: web
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kolejowe-db
+          property: connectionString
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      # Lets the backend allow requests from the frontend's Render-assigned
+      # origin automatically, without a manual post-deploy step -- see the
+      # CORS_HOST comment in backend/src/payload.config.ts.
+      - key: CORS_HOST
+        fromService:
+          name: kolejowe-frontend
+          type: web
+          property: host
+      # Extra allowed origins (comma-separated full URLs), e.g. once a
+      # custom domain is set up. Leave blank if not needed yet.
+      - key: CORS_ORIGINS
+        value: ''
+      # Powers the live arrivals/departures feature once the PLK API key is
+      # activated (see backend/src/jobs/matchPlkStations.ts). Not required
+      # for the app to run without it.
+      - key: PLK_API_KEY
+        sync: false
+      # Cloudflare R2 (or any S3-compatible) bucket for station/line
+      # photos -- required, otherwise uploaded media is lost on every
+      # redeploy/restart (Render's free web service has an ephemeral
+      # filesystem). See backend/src/payload.config.ts for how these are
+      # used; leaving S3_BUCKET unset falls back to local disk storage.
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_ENDPOINT
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ACCESS_KEY_ID
+        sync: false
+      - key: S3_SECRET_ACCESS_KEY
+        sync: false
+
+  - name: kolejowe-frontend
+    type: web
+    runtime: static
+    plan: free
+    rootDir: .
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      # See VITE_PAYLOAD_HOST handling in src/lib/payloadClient.ts -- same
+      # auto-wiring idea as CORS_HOST above, just in the other direction.
+      - key: VITE_PAYLOAD_HOST
+        fromService:
+          name: kolejowe-backend
+          type: web
+          property: host
