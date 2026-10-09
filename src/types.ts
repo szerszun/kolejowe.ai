@@ -61,7 +61,13 @@ export interface RailwayLine {
 
 export type Language = "pl" | "en";
 
-export type DaysOfOperation = "daily" | "weekdays" | "weekend";
+export type DaysOfOperation = "daily" | "weekdays" | "weekend" | "other";
+
+export interface TimetableInfo {
+  validFrom?: string; // ISO date
+  validTo?: string; // ISO date
+  source?: string;
+}
 
 export interface StationPhoto {
   url: string;
@@ -76,6 +82,8 @@ export interface StationTimetableEntry {
   operator: string;
   platform: string;
   daysOfOperation: DaysOfOperation;
+  trainNumber?: string;
+  trainName?: string;
 }
 
 export interface StationArrivalEntry {
@@ -86,10 +94,14 @@ export interface StationArrivalEntry {
   operator: string;
   platform: string;
   daysOfOperation: DaysOfOperation;
+  trainNumber?: string;
+  trainName?: string;
 }
 
 export interface StationDetails {
   stationId: string;
+  /** One sentence for a simple-tier station; a fuller paragraph for a detailed-tier one. */
+  description?: string;
   category?: string;
   address?: string;
   yearBuilt?: number;

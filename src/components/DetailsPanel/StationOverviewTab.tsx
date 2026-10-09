@@ -15,14 +15,14 @@ export function StationOverviewTab({ station, servingLines, details, onSelectLin
 
   return (
     <div className="tab-content">
-      {details?.photo ? (
+      {details?.photo && (
         <figure className="station-photo-figure">
           <img className="station-photo" src={details.photo.url} alt={station.name} loading="lazy" />
           <figcaption className="photo-credit">{details.photo.credit}</figcaption>
         </figure>
-      ) : (
-        <div className="station-photo station-photo--placeholder">{t("stationPhotoNone")}</div>
       )}
+
+      {details?.description && <p className="station-description">{details.description}</p>}
 
       {details && (
         <dl className="fact-grid">

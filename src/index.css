@@ -82,6 +82,12 @@ a {
   color: var(--color-text-muted);
 }
 
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .lang-toggle {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
@@ -93,6 +99,97 @@ a {
 }
 .lang-toggle:hover {
   border-color: var(--color-primary);
+}
+
+.feedback-toggle {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-navy);
+}
+.feedback-toggle:hover {
+  border-color: var(--color-primary);
+}
+
+.feedback-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 31, 75, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.feedback-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.feedback-modal h3 {
+  margin: 0 0 0.75rem;
+  color: var(--color-navy);
+  font-size: 1.05rem;
+}
+
+.feedback-textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.feedback-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.feedback-cancel {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.feedback-send {
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.feedback-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedback-success {
+  color: var(--color-text);
+}
+
+.feedback-error {
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
 }
 
 .demo-banner {
@@ -194,6 +291,9 @@ a {
   gap: 0.45rem;
   font-size: 0.85rem;
   margin-top: 0.35rem;
+}
+.checkbox-row--spaced {
+  margin-bottom: 0.85rem;
 }
 
 .line-list-header {
@@ -599,7 +699,8 @@ a {
   color: var(--color-navy);
 }
 
-.narrative {
+.narrative,
+.station-description {
   font-size: 0.9rem;
   line-height: 1.55;
   color: var(--color-text);
@@ -747,11 +848,26 @@ a {
   grid-column: 3;
   font-weight: 600;
 }
+.timetable-train {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
 .timetable-meta {
   grid-column: 1 / -1;
   font-size: 0.75rem;
   color: var(--color-text-muted);
   margin-top: 0.15rem;
+}
+
+.timetable-validity-banner {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  margin: 0 0 0.75rem;
 }
 
 /* Station departures */

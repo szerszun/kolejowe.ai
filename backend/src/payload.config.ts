@@ -9,6 +9,8 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Stations } from './collections/Stations'
 import { Lines } from './collections/Lines'
+import { Feedback } from './collections/Feedback'
+import { TimetableInfo } from './globals/TimetableInfo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +25,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Stations, Lines],
+  collections: [Users, Media, Stations, Lines, Feedback],
+  globals: [TimetableInfo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
