@@ -99,16 +99,10 @@ interface PayloadStationDoc {
   platformCount?: number | null;
   accessibility?: string | null;
   amenities?: { label: string }[] | null;
-  photo?: string | number | PayloadMediaDoc | null;
+  photo?: { url?: string | null; credit?: string | null } | null;
   timetable?: PayloadMovementDoc[] | null;
   arrivals?: PayloadMovementDoc[] | null;
   sources?: PayloadSourceDoc[] | null;
-}
-
-interface PayloadMediaDoc {
-  id: string | number;
-  url?: string | null;
-  credit?: string | null;
 }
 
 interface PayloadMovementDoc {
@@ -160,7 +154,7 @@ interface PayloadLineDoc {
   history?: {
     timeline?: HistoryEvent[] | null;
     narrative?: string | null;
-    photos?: (string | number | PayloadMediaDoc)[] | null;
+    photos?: { url: string; credit?: string | null }[] | null;
   } | null;
   tenders?: PayloadTenderDoc[] | null;
   sources?: PayloadSourceDoc[] | null;
@@ -220,7 +214,7 @@ export function toRailwayLine(doc: PayloadLineDoc): RailwayLine {
     history: {
       timeline: doc.history?.timeline ?? [],
       narrative: doc.history?.narrative ?? "",
-      photos: [], // not populated by fetchLines (depth=1 doesn't reach history.photos' media docs); none of the seeded lines have any yet
+      photos: (doc.history?.photos ?? []).map((p) => ({ url: p.url, credit: p.credit ?? "" })),
     },
     tenders: (doc.tenders ?? []).map((t) => toTender(t, doc.id)),
     sources: (doc.sources ?? []).map(toSource),
@@ -231,11 +225,6 @@ export function toRailwayLine(doc: PayloadLineDoc): RailwayLine {
 export async function fetchLines(): Promise<RailwayLine[]> {
   const data = await payloadFetch<{ docs: PayloadLineDoc[] }>("/api/lines?limit=0&depth=1");
   return data.docs.map(toRailwayLine);
-}
-
-function mediaUrl(m: string | number | PayloadMediaDoc | null | undefined): string | undefined {
-  if (!m || typeof m !== "object" || !m.url) return undefined;
-  return m.url.startsWith("http") ? m.url : `${PAYLOAD_URL}${m.url}`;
 }
 
 function toTimetableEntry(m: PayloadMovementDoc): StationTimetableEntry {
@@ -267,8 +256,6 @@ function toArrivalEntry(m: PayloadMovementDoc): StationArrivalEntry {
 }
 
 export function toStationDetails(doc: PayloadStationDoc): StationDetails {
-  const photoUrl = mediaUrl(doc.photo);
-  const photoCredit = typeof doc.photo === "object" && doc.photo ? doc.photo.credit : undefined;
   return {
     stationId: doc.id,
     description: doc.description ?? undefined,
@@ -278,7 +265,7 @@ export function toStationDetails(doc: PayloadStationDoc): StationDetails {
     platformCount: doc.platformCount ?? undefined,
     accessibility: doc.accessibility ?? undefined,
     amenities: (doc.amenities ?? []).map((a) => a.label),
-    photo: photoUrl ? { url: photoUrl, credit: photoCredit ?? "" } : undefined,
+    photo: doc.photo?.url ? { url: doc.photo.url, credit: doc.photo.credit ?? "" } : undefined,
     timetable: (doc.timetable ?? []).map(toTimetableEntry),
     arrivals: (doc.arrivals ?? []).map(toArrivalEntry),
     sources: (doc.sources ?? []).map(toSource),

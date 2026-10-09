@@ -81,7 +81,18 @@ export const Stations: CollectionConfig = {
       type: 'array',
       fields: [{ name: 'label', type: 'text', required: true }],
     },
-    { name: 'photo', type: 'upload', relationTo: 'media' },
+    {
+      // Links directly to the source image (e.g. Wikimedia) rather than
+      // uploading a local copy -- avoids needing any file storage at all,
+      // which matters on hosts with an ephemeral filesystem (e.g. Render's
+      // free tier). Trade-off: the photo breaks if the source URL does.
+      name: 'photo',
+      type: 'group',
+      fields: [
+        { name: 'url', type: 'text' },
+        { name: 'credit', type: 'text', admin: { description: 'e.g. "Wikimedia Commons / CC BY-SA 4.0 / author name".' } },
+      ],
+    },
     {
       name: 'timetable',
       type: 'array',

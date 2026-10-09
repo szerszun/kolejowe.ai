@@ -68,7 +68,6 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
-    media: Media;
     stations: Station;
     lines: Line;
     feedback: Feedback;
@@ -80,7 +79,6 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     stations: StationsSelect<false> | StationsSelect<true>;
     lines: LinesSelect<false> | LinesSelect<true>;
     feedback: FeedbackSelect<false> | FeedbackSelect<true>;
@@ -163,29 +161,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  /**
-   * Attribution, e.g. "Wikimedia Commons / CC BY-SA 4.0 / author name".
-   */
-  credit?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stations".
  */
 export interface Station {
@@ -217,7 +192,13 @@ export interface Station {
         id?: string | null;
       }[]
     | null;
-  photo?: (number | null) | Media;
+  photo?: {
+    url?: string | null;
+    /**
+     * e.g. "Wikimedia Commons / CC BY-SA 4.0 / author name".
+     */
+    credit?: string | null;
+  };
   timetable?:
     | {
         /**
@@ -338,7 +319,13 @@ export interface Line {
         }[]
       | null;
     narrative?: string | null;
-    photos?: (number | Media)[] | null;
+    photos?:
+      | {
+          url: string;
+          credit?: string | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   tenders?:
     | {
@@ -413,10 +400,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
       } | null)
     | ({
         relationTo: 'stations';
@@ -502,25 +485,6 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  credit?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stations_select".
  */
 export interface StationsSelect<T extends boolean = true> {
@@ -540,7 +504,12 @@ export interface StationsSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
-  photo?: T;
+  photo?:
+    | T
+    | {
+        url?: T;
+        credit?: T;
+      };
   timetable?:
     | T
     | {
@@ -625,7 +594,13 @@ export interface LinesSelect<T extends boolean = true> {
               id?: T;
             };
         narrative?: T;
-        photos?: T;
+        photos?:
+          | T
+          | {
+              url?: T;
+              credit?: T;
+              id?: T;
+            };
       };
   tenders?:
     | T

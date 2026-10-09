@@ -99,7 +99,16 @@ export const Lines: CollectionConfig = {
           ],
         },
         { name: 'narrative', type: 'textarea' },
-        { name: 'photos', type: 'upload', relationTo: 'media', hasMany: true },
+        {
+          // Same reasoning as Stations.photo -- direct source links, no
+          // upload/file storage needed.
+          name: 'photos',
+          type: 'array',
+          fields: [
+            { name: 'url', type: 'text', required: true },
+            { name: 'credit', type: 'text' },
+          ],
+        },
       ],
     },
     {

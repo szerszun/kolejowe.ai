@@ -35,21 +35,6 @@ services:
       # for the app to run without it.
       - key: PLK_API_KEY
         sync: false
-      # Cloudflare R2 (or any S3-compatible) bucket for station/line
-      # photos -- required, otherwise uploaded media is lost on every
-      # redeploy/restart (Render's free web service has an ephemeral
-      # filesystem). See backend/src/payload.config.ts for how these are
-      # used; leaving S3_BUCKET unset falls back to local disk storage.
-      - key: S3_BUCKET
-        sync: false
-      - key: S3_ENDPOINT
-        sync: false
-      - key: S3_REGION
-        sync: false
-      - key: S3_ACCESS_KEY_ID
-        sync: false
-      - key: S3_SECRET_ACCESS_KEY
-        sync: false
 
   - name: kolejowe-frontend
     type: web
