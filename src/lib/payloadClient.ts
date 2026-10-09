@@ -14,12 +14,15 @@ import type {
 
 // Base URL of the Payload backend (see backend/README.md). Configurable via
 // VITE_PAYLOAD_URL for anything other than the default local dev setup, or
-// via VITE_PAYLOAD_HOST (just a hostname, e.g. from Render's `fromService`
-// blueprint wiring, which can't produce a full https:// URL) when the only
-// thing that varies between environments is the host.
+// via VITE_PAYLOAD_HOST (just the bare Render service name, e.g.
+// "kolejowe-backend" -- confirmed empirically: Render's `fromService`
+// `property: host` does NOT return a full hostname, just the service's own
+// name, so ".onrender.com" has to be appended here) when the only thing
+// that varies between environments is which Render service to hit.
 const payloadHost = import.meta.env.VITE_PAYLOAD_HOST as string | undefined;
 export const PAYLOAD_URL =
-  (import.meta.env.VITE_PAYLOAD_URL as string | undefined) ?? (payloadHost ? `https://${payloadHost}` : "http://localhost:3000");
+  (import.meta.env.VITE_PAYLOAD_URL as string | undefined) ??
+  (payloadHost ? `https://${payloadHost}.onrender.com` : "http://localhost:3000");
 
 export class PayloadFetchError extends Error {
   constructor(message: string) {
