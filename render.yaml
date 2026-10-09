@@ -27,7 +27,7 @@ services:
       # CORS_HOST comment in backend/src/payload.config.ts.
       - key: CORS_HOST
         fromService:
-          name: kolejowe-frontend
+          name: kolejoweai
           type: web
           property: host
       # Extra allowed origins (comma-separated full URLs), e.g. once a
@@ -40,7 +40,7 @@ services:
       - key: PLK_API_KEY
         sync: false
 
-  - name: kolejowe-frontend
+  - name: kolejoweai
     type: web
     runtime: static
     rootDir: .
