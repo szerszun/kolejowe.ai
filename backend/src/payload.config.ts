@@ -38,16 +38,17 @@ if (!payloadSecret && process.env.NODE_ENV === 'production') {
 
 // Comma-separated list of extra allowed origins (full "https://..." URLs,
 // e.g. a custom domain) on top of the local Vite dev server, which is
-// always allowed. CORS_HOST is the same idea but takes a bare hostname --
-// Render's `fromService` blueprint wiring can only produce a hostname, not
-// a full URL, so this is how the deployed frontend's origin gets in here
-// without a manual post-deploy step.
+// always allowed. CORS_HOST is the same idea but takes just the bare
+// Render service name (confirmed empirically: `fromService`'s `host`
+// property returns e.g. "kolejowe-frontend", not a full hostname, despite
+// its name -- ".onrender.com" has to be appended here), so this is how the
+// deployed frontend's origin gets in here without a manual post-deploy step.
 const corsHost = process.env.CORS_HOST
 const extraCorsOrigins = (process.env.CORS_ORIGINS || '')
   .split(',')
   .map((s) => s.trim())
   .filter(Boolean)
-  .concat(corsHost ? [`https://${corsHost}`] : [])
+  .concat(corsHost ? [`https://${corsHost}.onrender.com`] : [])
 
 export default buildConfig({
   cors: ['http://localhost:5173', ...extraCorsOrigins],
