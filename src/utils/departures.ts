@@ -25,30 +25,14 @@ function runsOnDate(days: DaysOfOperation, date: Date): boolean {
   return day >= 1 && day <= 5;
 }
 
-function hashString(s: string): number {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) {
-    h = (Math.imul(h, 31) + s.charCodeAt(i)) >>> 0;
-  }
-  return h;
-}
-
-// Deterministic per entry+day so a delay/cancellation is stable within a
-// given day instead of flickering on every re-render -- there's no real
-// dispatch system behind this draft, just a stand-in for what live running
-// information would look like.
-function mockRealtimeFor(entryId: string, dateKey: string): { status: DepartureStatus; delayMinutes: number } {
-  const h = hashString(`${entryId}:${dateKey}`);
-  const bucket = h % 10;
-  if (bucket === 9) return { status: "cancelled", delayMinutes: 0 };
-  if (bucket >= 6) return { status: "delayed", delayMinutes: 2 + (h % 13) };
-  return { status: "on_time", delayMinutes: 0 };
-}
-
 // Shared by the Departures and Arrivals tabs -- same "what's happening in
-// the next N hours" windowing and mock realtime status logic, just fed a
-// different entry list (departures keyed by destination, arrivals by
-// origin).
+// the next N hours" windowing logic, just fed a different entry list
+// (departures keyed by destination, arrivals by origin). Every entry starts
+// neutral ("on_time", no actual time) since this is just the static
+// timetable; applyLiveData below overlays real PKP PLK status for entries
+// it can match. An entry that stays unmatched shows no status claim at all
+// rather than a fabricated one -- there's no "probably fine" signal to show
+// when we genuinely don't know.
 export function getUpcomingMovements<T extends TimedEntry>(timetable: T[], now: Date, hoursAhead = 6): UpcomingMovement<T>[] {
   const result: UpcomingMovement<T>[] = [];
 
@@ -65,10 +49,7 @@ export function getUpcomingMovements<T extends TimedEntry>(timetable: T[], now: 
       const diffHours = (scheduledAt.getTime() - now.getTime()) / 3_600_000;
       if (diffHours < 0 || diffHours > hoursAhead) continue;
 
-      const dateKey = scheduledAt.toISOString().slice(0, 10);
-      const { status, delayMinutes } = mockRealtimeFor(entry.id, dateKey);
-      const actualAt = status === "cancelled" ? null : new Date(scheduledAt.getTime() + delayMinutes * 60_000);
-      result.push({ entry, scheduledAt, actualAt, delayMinutes, status, isLive: false });
+      result.push({ entry, scheduledAt, actualAt: null, delayMinutes: 0, status: "on_time", isLive: false });
     }
   }
 
