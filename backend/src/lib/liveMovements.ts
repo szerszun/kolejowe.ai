@@ -105,6 +105,10 @@ export async function getLiveMovements(plkStationId: number): Promise<LiveMoveme
     return { ok: true, movements, stale: false }
   } catch (err) {
     const reason: LiveMovementsUnavailableReason = err instanceof PlkRateLimitError ? 'rate_limited' : 'upstream_error'
+    // Otherwise unavailable-by-design failures (quota, no match) never reach here, so
+    // anything that does is worth a server log -- the frontend only ever sees "reason",
+    // never this message, which is the only place the real cause survives.
+    console.error(`[liveMovements] fetch failed for plkStationId=${plkStationId}:`, err)
     if (cached) return { ok: true, movements: cached.movements, stale: true }
     return { ok: false, reason }
   }
