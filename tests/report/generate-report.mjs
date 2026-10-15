@@ -25,6 +25,8 @@ const UNIT_JSON = path.join(RESULTS_DIR, "unit.json");
 const E2E_JSON = path.join(RESULTS_DIR, "e2e.json");
 const OUT_HTML = path.join(RESULTS_DIR, "executive-summary.html");
 const OUT_JSON = path.join(RESULTS_DIR, "executive-summary.json");
+const SONAR_DIR = path.join(ROOT, "sonar-summary");
+const SONAR_DASHBOARD_URL = "https://sonarcloud.io/project/overview?id=szerszun_kolejowe.ai";
 
 /** @typedef {{ name: string, area: string, severity: "critical"|"major"|"minor", status: "passed"|"failed"|"skipped", message?: string }} TestResult */
 
@@ -102,6 +104,44 @@ function parsePlaywright() {
   return results;
 }
 
+/**
+ * Reads the gate.json/measures.json the CI workflow downloads from the sonarcloud job's
+ * artifact (see .github/workflows/regression.yml). Both files are fetched straight from
+ * SonarCloud's own API, so either can be missing (job failed before uploading) or
+ * malformed (API hiccup) -- either case degrades to "unavailable", never a report crash.
+ * @returns {{ gateStatus: string, bugs: string, vulnerabilities: string, codeSmells: string, securityHotspots: string, coverage: string, dashboardUrl: string } | null}
+ */
+function parseSonar() {
+  const gatePath = path.join(SONAR_DIR, "gate.json");
+  const measuresPath = path.join(SONAR_DIR, "measures.json");
+  if (!fs.existsSync(gatePath) && !fs.existsSync(measuresPath)) return null;
+
+  let gateStatus = "UNKNOWN";
+  try {
+    gateStatus = JSON.parse(fs.readFileSync(gatePath, "utf8")).projectStatus?.status ?? "UNKNOWN";
+  } catch {
+    // Missing or malformed -- leave UNKNOWN rather than fail the whole report.
+  }
+
+  const measures = {};
+  try {
+    const data = JSON.parse(fs.readFileSync(measuresPath, "utf8"));
+    for (const m of data.component?.measures ?? []) measures[m.metric] = m.value;
+  } catch {
+    // Missing or malformed -- leave measures empty.
+  }
+
+  return {
+    gateStatus,
+    bugs: measures.bugs ?? "?",
+    vulnerabilities: measures.vulnerabilities ?? "?",
+    codeSmells: measures.code_smells ?? "?",
+    securityHotspots: measures.security_hotspots ?? "?",
+    coverage: measures.coverage != null ? `${measures.coverage}%` : "?",
+    dashboardUrl: SONAR_DASHBOARD_URL,
+  };
+}
+
 const results = [...parseVitest(), ...parsePlaywright()];
 
 if (results.length === 0) {
@@ -131,6 +171,7 @@ const summary = {
   generatedAt: new Date().toISOString(),
   verdict,
   verdictLabel,
+  sonar: parseSonar(),
   totals: {
     total: results.length,
     passed: results.filter((r) => r.status === "passed").length,
@@ -177,6 +218,24 @@ function renderHtml(summary, results) {
       return `<tr><td>${esc(area)}</td><td>${inArea.length}</td><td class="pass">${passed}</td><td class="${failed ? "fail" : ""}">${failed}</td></tr>`;
     })
     .join("\n");
+
+  const sonarSection = summary.sonar
+    ? (() => {
+        const s = summary.sonar;
+        const pillClass = { OK: "pill--sonar-ok", ERROR: "pill--sonar-error" }[s.gateStatus] ?? "pill--sonar-unknown";
+        return `<h2 class="section">Code quality (SonarCloud)</h2>
+  <p><span class="pill ${pillClass}">Quality Gate: ${esc(s.gateStatus)}</span></p>
+  <div class="stat-row">
+    <div class="stat"><div class="num ${Number(s.bugs) > 0 ? "fail" : ""}">${esc(s.bugs)}</div><div class="label">Bugs</div></div>
+    <div class="stat"><div class="num ${Number(s.vulnerabilities) > 0 ? "fail" : ""}">${esc(s.vulnerabilities)}</div><div class="label">Vulnerabilities</div></div>
+    <div class="stat"><div class="num">${esc(s.codeSmells)}</div><div class="label">Code smells</div></div>
+    <div class="stat"><div class="num ${Number(s.securityHotspots) > 0 ? "fail" : ""}">${esc(s.securityHotspots)}</div><div class="label">Security hotspots</div></div>
+    <div class="stat"><div class="num">${esc(s.coverage)}</div><div class="label">Unit test coverage</div></div>
+  </div>
+  <p class="sonar-link"><a href="${esc(s.dashboardUrl)}">View full analysis on SonarCloud &rarr;</a></p>`;
+      })()
+    : `<h2 class="section">Code quality (SonarCloud)</h2>
+  <p style="color:var(--text-muted);font-size:0.85rem;">Unavailable for this run (the sonarcloud job may not have completed).</p>`;
 
   const failureRows = ["critical", "major", "minor"]
     .flatMap((sev) => summary.failures.filter((f) => f.severity === sev))
@@ -229,7 +288,11 @@ function renderHtml(summary, results) {
   .pill--critical { background: var(--bad-bg); color: var(--bad-fg); }
   .pill--major { background: var(--caution-bg); color: var(--caution-fg); }
   .pill--minor { background: var(--surface-2); color: var(--text-muted); }
+  .pill--sonar-ok { background: var(--good-bg); color: var(--good-fg); }
+  .pill--sonar-error { background: var(--bad-bg); color: var(--bad-fg); }
+  .pill--sonar-unknown { background: var(--surface-2); color: var(--text-muted); }
   h2.section { font-size: 1.1rem; margin: 2rem 0 0.8rem; }
+  .sonar-link { font-size: 0.8rem; margin: 0 0 1rem; }
 </style>
 </head>
 <body>
@@ -254,6 +317,8 @@ function renderHtml(summary, results) {
     <div class="stat"><div class="num ${summary.bySeverity.major.failed ? "fail" : "pass"}">${summary.bySeverity.major.passed}/${summary.bySeverity.major.total}</div><div class="label">Major passed</div></div>
     <div class="stat"><div class="num ${summary.bySeverity.minor.failed ? "fail" : "pass"}">${summary.bySeverity.minor.passed}/${summary.bySeverity.minor.total}</div><div class="label">Minor passed</div></div>
   </div>
+
+  ${sonarSection}
 
   ${failureRows ? `<h2 class="section">Failures</h2>
   <table>

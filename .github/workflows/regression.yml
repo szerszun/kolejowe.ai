@@ -8,6 +8,10 @@ on:
 
 jobs:
   test:
+    needs: [sonarcloud]
+    # Run even if the sonarcloud job failed (e.g. a Quality Gate miss) -- the regression
+    # report is still worth generating and emailing, just without a quality summary.
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -33,6 +37,15 @@ jobs:
           DATABASE_URL: file:./kolejowe.db
           PAYLOAD_SECRET: ci-ephemeral-secret-not-used-in-production
         run: npm run seed
+
+      - name: Download SonarCloud summary
+        # Absent if the sonarcloud job failed before it could upload (e.g. checkout
+        # error) -- generate-report.mjs treats a missing file as "unavailable", not fatal.
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: sonar-summary
+          path: sonar-summary
 
       - name: Run the regression suite
         id: tests
@@ -108,3 +121,26 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Fetch SonarCloud quality summary
+        # Runs even if the Quality Gate failed above -- the regression report should
+        # still be able to show *why* (gate status + the measures behind it).
+        if: always()
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mkdir -p sonar-summary
+          curl -sf -u "$SONAR_TOKEN:" \
+            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=szerszun_kolejowe.ai" \
+            -o sonar-summary/gate.json
+          curl -sf -u "$SONAR_TOKEN:" \
+            "https://sonarcloud.io/api/measures/component?component=szerszun_kolejowe.ai&metricKeys=bugs,vulnerabilities,code_smells,security_hotspots,coverage" \
+            -o sonar-summary/measures.json
+
+      - name: Upload SonarCloud summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-summary
+          path: sonar-summary/
+          retention-days: 30
