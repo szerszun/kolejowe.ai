@@ -1,6 +1,8 @@
 import type {
   DaysOfOperation,
   HistoryEvent,
+  LiveMovement,
+  LiveMovementsUnavailableReason,
   RailwayLine,
   SourceRef,
   Station,
@@ -308,4 +310,35 @@ export async function fetchStationDetails(stationId: string): Promise<StationDet
     throw err;
   }
   return toStationDetails(doc);
+}
+
+interface LiveMovementsResponse {
+  available: boolean;
+  stale?: boolean;
+  movements?: LiveMovement[];
+  reason?: LiveMovementsUnavailableReason;
+}
+
+export interface LiveMovementsFetchResult {
+  movements: LiveMovement[] | null;
+  /** Non-null exactly when `movements` is null -- see LiveMovementsUnavailableReason for what each value means. */
+  reason: LiveMovementsUnavailableReason | null;
+}
+
+/**
+ * Real-time arrivals/departures for a station from PKP PLK's Open Data API,
+ * proxied through the backend (see backend/src/lib/liveMovements.ts --
+ * that's where caching and the API quota budget live). `movements: null`
+ * means the caller should fall back to the static timetable; `reason`
+ * distinguishes "this station just has no PKP PLK match" (normal) from
+ * "the feed itself is down" (worth telling the user about).
+ */
+export async function fetchLiveMovements(stationId: string): Promise<LiveMovementsFetchResult> {
+  try {
+    const data = await payloadFetch<LiveMovementsResponse>(`/api/stations/${encodeURIComponent(stationId)}/live`);
+    if (data.available) return { movements: data.movements ?? [], reason: null };
+    return { movements: null, reason: data.reason ?? "upstream_error" };
+  } catch {
+    return { movements: null, reason: "upstream_error" };
+  }
 }

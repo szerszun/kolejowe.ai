@@ -5,6 +5,7 @@ import type { DaysOfOperation, RailwayLine, StationDetails } from "../../types";
 import { getLineColor } from "../../utils/lineColors";
 import { normalize } from "../../utils/text";
 import { TimetableValidityBanner } from "./TimetableValidityBanner";
+import { StationDataStatus } from "./StationDataStatus";
 
 const DAYS_KEY: Record<DaysOfOperation, "timetableDaily" | "timetableWeekdays" | "timetableWeekend" | "timetableOther"> = {
   daily: "timetableDaily",
@@ -16,9 +17,11 @@ const DAYS_KEY: Record<DaysOfOperation, "timetableDaily" | "timetableWeekdays" |
 interface StationTimetableTabProps {
   details: StationDetails | undefined;
   lines: RailwayLine[];
+  loading: boolean;
+  error: boolean;
 }
 
-export function StationTimetableTab({ details, lines }: StationTimetableTabProps) {
+export function StationTimetableTab({ details, lines, loading, error }: StationTimetableTabProps) {
   const { t } = useI18n();
   const timetableInfo = useTimetableInfo();
   const [query, setQuery] = useState("");
@@ -42,7 +45,8 @@ export function StationTimetableTab({ details, lines }: StationTimetableTabProps
     return (
       <div className="tab-content">
         <TimetableValidityBanner info={timetableInfo} />
-        <p className="empty-state">{t("timetableEmpty")}</p>
+        <StationDataStatus loading={loading} error={error} />
+        {!loading && !error && <p className="empty-state">{t("timetableEmpty")}</p>}
       </div>
     );
   }

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import { useTimetableInfo } from "../../hooks/useTimetableInfo";
+import { useLiveMovements } from "../../hooks/useLiveMovements";
 import type { DaysOfOperation, RailwayLine } from "../../types";
 import { getLineColor } from "../../utils/lineColors";
-import { getUpcomingMovements } from "../../utils/departures";
+import { applyLiveData, getUpcomingMovements } from "../../utils/departures";
 import { TimetableValidityBanner } from "./TimetableValidityBanner";
 
 interface MovementEntry {
@@ -18,6 +19,8 @@ interface MovementEntry {
 }
 
 interface StationMovementListProps<T extends MovementEntry> {
+  stationId: string;
+  kind: "departure" | "arrival";
   entries: T[] | undefined;
   lines: RailwayLine[];
   placeLabel: (entry: T) => string;
@@ -30,6 +33,8 @@ function formatTime(date: Date): string {
 }
 
 export function StationMovementList<T extends MovementEntry>({
+  stationId,
+  kind,
   entries,
   lines,
   placeLabel,
@@ -39,9 +44,14 @@ export function StationMovementList<T extends MovementEntry>({
   const { t } = useI18n();
   const timetableInfo = useTimetableInfo();
   const [now, setNow] = useState(() => new Date());
-  // Defaults to the static timetable until a real PKP PLK realtime feed replaces the mocked
-  // status in getUpcomingMovements -- flip this default to false once that's live.
+  // Defaults to the static timetable; flip this default to false once the live PKP PLK
+  // feed (below) has proven stable enough to be the default view.
   const [timetableTimeOnly, setTimetableTimeOnly] = useState(true);
+  const { movements: liveMovements, reason: liveUnavailableReason } = useLiveMovements(stationId, !timetableTimeOnly);
+  // The live feed is down (quota exhausted or the PKP PLK API itself didn't respond) rather than
+  // just "this station has no PKP PLK match" -- fall back to plain timetable display and say why.
+  const liveServiceDown = !timetableTimeOnly && (liveUnavailableReason === "rate_limited" || liveUnavailableReason === "upstream_error");
+  const effectiveTimetableOnly = timetableTimeOnly || liveServiceDown;
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60_000);
@@ -49,12 +59,18 @@ export function StationMovementList<T extends MovementEntry>({
   }, []);
 
   const lineById = new Map(lines.map((line) => [line.id, line]));
-  const movements = getUpcomingMovements(entries ?? [], now, 6);
+  const baseMovements = getUpcomingMovements(entries ?? [], now, 6);
+  const movements =
+    !effectiveTimetableOnly && liveMovements ? applyLiveData(baseMovements, liveMovements, kind) : baseMovements;
 
   return (
     <div className="tab-content">
       <TimetableValidityBanner info={timetableInfo} />
-      <p className="departures-disclaimer">{timetableTimeOnly ? t("timetableTimeDisclaimer") : disclaimer}</p>
+      {liveServiceDown ? (
+        <p className="live-unavailable-banner">{t("liveUnavailableWarning")}</p>
+      ) : (
+        <p className="departures-disclaimer">{timetableTimeOnly ? t("timetableTimeDisclaimer") : disclaimer}</p>
+      )}
       <label className="checkbox-row checkbox-row--spaced">
         <input type="checkbox" checked={timetableTimeOnly} onChange={(e) => setTimetableTimeOnly(e.target.checked)} />
         {t("timetableTimeCheckbox")}
@@ -66,7 +82,7 @@ export function StationMovementList<T extends MovementEntry>({
         <ul className="departure-list">
           {movements.map((movement) => {
             const line = lineById.get(movement.entry.lineId);
-            const cardStatus = timetableTimeOnly ? "on_time" : movement.status;
+            const cardStatus = effectiveTimetableOnly ? "on_time" : movement.status;
             return (
               <li key={movement.entry.id} className={`departure-card departure-card--${cardStatus}`}>
                 <div className="departure-card-header">
@@ -74,7 +90,8 @@ export function StationMovementList<T extends MovementEntry>({
                     {line?.number ?? movement.entry.lineId}
                   </span>
                   <strong className="departure-destination">{placeLabel(movement.entry)}</strong>
-                  {!timetableTimeOnly && (
+                  {!effectiveTimetableOnly && movement.isLive && <span className="live-tag">{t("liveSourceTag")}</span>}
+                  {!effectiveTimetableOnly && (
                     <span className={`badge badge--${movement.status}`}>
                       {movement.status === "cancelled"
                         ? t("departureStatusCancelled")
@@ -89,7 +106,7 @@ export function StationMovementList<T extends MovementEntry>({
                     <dt>{t("departureScheduled")}</dt>
                     <dd>{formatTime(movement.scheduledAt)}</dd>
                   </div>
-                  {!timetableTimeOnly && movement.actualAt && (
+                  {!effectiveTimetableOnly && movement.actualAt && (
                     <div>
                       <dt>{t("departureActual")}</dt>
                       <dd>{formatTime(movement.actualAt)}</dd>
