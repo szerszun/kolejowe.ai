@@ -44,9 +44,9 @@ export function StationMovementList<T extends MovementEntry>({
   const { t } = useI18n();
   const timetableInfo = useTimetableInfo();
   const [now, setNow] = useState(() => new Date());
-  // Defaults to the static timetable until the plkStationId data migration has run in
-  // production -- flip this to false once live data is actually available there too.
-  const [timetableTimeOnly, setTimetableTimeOnly] = useState(true);
+  // Defaults to the live PKP PLK feed; stations without a match (or when the feed is
+  // down) fall back to the static timetable automatically -- see liveServiceDown below.
+  const [timetableTimeOnly, setTimetableTimeOnly] = useState(false);
   const { movements: liveMovements, reason: liveUnavailableReason } = useLiveMovements(stationId, !timetableTimeOnly);
   // The live feed is down (quota exhausted or the PKP PLK API itself didn't respond) rather than
   // just "this station has no PKP PLK match" -- fall back to plain timetable display and say why.
