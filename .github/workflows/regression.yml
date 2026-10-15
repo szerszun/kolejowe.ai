@@ -62,6 +62,10 @@ jobs:
       # merge (see the final step) without emailing on every PR update.
       - name: Email report to admin
         if: always() && github.event_name == 'push'
+        # Notification delivery failing (e.g. a bad/missing Gmail app password) shouldn't
+        # turn the whole job red when the actual regression suite passed -- that's what
+        # the explicit verdict check below is for.
+        continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -101,6 +105,6 @@ jobs:
         run: npx vitest run --coverage
 
       - name: SonarCloud scan
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
