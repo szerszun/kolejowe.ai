@@ -80,3 +80,27 @@ jobs:
         run: |
           echo "Regression suite failed -- see the uploaded report artifact for details."
           exit 1
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # SonarCloud wants full history for its new-code/blame analysis, not just the
+          # single commit a shallow checkout gives it.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests with coverage
+        run: npx vitest run --coverage
+
+      - name: SonarCloud scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
