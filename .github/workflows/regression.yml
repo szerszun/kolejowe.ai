@@ -1,0 +1,82 @@
+name: Regression suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Install Playwright's browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Seed a throwaway local database
+        working-directory: backend
+        env:
+          DATABASE_URL: file:./kolejowe.db
+          PAYLOAD_SECRET: ci-ephemeral-secret-not-used-in-production
+        run: npm run seed
+
+      - name: Run the regression suite
+        id: tests
+        env:
+          CI: "true"
+          DATABASE_URL: file:./kolejowe.db
+          PAYLOAD_SECRET: ci-ephemeral-secret-not-used-in-production
+        # The report step must still run (and the job's pass/fail must reflect the
+        # executive verdict, not just "did every command exit 0") even when tests fail --
+        # see the explicit exit-code check at the end of this job.
+        run: npm test
+        continue-on-error: true
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-report
+          path: |
+            test-results/executive-summary.html
+            test-results/executive-summary.json
+            test-results/playwright-html
+          retention-days: 30
+
+      # Only on an actual push to main -- that's what triggers a Render deploy for this
+      # project, which is what "after each deploy" means here. PR runs still gate the
+      # merge (see the final step) without emailing on every PR update.
+      - name: Email report to admin
+        if: always() && github.event_name == 'push'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai regression report (${{ job.status }}) -- ${{ github.sha }}"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          html_body: file://test-results/executive-summary.html
+          attachments: test-results/executive-summary.json
+
+      - name: Fail the job if the suite reported NOT READY FOR PRODUCTION
+        if: steps.tests.outcome == 'failure'
+        run: |
+          echo "Regression suite failed -- see the uploaded report artifact for details."
+          exit 1
