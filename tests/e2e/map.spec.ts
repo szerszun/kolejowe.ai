@@ -50,6 +50,16 @@ test.describe("Interactive map", () => {
     expect(after).toBeLessThan(before);
   });
 
+  test("[MAJOR] clicking the kolejowe.ai logo returns to the home view from a selected line", async ({ page }) => {
+    await page.goto(`/line/${SEEDED.line274.number}`);
+    await expect(page.getByRole("heading", { name: SEEDED.line274.name })).toBeVisible({ timeout: 15_000 });
+
+    await page.getByRole("button", { name: "kolejowe.ai" }).click();
+
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("heading", { name: SEEDED.line274.name })).not.toBeVisible();
+  });
+
   test("[MINOR] mobile viewport: selecting a line shows the details panel as a bottom sheet layout", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/line/${SEEDED.line274.number}`);
