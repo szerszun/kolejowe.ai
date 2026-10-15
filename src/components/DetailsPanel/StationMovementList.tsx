@@ -44,8 +44,8 @@ export function StationMovementList<T extends MovementEntry>({
   const { t } = useI18n();
   const timetableInfo = useTimetableInfo();
   const [now, setNow] = useState(() => new Date());
-  // Defaults to the static timetable; flip this default to false once the live PKP PLK
-  // feed (below) has proven stable enough to be the default view.
+  // Defaults to the static timetable until the plkStationId data migration has run in
+  // production -- flip this to false once live data is actually available there too.
   const [timetableTimeOnly, setTimetableTimeOnly] = useState(true);
   const { movements: liveMovements, reason: liveUnavailableReason } = useLiveMovements(stationId, !timetableTimeOnly);
   // The live feed is down (quota exhausted or the PKP PLK API itself didn't respond) rather than
@@ -82,7 +82,10 @@ export function StationMovementList<T extends MovementEntry>({
         <ul className="departure-list">
           {movements.map((movement) => {
             const line = lineById.get(movement.entry.lineId);
-            const cardStatus = effectiveTimetableOnly ? "on_time" : movement.status;
+            // Only a live-matched entry has an actual status claim to make -- an unmatched entry in
+            // live view gets neutral styling rather than an implied (fabricated) "on time".
+            const showStatus = !effectiveTimetableOnly && movement.isLive;
+            const cardStatus = showStatus ? movement.status : "on_time";
             return (
               <li key={movement.entry.id} className={`departure-card departure-card--${cardStatus}`}>
                 <div className="departure-card-header">
@@ -90,8 +93,8 @@ export function StationMovementList<T extends MovementEntry>({
                     {line?.number ?? movement.entry.lineId}
                   </span>
                   <strong className="departure-destination">{placeLabel(movement.entry)}</strong>
-                  {!effectiveTimetableOnly && movement.isLive && <span className="live-tag">{t("liveSourceTag")}</span>}
-                  {!effectiveTimetableOnly && (
+                  {showStatus && <span className="live-tag">{t("liveSourceTag")}</span>}
+                  {showStatus && (
                     <span className={`badge badge--${movement.status}`}>
                       {movement.status === "cancelled"
                         ? t("departureStatusCancelled")
