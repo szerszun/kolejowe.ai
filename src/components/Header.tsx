@@ -1,13 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import { useI18n } from "../i18n/I18nContext";
 import { AboutButton } from "./AboutButton";
 import { FeedbackButton } from "./FeedbackButton";
 
 export function Header() {
   const { t, language, setLanguage } = useI18n();
+  const navigate = useNavigate();
   return (
     <header className="app-header">
       <div className="app-header-brand">
-        <span className="app-header-logo">kolejowe.ai</span>
+        <button type="button" className="app-header-logo app-header-logo--link" onClick={() => navigate("/")}>
+          kolejowe.ai
+        </button>
         <span className="app-header-subtitle">{t("appSubtitle")}</span>
       </div>
       <div className="app-header-actions">
