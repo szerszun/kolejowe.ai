@@ -757,6 +757,11 @@ a {
   line-height: 1.5;
   color: var(--color-text-muted);
 }
+.empty-state--error {
+  background: rgba(192, 57, 43, 0.08);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  color: #c0392b;
+}
 
 .tender-list {
   list-style: none;
@@ -906,6 +911,16 @@ a {
   padding: 0.6rem 0.75rem;
   margin: 0 0 1rem;
 }
+.live-unavailable-banner {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8a6100;
+  background: rgba(230, 161, 0, 0.12);
+  border: 1px solid rgba(230, 161, 0, 0.3);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  margin: 0 0 1rem;
+}
 .departure-list {
   list-style: none;
   padding: 0;
@@ -949,6 +964,16 @@ a {
 .badge--cancelled {
   background: rgba(192, 57, 43, 0.12);
   color: #c0392b;
+}
+.live-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #2e7d32;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
 }
 
 /* Responsive: mobile */

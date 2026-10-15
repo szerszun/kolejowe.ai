@@ -113,3 +113,22 @@ export interface StationDetails {
   arrivals: StationArrivalEntry[];
   sources: SourceRef[];
 }
+
+export interface LiveMovement {
+  scheduledArrival: string | null; // ISO date-time
+  scheduledDeparture: string | null;
+  actualArrival: string | null;
+  actualDeparture: string | null;
+  arrivalDelayMinutes: number | null;
+  departureDelayMinutes: number | null;
+  cancelled: boolean;
+}
+
+/**
+ * Why live data isn't available for a station right now:
+ * - "not_matched": this station has no PKP PLK counterpart -- normal and permanent, no warning needed.
+ * - "rate_limited": the backend's PKP PLK API quota (100/hour, 1,000/day) is exhausted.
+ * - "upstream_error": the PKP PLK API itself didn't respond.
+ * The latter two are shown to the user as "dynamic data unavailable" (see useLiveMovements.ts).
+ */
+export type LiveMovementsUnavailableReason = "not_matched" | "rate_limited" | "upstream_error";

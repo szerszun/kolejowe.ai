@@ -26,7 +26,7 @@ interface StationDetailsPanelProps {
 export function StationDetailsPanel({ station, servingLines, onClose, onSelectLine }: StationDetailsPanelProps) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("overview");
-  const { details } = useStationDetails(station.id);
+  const { details, loading, error } = useStationDetails(station.id);
 
   return (
     <aside className="details-panel" aria-label={station.name}>
@@ -56,11 +56,18 @@ export function StationDetailsPanel({ station, servingLines, onClose, onSelectLi
 
       <div className="details-panel-body">
         {tab === "overview" && (
-          <StationOverviewTab station={station} servingLines={servingLines} details={details} onSelectLine={onSelectLine} />
+          <StationOverviewTab
+            station={station}
+            servingLines={servingLines}
+            details={details}
+            loading={loading}
+            error={error}
+            onSelectLine={onSelectLine}
+          />
         )}
-        {tab === "timetable" && <StationTimetableTab details={details} lines={servingLines} />}
-        {tab === "arrivals" && <StationArrivalsTab details={details} lines={servingLines} />}
-        {tab === "departures" && <StationDeparturesTab details={details} lines={servingLines} />}
+        {tab === "timetable" && <StationTimetableTab details={details} lines={servingLines} loading={loading} error={error} />}
+        {tab === "arrivals" && <StationArrivalsTab details={details} lines={servingLines} loading={loading} error={error} />}
+        {tab === "departures" && <StationDeparturesTab details={details} lines={servingLines} loading={loading} error={error} />}
       </div>
     </aside>
   );

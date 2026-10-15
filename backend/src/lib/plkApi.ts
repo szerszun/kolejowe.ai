@@ -2,8 +2,10 @@
  * Minimal client for PKP PLK's Open Railway Data API (pdp-api.plk-sa.pl),
  * matching the fetch-only style of src/jobs/openaiClient.ts -- no SDK.
  *
- * Free "Basic" tier is capped at 100 req/hour, 1000/day, so callers should
- * cache responses rather than hitting this on every request.
+ * Free "Basic" tier is capped at 100 req/hour, 1,000 req/day (confirmed from
+ * the API's own swagger doc and the X-RateLimit-* response headers below --
+ * NOT the 1,000/hour, 8,000/day the project owner initially recalled).
+ * Callers should cache responses rather than hitting this on every request.
  */
 const PLK_BASE = 'https://pdp-api.plk-sa.pl'
 
@@ -15,25 +17,71 @@ function apiKey(): string {
   return key
 }
 
+export class PlkRateLimitError extends Error {}
+
+/** Anything that isn't a 429: network failure, 4xx, 5xx -- i.e. "the API isn't working right now". */
+export class PlkApiError extends Error {}
+
+export interface PlkRateLimitStatus {
+  hourlyLimit: number | null
+  hourlyRemaining: number | null
+  dailyLimit: number | null
+  dailyRemaining: number | null
+}
+
+let lastRateLimitStatus: PlkRateLimitStatus = {
+  hourlyLimit: null,
+  hourlyRemaining: null,
+  dailyLimit: null,
+  dailyRemaining: null,
+}
+
+/** Quota state as of the most recent response -- null fields mean "no request has completed yet this process". */
+export function getLastRateLimitStatus(): PlkRateLimitStatus {
+  return lastRateLimitStatus
+}
+
+function toIntOrNull(value: string | null): number | null {
+  if (value == null) return null
+  const n = Number.parseInt(value, 10)
+  return Number.isFinite(n) ? n : null
+}
+
 async function plkFetch<T>(path: string, searchParams: Record<string, string | number | boolean | undefined>): Promise<T> {
   const url = new URL(path, PLK_BASE)
   for (const [key, value] of Object.entries(searchParams)) {
     if (value !== undefined) url.searchParams.set(key, String(value))
   }
-  const res = await fetch(url, {
-    headers: { 'X-API-Key': apiKey() },
-  })
+
+  let res: Response
+  try {
+    res = await fetch(url, { headers: { 'X-API-Key': apiKey() } })
+  } catch (err) {
+    throw new PlkApiError(`Could not reach PLK API at ${url.pathname}: ${err instanceof Error ? err.message : String(err)}`)
+  }
+
+  // The API reports live quota state on every response, including 429s --
+  // capture it regardless of status so callers can make pre-emptive
+  // decisions (see getLastRateLimitStatus / src/lib/liveMovements.ts).
+  lastRateLimitStatus = {
+    hourlyLimit: toIntOrNull(res.headers.get('X-RateLimit-Hourly-Limit')),
+    hourlyRemaining: toIntOrNull(res.headers.get('X-RateLimit-Hourly-Remaining')),
+    dailyLimit: toIntOrNull(res.headers.get('X-RateLimit-Daily-Limit')),
+    dailyRemaining: toIntOrNull(res.headers.get('X-RateLimit-Daily-Remaining')),
+  }
+
+  if (res.status === 429) {
+    throw new PlkRateLimitError(`PLK API ${url.pathname} -> HTTP 429: ${(await res.text()).slice(0, 300)}`)
+  }
   if (!res.ok) {
-    throw new Error(`PLK API ${url.pathname} -> HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`)
+    throw new PlkApiError(`PLK API ${url.pathname} -> HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`)
   }
   return (await res.json()) as T
 }
 
 export interface PlkStationDto {
-  stationId: number
+  id: number
   name: string
-  stationCodes: string[]
-  city?: string
 }
 
 interface PlkStationsResponse {
@@ -55,48 +103,57 @@ export async function fetchAllPlkStations(): Promise<PlkStationDto[]> {
   return all
 }
 
-export type PlkStopType = 'start' | 'stop' | 'end' | string
+/** Train status codes per the API: S=NotStarted, P=InProgress, C=Completed, X=Cancelled, Q=PartialCancelled. */
+export type PlkTrainStatus = 'S' | 'P' | 'C' | 'X' | 'Q' | string
 
-export interface PlkStopDto {
+export interface PlkOperationStationDto {
   stationId: number
-  sequenceNumber: number
-  plannedArrivalTime?: string | null
-  actualArrivalTime?: string | null
-  plannedDepartureTime?: string | null
-  actualDepartureTime?: string | null
-  platform?: string | null
-  stopType?: PlkStopType
+  plannedSequenceNumber?: number | null
+  actualSequenceNumber?: number | null
+  /** ISO date-time, UTC-naive (OperatingDate + planned time). Omitted unless withPlanned=true. */
+  plannedArrival?: string | null
+  plannedDeparture?: string | null
+  actualArrival?: string | null
+  actualDeparture?: string | null
+  arrivalDelayMinutes?: number | null
+  departureDelayMinutes?: number | null
+  isConfirmed?: boolean
 }
 
 export interface PlkTrainOperationDto {
   scheduleId: number
   orderId: number
+  trainOrderId: number
   operatingDate: string
-  stops: PlkStopDto[]
-  trainNumber: string
-  commercialTrainNumber?: string | null
-  carrierCode: string
-  status: string
-}
-
-export interface PlkStationDictionaryDto {
-  name: string
-  [key: string]: unknown
+  trainStatus: PlkTrainStatus | null
+  /**
+   * Stops along the route. With `fullRoutes: false` (the default, and what
+   * this client always sends) this is NOT the full route -- the API narrows
+   * it to just the stop(s) matching the `stations` filter, which is exactly
+   * what the caller wants, so there's no need to search for "our" station
+   * within the array.
+   */
+  stations: PlkOperationStationDto[]
 }
 
 interface PlkOperationsResponse {
   generatedAt: string
-  operations: PlkTrainOperationDto[]
-  stations: Record<string, PlkStationDictionaryDto>
-  services?: Record<string, unknown>
-  carriers: Record<string, string>
+  trains: PlkTrainOperationDto[]
+  /** Station dictionary (id -> name), only for ids referenced by `trains`. */
+  stations: Record<string, string>
 }
 
-/** Real-time operations (with planned times + delays) for one or more PLK station ids. */
+/**
+ * Real-time operations (with planned times + delays) for one or more PLK
+ * station ids, today. `withPlanned: true` is required to get planned
+ * times and delay minutes back at all -- without it the response only has
+ * actual times. Deliberately never passes `fullRoutes: true`: that returns
+ * every stop of every matched train nationwide, far beyond what's needed
+ * here and far more expensive against the 100 req/hour quota.
+ */
 export async function fetchOperationsForStations(stationIds: number[]): Promise<PlkOperationsResponse> {
   return plkFetch<PlkOperationsResponse>('/api/v1/operations', {
     stations: stationIds.join(','),
     withPlanned: true,
-    fullRoutes: true,
   })
 }

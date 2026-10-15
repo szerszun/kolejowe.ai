@@ -81,13 +81,13 @@ async function applyMatches() {
     }
     if (candidates.length > 1) {
       ambiguous++
-      ambiguousNames.push(`${station.name} (${candidates.map((c) => c.stationId).join(', ')})`)
+      ambiguousNames.push(`${station.name} (${candidates.map((c) => c.id).join(', ')})`)
       continue
     }
     await payload.update({
       collection: 'stations',
       id: station.id,
-      data: { plkStationId: candidates[0].stationId },
+      data: { plkStationId: candidates[0].id },
       overrideAccess: true,
     })
     matched++

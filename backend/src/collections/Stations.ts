@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { adminOrAgentWrite, adminOnly, publicRead, requireAdminToPublish } from '../access/roles'
+import { getLiveMovements } from '../lib/liveMovements'
 
 const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields'] => [
   { name: 'time', type: 'text', required: true, admin: { description: 'HH:mm, 24h' } },
@@ -46,6 +47,35 @@ export const Stations: CollectionConfig = {
   hooks: {
     beforeChange: [requireAdminToPublish],
   },
+  endpoints: [
+    {
+      path: '/:id/live',
+      method: 'get',
+      handler: async (req) => {
+        const id = req.routeParams?.id
+        if (typeof id !== 'string') {
+          return Response.json({ available: false }, { status: 400 })
+        }
+
+        const station = await req.payload
+          .findByID({ collection: 'stations', id, overrideAccess: true, depth: 0 })
+          .catch(() => null)
+
+        if (!station?.plkStationId) {
+          return Response.json({ available: false, reason: 'not_matched' })
+        }
+
+        try {
+          const result = await getLiveMovements(station.plkStationId)
+          if (!result.ok) return Response.json({ available: false, reason: result.reason })
+          return Response.json({ available: true, stale: result.stale, movements: result.movements })
+        } catch (err) {
+          req.payload.logger.error(err)
+          return Response.json({ available: false, reason: 'upstream_error' })
+        }
+      },
+    },
+  ],
   fields: [
     {
       name: 'id',

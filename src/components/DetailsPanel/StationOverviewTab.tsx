@@ -2,15 +2,18 @@ import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine, Station, StationDetails } from "../../types";
 import { getLineColor } from "../../utils/lineColors";
 import { SourceFooter } from "./SourceFooter";
+import { StationDataStatus } from "./StationDataStatus";
 
 interface StationOverviewTabProps {
   station: Station;
   servingLines: RailwayLine[];
   details: StationDetails | undefined;
+  loading: boolean;
+  error: boolean;
   onSelectLine: (id: string) => void;
 }
 
-export function StationOverviewTab({ station, servingLines, details, onSelectLine }: StationOverviewTabProps) {
+export function StationOverviewTab({ station, servingLines, details, loading, error, onSelectLine }: StationOverviewTabProps) {
   const { t } = useI18n();
 
   return (
@@ -71,7 +74,8 @@ export function StationOverviewTab({ station, servingLines, details, onSelectLin
         </>
       )}
 
-      {!details && <p className="empty-state">{t("stationOverviewNoDetails")}</p>}
+      {!details && <StationDataStatus loading={loading} error={error} />}
+      {!details && !loading && !error && <p className="empty-state">{t("stationOverviewNoDetails")}</p>}
 
       <h3>{t("stationPanelLinesTitle")}</h3>
       <ul className="line-list" role="listbox" aria-label={t("stationPanelLinesTitle")}>
