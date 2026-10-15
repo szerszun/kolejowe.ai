@@ -295,9 +295,11 @@ export function RailwayMap({
     const map = mapRef.current;
     if (!map || !ready) return;
     const filtered = lines.filter((l) => visibleLineIds.has(l.id));
-    (map.getSource("lines") as GeoJSONSource | undefined)?.setData(linesToGeoJSON(filtered));
-    (map.getSource("stations") as GeoJSONSource | undefined)?.setData(stationsToGeoJSON(filtered));
-    (map.getSource("tender-badges") as GeoJSONSource | undefined)?.setData(tenderBadgesToGeoJSON(filtered));
+    // setData() returns a promise (resolves once MapLibre's processed the data), but
+    // there's nothing useful to await here -- the map re-renders on its own once ready.
+    void (map.getSource("lines") as GeoJSONSource | undefined)?.setData(linesToGeoJSON(filtered));
+    void (map.getSource("stations") as GeoJSONSource | undefined)?.setData(stationsToGeoJSON(filtered));
+    void (map.getSource("tender-badges") as GeoJSONSource | undefined)?.setData(tenderBadgesToGeoJSON(filtered));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lines, visibleLineIds, ready]);
 

@@ -26,7 +26,10 @@ export function useLiveMovements(stationId: string | null, enabled: boolean): Us
     let cancelled = false;
 
     const load = () => {
-      fetchLiveMovements(stationId).then((result) => {
+      // fetchLiveMovements never rejects (it catches internally and resolves with an
+      // "upstream_error" reason instead) -- void documents that this is a deliberate
+      // fire-and-forget from a non-async context, not an overlooked await.
+      void fetchLiveMovements(stationId).then((result) => {
         if (cancelled) return;
         setMovements(result.movements);
         setReason(result.reason);

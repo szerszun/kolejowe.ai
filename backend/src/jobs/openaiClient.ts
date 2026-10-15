@@ -97,7 +97,11 @@ function parseResponse(result: ResponsesResult): string {
 
 /** Extracts and parses the last ```json fenced block in `text`. Throws if none is found or it doesn't parse. */
 export function extractJsonBlock<T>(text: string): T {
-  const matches = [...text.matchAll(/```json\s*([\s\S]*?)```/g)]
+  // No \s* after "```json": a lazy [\s\S]*? right next to a whitespace-matching
+  // quantifier is an overlapping-quantifier pattern (SonarCloud correctly flagged
+  // super-linear backtracking risk on non-matching input) -- dropping it costs nothing
+  // since JSON.parse already ignores the leading whitespace this would have skipped.
+  const matches = [...text.matchAll(/```json([\s\S]*?)```/g)]
   if (matches.length === 0) {
     throw new Error(`No \`\`\`json block found in model response: ${text.slice(0, 500)}`)
   }
