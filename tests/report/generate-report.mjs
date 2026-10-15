@@ -191,11 +191,47 @@ fs.mkdirSync(RESULTS_DIR, { recursive: true });
 fs.writeFileSync(OUT_JSON, JSON.stringify(summary, null, 2));
 fs.writeFileSync(OUT_HTML, renderHtml(summary, results));
 
+// GITHUB_STEP_SUMMARY is only set inside a GitHub Actions run -- appending here makes the
+// verdict visible directly on the run page's summary tab, which never depends on email
+// deliverability (unlike the separate "Email report to admin" step, which can silently
+// fail to reach an inbox even when the Action itself reports success).
+if (process.env.GITHUB_STEP_SUMMARY) {
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, renderMarkdown(summary));
+}
+
 console.log(`\nVerdict: ${summary.verdictLabel}`);
 console.log(`${summary.totals.passed}/${summary.totals.total} passed, ${summary.totals.failed} failed, ${summary.totals.skipped} skipped`);
 console.log(`Report: ${path.relative(ROOT, OUT_HTML)}`);
 
 process.exit(verdict === "not_ready" ? 1 : 0);
+
+function renderMarkdown(summary) {
+  const verdictEmoji = { not_ready: "🔴", caution: "🟡", ready: "🟢" }[summary.verdict];
+  const lines = [
+    `## ${verdictEmoji} kolejowe.ai regression report -- ${summary.verdictLabel}`,
+    "",
+    `${summary.totals.passed}/${summary.totals.total} passed, ${summary.totals.failed} failed, ${summary.totals.skipped} skipped`,
+    `(critical ${summary.bySeverity.critical.passed}/${summary.bySeverity.critical.total}, major ${summary.bySeverity.major.passed}/${summary.bySeverity.major.total}, minor ${summary.bySeverity.minor.passed}/${summary.bySeverity.minor.total})`,
+    "",
+  ];
+
+  if (summary.sonar) {
+    const s = summary.sonar;
+    lines.push(
+      `**SonarCloud Quality Gate: ${s.gateStatus}** -- bugs ${s.bugs}, vulnerabilities ${s.vulnerabilities}, code smells ${s.codeSmells}, security hotspots ${s.securityHotspots}, unit coverage ${s.coverage}`,
+      `[Full analysis](${s.dashboardUrl})`,
+      "",
+    );
+  }
+
+  if (summary.failures.length > 0) {
+    lines.push("### Failures", "", "| Severity | Area | Test |", "|---|---|---|");
+    for (const f of summary.failures) lines.push(`| ${f.severity} | ${f.area} | ${f.name} |`);
+    lines.push("");
+  }
+
+  return lines.join("\n") + "\n";
+}
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
