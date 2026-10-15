@@ -37,6 +37,29 @@ The frontend shows a loading/error state if it can't reach the backend at
 `http://localhost:3000` (configurable via `VITE_PAYLOAD_URL`) — see
 `backend/README.md` for first-time setup (seeding, the agent job, etc.).
 
+## Testing
+
+A regression suite covers the map, line/station details, the live PKP PLK
+feed (mocked — never calls the real rate-limited API), access control, and
+a handful of fixtures tied to specific bugs this project hit before. Run it
+with the backend already seeded and **not** already running on :3000/:5173
+(Playwright starts both itself):
+
+```bash
+npm test
+```
+
+This runs Vitest (pure-logic unit tests), the full Playwright suite (E2E +
+API + a real production-build smoke test), and writes an executive-readable
+go/no-go report to `test-results/executive-summary.html` — open it in a
+browser; `npm test`'s own exit code reflects its verdict (non-zero if any
+`[CRITICAL]`-tagged test failed). `npm run test:unit` / `npm run test:e2e`
+run either half alone; `npm run test:report` just regenerates the summary
+from the last run's results. See `tests/report/generate-report.mjs` for
+exactly how severity and the verdict are computed, and
+`.github/workflows/regression.yml` for the CI job that runs this on every
+push/PR to `main` and emails the admin the report after a push.
+
 ## What's implemented (draft scope)
 
 - Interactive map of 86 lines across Lower Silesia, most with **real
