@@ -19,6 +19,14 @@ async function openDepartures(page: Page, stationId: string) {
   return panel;
 }
 
+async function openArrivals(page: Page, stationId: string) {
+  await page.goto(`/station/${stationId}`);
+  const panel = page.locator("aside.details-panel");
+  await expect(panel).toBeVisible({ timeout: 15_000 });
+  await panel.getByRole("tab", { name: /arrivals/i }).click();
+  return panel;
+}
+
 test.describe("Live PKP PLK feed", () => {
   test("[CRITICAL] defaults to the live view (Timetable time unchecked)", async ({ page }) => {
     await mockLive(page, { available: true, stale: false, movements: [] });
@@ -93,5 +101,30 @@ test.describe("Live PKP PLK feed", () => {
     await checkbox.check();
     await expect(checkbox).toBeChecked();
     await expect(panel.locator(".live-tag")).toHaveCount(0);
+  });
+
+  // Same search logic as the Timetable tab (see station-details.spec.ts's "Timetable tab
+  // is searchable") -- both Departures and Arrivals filter the same underlying movement
+  // list, just keyed by destination vs. origin.
+  test("[MAJOR] Departures tab is searchable", async ({ page }) => {
+    await mockLive(page, { available: true, stale: false, movements: [] });
+    const panel = await openDepartures(page, SEEDED.wroclawGlowny.id);
+    const search = panel.getByPlaceholder(/destination|operator|line/i);
+    await expect(search).toBeVisible();
+    const rowsBefore = await panel.locator(".departure-card").count();
+    await search.fill("zzzz-no-such-destination-zzzz");
+    await expect(panel.getByText(/no connections match/i)).toBeVisible();
+    expect(rowsBefore).toBeGreaterThan(0);
+  });
+
+  test("[MAJOR] Arrivals tab is searchable", async ({ page }) => {
+    await mockLive(page, { available: true, stale: false, movements: [] });
+    const panel = await openArrivals(page, SEEDED.wroclawGlowny.id);
+    const search = panel.getByPlaceholder(/origin|operator|line/i);
+    await expect(search).toBeVisible();
+    const rowsBefore = await panel.locator(".departure-card").count();
+    await search.fill("zzzz-no-such-origin-zzzz");
+    await expect(panel.getByText(/no connections match/i)).toBeVisible();
+    expect(rowsBefore).toBeGreaterThan(0);
   });
 });
