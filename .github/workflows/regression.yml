@@ -261,3 +261,27 @@ jobs:
 
             This usually means a Render build failed and the previous commit is
             still quietly serving traffic -- check the Render dashboard directly.
+
+  # Independent of the jobs above: just needs the frontend build, not the backend or
+  # Playwright's browsers, so it stays fast. Vite's own build already warns past 500KB
+  # raw on a chunk, but that warning was just scrolling past in a build log with nothing
+  # acting on it -- the main JS bundle grew from 1.33MB to 1.36MB over the course of this
+  # project's mobile work without anyone noticing. This is what actually stops it from
+  # being ignored going forward.
+  bundle-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check bundle size budget
+        run: node scripts/check-bundle-size.mjs
