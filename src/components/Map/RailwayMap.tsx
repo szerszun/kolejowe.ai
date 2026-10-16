@@ -10,6 +10,7 @@ import { GeolocateControl, MapLibreMap, NavigationControl, setWorkerUrl, type Ge
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import type { RailwayLine } from "../../types";
+import { useI18n } from "../../i18n/I18nContext";
 import { getLineColor } from "../../utils/lineColors";
 import { boundsForCoordinates } from "../../utils/geo";
 import { regionBorder } from "../../data/regionBorder";
@@ -108,10 +109,12 @@ export function RailwayMap({
   onSelectLine,
   onSelectStation,
 }: RailwayMapProps) {
+  const { t } = useI18n();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [ready, setReady] = useState(false);
   const [hover, setHover] = useState<HoverInfo | null>(null);
+  const [geolocateError, setGeolocateError] = useState(false);
 
   // Init map once
   useEffect(() => {
@@ -130,10 +133,18 @@ export function RailwayMap({
     // after the initial fly-to. Station markers render from zoom 10 (labels from 11), both
     // comfortably inside this control's default fly-to zoom, so a located station is
     // immediately visible and clickable for its live departures.
-    map.addControl(
-      new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: false, showUserLocation: true }),
-      "top-left",
-    );
+    const geolocate = new GeolocateControl({
+      positionOptions: { enableHighAccuracy: true },
+      trackUserLocation: false,
+      showUserLocation: true,
+    });
+    // Silent otherwise: MapLibre's own button gives no visible sign a click failed (no
+    // error text, no state change an axe/visual check would catch) -- confirmed by
+    // actually triggering a failure (geolocation denied/unavailable) before shipping this,
+    // not assumed. Location services off, no GPS fix, and a timeout all surface here.
+    geolocate.on("error", () => setGeolocateError(true));
+    geolocate.on("geolocate", () => setGeolocateError(false));
+    map.addControl(geolocate, "top-left");
     mapRef.current = map;
 
     // The container can settle its final size (e.g. details panel opening/
@@ -377,6 +388,14 @@ export function RailwayMap({
       {hover && hover.kind === "station" && (
         <div className="map-tooltip" style={{ left: hover.x + 12, top: hover.y + 12 }}>
           <strong>{hover.name}</strong>
+        </div>
+      )}
+      {geolocateError && (
+        <div className="geolocate-error-banner" role="alert">
+          <span>{t("geolocateError")}</span>
+          <button type="button" aria-label={t("close")} onClick={() => setGeolocateError(false)}>
+            ✕
+          </button>
         </div>
       )}
     </div>
