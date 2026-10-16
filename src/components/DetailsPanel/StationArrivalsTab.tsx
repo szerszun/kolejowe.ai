@@ -31,6 +31,7 @@ export function StationArrivalsTab({ details, lines, loading, error }: StationAr
       placeLabel={(entry) => entry.origin}
       disclaimer={t("arrivalsDisclaimer")}
       emptyMessage={t("arrivalsEmpty")}
+      searchPlaceholder={t("arrivalsSearchPlaceholder")}
     />
   );
 }

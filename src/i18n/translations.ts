@@ -109,9 +109,11 @@ export const translations = {
     departuresEmpty: "Brak odjazdów w najbliższych 6 godzinach.",
     departuresDisclaimer:
       "Status pociągu pochodzi z systemu PKP PLK w czasie rzeczywistym tam, gdzie jest dostępny dla tej stacji i tego połączenia — w pozostałych przypadkach pokazywany jest wyłącznie rozkład.",
+    departuresSearchPlaceholder: "Szukaj po kierunku, przewoźniku lub numerze linii",
     arrivalsEmpty: "Brak przyjazdów w najbliższych 6 godzinach.",
     arrivalsDisclaimer:
       "Status pociągu pochodzi z systemu PKP PLK w czasie rzeczywistym tam, gdzie jest dostępny dla tej stacji i tego połączenia — w pozostałych przypadkach pokazywany jest wyłącznie rozkład.",
+    arrivalsSearchPlaceholder: "Szukaj po stacji początkowej, przewoźniku lub numerze linii",
     departureScheduled: "Rozkładowo",
     departureActual: "Faktycznie",
     departureStatusOnTime: "Punktualnie",
@@ -233,9 +235,11 @@ export const translations = {
     departuresEmpty: "No departures in the next 6 hours.",
     departuresDisclaimer:
       "Train status comes from PKP PLK's real-time system where available for this station and connection — otherwise only the timetable is shown.",
+    departuresSearchPlaceholder: "Search by destination, operator or line number",
     arrivalsEmpty: "No arrivals in the next 6 hours.",
     arrivalsDisclaimer:
       "Train status comes from PKP PLK's real-time system where available for this station and connection — otherwise only the timetable is shown.",
+    arrivalsSearchPlaceholder: "Search by origin, operator or line number",
     departureScheduled: "Scheduled",
     departureActual: "Actual",
     departureStatusOnTime: "On time",
