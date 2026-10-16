@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapLibreMap, NavigationControl, setWorkerUrl, type GeoJSONSource } from "maplibre-gl";
+import { GeolocateControl, MapLibreMap, NavigationControl, setWorkerUrl, type GeoJSONSource } from "maplibre-gl";
 // `?worker&url` makes Vite bundle this file as its own chunk and give back
 // its built URL. Needed because MapLibre otherwise resolves its worker at
 // runtime via `new URL(...)` relative to its own module -- a pattern Vite's
@@ -124,6 +124,16 @@ export function RailwayMap({
       attributionControl: { compact: true },
     });
     map.addControl(new NavigationControl({ showCompass: false }), "top-left");
+    // One-shot "find me" (trackUserLocation: false) rather than continuous tracking --
+    // this is for locating nearby stations before a trip, not turn-by-turn navigation,
+    // so there's no reason to keep watching position (or the battery/privacy cost of it)
+    // after the initial fly-to. Station markers render from zoom 10 (labels from 11), both
+    // comfortably inside this control's default fly-to zoom, so a located station is
+    // immediately visible and clickable for its live departures.
+    map.addControl(
+      new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: false, showUserLocation: true }),
+      "top-left",
+    );
     mapRef.current = map;
 
     // The container can settle its final size (e.g. details panel opening/
