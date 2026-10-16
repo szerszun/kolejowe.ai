@@ -277,11 +277,59 @@ a {
 .explorer-panel {
   border-right: 1px solid var(--color-border);
   background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Bottom-sheet handle/grabber -- hidden here, shown only by the mobile layout below
+   (.explorer-panel becomes a sheet over the map there; on desktop the panel is always
+   fully visible in its own column, so there's nothing to expand/collapse). */
+.explorer-handle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0.5rem 0.8rem 0.4rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.explorer-handle-grip {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-border);
+}
+
+.explorer-body {
+  flex: 1;
+  min-height: 0;
   padding: 0.8rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+/* Tapping outside the expanded mobile sheet collapses it -- without this there'd be no
+   way back to the map without finding the small handle again, which is now mostly
+   covered by the sheet itself. Only ever rendered while expanded, which (see
+   .explorer-handle above) only happens on mobile -- no media query needed here. */
+.explorer-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  border: none;
+  padding: 0;
+  background: rgba(27, 31, 75, 0.25);
+  cursor: pointer;
 }
 
 .search-input {
@@ -1001,15 +1049,66 @@ a {
 
 /* Responsive: mobile */
 @media (max-width: 760px) {
+  /* Header: the decorative cursive subtitle and full-size buttons don't fit next to
+     each other below ~430px -- at 390px (iPhone 13) the language toggle button rendered
+     entirely off-screen (measured: its left edge was already past the viewport's right
+     edge), making it permanently unreachable. Drop the subtitle and shrink everything
+     else so the whole header fits on one line with room to spare. */
+  .app-header {
+    padding: 0.5rem 0.8rem;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .app-header-subtitle {
+    display: none;
+  }
+  .app-header-logo {
+    font-size: 1.3rem;
+  }
+  .app-header-actions {
+    gap: 0.3rem;
+  }
+  .lang-toggle,
+  .feedback-toggle,
+  .about-toggle {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.8rem;
+  }
+
+  /* Map-first layout: the explorer panel (search/filters/list) used to sit in a fixed
+     40vh row above the map, but the search box and filter chips alone filled nearly all
+     of that budget -- the actual scrollable line list measured ~23px tall, well under one
+     row, making it impossible to browse or select anything from it. Instead, the map now
+     fills the full body and the explorer becomes a bottom sheet over it (same pattern as
+     .details-panel below), collapsed to just a tappable handle by default and expanding
+     to 75vh on tap -- consistent with how selecting a line/station already opens a sheet
+     from the bottom, and avoids two competing "primary" views fighting for a small screen. */
   .app-body {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr;
   }
+
   .explorer-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 12;
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
-    max-height: 40vh;
+    border-top: 1px solid var(--color-border);
+    border-radius: 16px 16px 0 0;
+    box-shadow: var(--shadow);
+    max-height: 56px;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
   }
+  .explorer-panel--expanded {
+    max-height: 75vh;
+  }
+  .explorer-handle {
+    display: flex;
+  }
+
   .details-panel {
     top: auto;
     height: 65vh;
