@@ -1,6 +1,6 @@
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine, Station, StationDetails } from "../../types";
-import { getLineColor } from "../../utils/lineColors";
+import { getContrastingTextColor, getLineColor } from "../../utils/lineColors";
 import { SourceFooter } from "./SourceFooter";
 import { StationDataStatus } from "./StationDataStatus";
 
@@ -79,18 +79,21 @@ export function StationOverviewTab({ station, servingLines, details, loading, er
 
       <h3>{t("stationPanelLinesTitle")}</h3>
       <ul className="line-list" role="listbox" aria-label={t("stationPanelLinesTitle")}>
-        {servingLines.map((line) => (
-          <li key={line.id}>
-            <button type="button" role="option" className="line-list-item" onClick={() => onSelectLine(line.id)}>
-              <span className="line-list-badge" style={{ backgroundColor: getLineColor(line.id) }}>
-                {line.number}
-              </span>
-              <span className="line-list-text">
-                <strong>{line.name}</strong>
-              </span>
-            </button>
-          </li>
-        ))}
+        {servingLines.map((line) => {
+          const badgeColor = getLineColor(line.id);
+          return (
+            <li key={line.id} role="presentation">
+              <button type="button" role="option" className="line-list-item" onClick={() => onSelectLine(line.id)}>
+                <span className="line-list-badge" style={{ backgroundColor: badgeColor, color: getContrastingTextColor(badgeColor) }}>
+                  {line.number}
+                </span>
+                <span className="line-list-text">
+                  <strong>{line.name}</strong>
+                </span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
       {details?.sources[0] && <SourceFooter source={details.sources[0]} />}

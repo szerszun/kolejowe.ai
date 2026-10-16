@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import type { RailwayLine } from "../../types";
 import { STATUS_LABEL_KEY } from "../../utils/status";
-import { getLineColor } from "../../utils/lineColors";
+import { getContrastingTextColor, getLineColor } from "../../utils/lineColors";
 import { OverviewTab } from "./OverviewTab";
 import { HistoryTab } from "./HistoryTab";
 import { TendersTab } from "./TendersTab";
@@ -18,12 +18,13 @@ interface DetailsPanelProps {
 export function DetailsPanel({ line, onClose, onSelectStation }: DetailsPanelProps) {
   const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("overview");
+  const badgeColor = getLineColor(line.id);
 
   return (
     <aside className="details-panel" aria-label={`${line.number} ${line.name}`}>
       <header className="details-panel-header">
         <div>
-          <span className="line-badge" style={{ backgroundColor: getLineColor(line.id) }}>
+          <span className="line-badge" style={{ backgroundColor: badgeColor, color: getContrastingTextColor(badgeColor) }}>
             {line.number}
           </span>
           <h2>{line.name}</h2>

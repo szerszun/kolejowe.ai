@@ -3,7 +3,7 @@ import type { RailwayLine } from "../../types";
 import type { FilterState } from "../../hooks/useLineFilters";
 import type { StationEntry } from "../../utils/stations";
 import { ALL_STATUSES, STATUS_COLORS, STATUS_LABEL_KEY } from "../../utils/status";
-import { getLineColor } from "../../utils/lineColors";
+import { getContrastingTextColor, getLineColor } from "../../utils/lineColors";
 import { StationIcon } from "./StationIcon";
 
 interface ExplorerPanelProps {
@@ -93,25 +93,36 @@ export function ExplorerPanel({
       <div className="results-scroll">
         <div className="line-list-header">{t("resultsCountLines", { count: filteredLines.length })}</div>
         <ul className="line-list" role="listbox" aria-label={t("listViewToggle")}>
-          {filteredLines.map((line) => (
-            <li key={line.id}>
-              <button
-                type="button"
-                role="option"
-                aria-selected={line.id === selectedLineId}
-                className={`line-list-item ${line.id === selectedLineId ? "line-list-item--active" : ""}`}
-                onClick={() => onSelectLine(line.id)}
-              >
-                <span className="line-list-badge" style={{ backgroundColor: getLineColor(line.id) }}>
-                  {line.number}
-                </span>
-                <span className="line-list-text">
-                  <strong>{line.name}</strong>
-                </span>
-              </button>
+          {filteredLines.map((line) => {
+            const badgeColor = getLineColor(line.id);
+            return (
+              // role="presentation" -- a <ul role="listbox"> may only contain role="option"
+              // (or role="group") children per ARIA; this <li> is purely a styling wrapper
+              // around the actual option button, so it must be removed from the a11y tree
+              // rather than present an unlabeled, context-less "listitem" of its own.
+              <li key={line.id} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={line.id === selectedLineId}
+                  className={`line-list-item ${line.id === selectedLineId ? "line-list-item--active" : ""}`}
+                  onClick={() => onSelectLine(line.id)}
+                >
+                  <span className="line-list-badge" style={{ backgroundColor: badgeColor, color: getContrastingTextColor(badgeColor) }}>
+                    {line.number}
+                  </span>
+                  <span className="line-list-text">
+                    <strong>{line.name}</strong>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+          {filteredLines.length === 0 && (
+            <li className="line-list-empty" role="presentation">
+              {t("noStationsSearchResult")}
             </li>
-          ))}
-          {filteredLines.length === 0 && <li className="line-list-empty">{t("noStationsSearchResult")}</li>}
+          )}
         </ul>
 
         {isSearching && (
@@ -121,7 +132,7 @@ export function ExplorerPanel({
             </div>
             <ul className="line-list" role="listbox" aria-label={t("stationsSectionTitle")}>
               {filteredStations.map((station) => (
-                <li key={station.id}>
+                <li key={station.id} role="presentation">
                   <button
                     type="button"
                     role="option"
@@ -138,7 +149,11 @@ export function ExplorerPanel({
                   </button>
                 </li>
               ))}
-              {filteredStations.length === 0 && <li className="line-list-empty">{t("noStationsSearchResult")}</li>}
+              {filteredStations.length === 0 && (
+                <li className="line-list-empty" role="presentation">
+                  {t("noStationsSearchResult")}
+                </li>
+              )}
             </ul>
           </>
         )}
