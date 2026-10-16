@@ -42,7 +42,7 @@ jobs:
         # Absent if the sonarcloud job failed before it could upload (e.g. checkout
         # error) -- generate-report.mjs treats a missing file as "unavailable", not fatal.
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: sonar-summary
           path: sonar-summary
