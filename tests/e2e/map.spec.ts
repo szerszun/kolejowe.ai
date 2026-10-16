@@ -60,6 +60,19 @@ test.describe("Interactive map", () => {
     await expect(page.getByRole("heading", { name: SEEDED.line274.name })).not.toBeVisible();
   });
 
+  test("[MINOR] the map legend can be collapsed and expanded again", async ({ page }) => {
+    await page.goto("/");
+    const legend = page.locator(".legend");
+    await expect(legend.getByText("Active passenger")).toBeVisible({ timeout: 15_000 });
+
+    const toggle = legend.getByRole("button", { name: /collapse legend/i });
+    await toggle.click();
+    await expect(legend.getByText("Active passenger")).not.toBeVisible();
+
+    await legend.getByRole("button", { name: /expand legend/i }).click();
+    await expect(legend.getByText("Active passenger")).toBeVisible();
+  });
+
   test("[MINOR] mobile viewport: selecting a line shows the details panel as a bottom sheet layout", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/line/${SEEDED.line274.number}`);
