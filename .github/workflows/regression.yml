@@ -144,3 +144,82 @@ jobs:
           name: sonar-summary
           path: sonar-summary/
           retention-days: 30
+
+  # Only on an actual push to main -- PRs don't trigger a Render deploy, so there's
+  # nothing new to verify yet. Deliberately independent of the `test`/`sonarcloud`
+  # jobs above: those build and test an ephemeral local checkout, which has already
+  # twice given a false sense of safety when the *real* Render deploy broke in a way
+  # the local build never could -- a missing production env var, and a backend build
+  # that failed on Render's isolated environment while passing locally. A failed
+  # Render build also leaves the *previous* commit quietly still serving traffic
+  # (no downtime, no obvious error), so a plain "is the site up" check wouldn't catch
+  # it either -- this polls for the specific commit SHA to actually be live.
+  production-smoke:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FRONTEND_URL: https://kolejoweai.onrender.com
+      BACKEND_URL: https://kolejowe-backend.onrender.com
+    steps:
+      - name: Wait for Render to finish deploying this commit
+        run: |
+          set -e
+          for i in $(seq 1 30); do
+            FRONTEND_COMMIT=$(curl -sf "$FRONTEND_URL/version.json" | jq -r .commit 2>/dev/null || echo "")
+            BACKEND_COMMIT=$(curl -sf "$BACKEND_URL/api/health" | jq -r .commit 2>/dev/null || echo "")
+            if [ "$FRONTEND_COMMIT" = "$GITHUB_SHA" ] && [ "$BACKEND_COMMIT" = "$GITHUB_SHA" ]; then
+              echo "Both services are live on $GITHUB_SHA."
+              exit 0
+            fi
+            echo "Attempt $i/30: frontend=$FRONTEND_COMMIT backend=$BACKEND_COMMIT (want $GITHUB_SHA) -- waiting 20s"
+            sleep 20
+          done
+          echo "::error::Timed out waiting for $GITHUB_SHA to go live (frontend=$FRONTEND_COMMIT backend=$BACKEND_COMMIT) -- a Render build likely failed while the previous commit kept serving traffic."
+          exit 1
+
+      - name: Backend serves real line data
+        run: |
+          set -e
+          COUNT=$(curl -sf "$BACKEND_URL/api/lines?limit=1" | jq '.docs | length' 2>/dev/null || echo 0)
+          [ "$COUNT" -ge 1 ] || { echo "::error::$BACKEND_URL/api/lines returned no docs."; exit 1; }
+
+      - name: Frontend serves the app shell
+        run: |
+          set -e
+          curl -sf "$FRONTEND_URL/" | grep -q '<div id="root">' || {
+            echo "::error::$FRONTEND_URL doesn't contain the app's mount point."
+            exit 1
+          }
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ **Production smoke test**: commit \`${{ github.sha }}\` is live and healthy on both services." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "🔴 **Production smoke test FAILED** for commit \`${{ github.sha }}\` -- see the failing step above." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Email on failure
+        if: failure()
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai PRODUCTION SMOKE TEST FAILED -- ${{ github.sha }}"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          body: |
+            Commit ${{ github.sha }} failed the post-deploy production smoke test.
+
+            Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}
+            Frontend: https://kolejoweai.onrender.com
+            Backend: https://kolejowe-backend.onrender.com
+
+            This usually means a Render build failed and the previous commit is
+            still quietly serving traffic -- check the Render dashboard directly.
