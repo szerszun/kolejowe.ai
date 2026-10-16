@@ -99,6 +99,15 @@ jobs:
           exit 1
 
   sonarcloud:
+    # GitHub withholds repository secrets from pull_request runs triggered by Dependabot
+    # (a deliberate security default -- a malicious/compromised dependency bump shouldn't
+    # get CI-level secret access). SONAR_TOKEN is empty there, so the scan would fail
+    # "Not authorized" on every single Dependabot PR regardless of actual code quality --
+    # confirmed directly on PR #19 (a TypeScript major bump) before adding this. A
+    # lockfile-only PR has near-zero code-quality signal for Sonar to add anyway; the
+    # `test` job's full regression suite (which does run, with secrets, on these PRs) is
+    # what actually verifies a bump didn't break anything.
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
