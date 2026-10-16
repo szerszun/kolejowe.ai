@@ -67,7 +67,7 @@ test("[CRITICAL] regression: the production build serves MapLibre's worker scrip
   // signal that the build's worker asset actually loaded, not just that the page returned 200.
   // (Needs this preview server's origin allowed through the backend's CORS_ORIGINS -- see
   // the "build-smoke.spec.ts" comment on the backend webServer entry in playwright.config.ts.)
-  await expect(page.getByText(/lines found/i)).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator(".line-list-header")).toBeVisible({ timeout: 20_000 });
 
   const workerFailures = failedRequests.filter((f) => /worker/i.test(f));
   expect(workerFailures).toEqual([]);

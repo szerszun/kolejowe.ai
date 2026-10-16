@@ -15,7 +15,7 @@ async function scan(page: import("@playwright/test").Page) {
 test.describe("Accessibility", () => {
   test("[MAJOR] home/map view has no WCAG A/AA violations", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText(/lines found/i)).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".line-list-header")).toBeVisible({ timeout: 15_000 });
     const results = await scan(page);
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
