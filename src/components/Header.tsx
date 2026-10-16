@@ -21,7 +21,7 @@ export function Header() {
           type="button"
           className="lang-toggle"
           onClick={() => setLanguage(language === "pl" ? "en" : "pl")}
-          aria-label="Toggle language"
+          aria-label={t("langToggleAria")}
         >
           {t("langToggle")}
         </button>

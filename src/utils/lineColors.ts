@@ -66,3 +66,32 @@ export function getLineColor(lineId: string): string {
   if (!lineId) return "#374151";
   return PALETTE[hashString(lineId) % PALETTE.length];
 }
+
+// Pure black, not --color-text (#1b1f2b) -- the extra headroom is needed to clear
+// 4.5:1 against the palette's mid-brightness entries (verified against all 46 colors).
+const DARK_TEXT = "#000000";
+const WHITE_TEXT = "#ffffff";
+
+// WCAG relative luminance (https://www.w3.org/TR/WCAG21/#dfn-relative-luminance).
+function relativeLuminance(hex: string): number {
+  const [r, g, b] = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map((h) => {
+    const c = Number.parseInt(h, 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrastRatio(hexA: string, hexB: string): number {
+  const [lighter, darker] = [relativeLuminance(hexA), relativeLuminance(hexB)].sort((a, b) => b - a);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * Picks white or dark text for a badge on this background color -- the 45-color
+ * palette above was tuned for distinguishability on the map, not for a fixed
+ * white-text badge to stay WCAG AA (4.5:1) against every one of them. Whichever
+ * of white/dark gives the higher contrast against this specific background wins.
+ */
+export function getContrastingTextColor(backgroundHex: string): string {
+  return contrastRatio(backgroundHex, DARK_TEXT) > contrastRatio(backgroundHex, WHITE_TEXT) ? DARK_TEXT : WHITE_TEXT;
+}

@@ -54,6 +54,7 @@ export const translations = {
     autoMatched: "dopasowanie automatyczne",
     confirmed: "potwierdzone",
     langToggle: "EN",
+    langToggleAria: "EN – przełącz język na angielski",
     aboutButton: "O aplikacji",
     aboutModalTitle: "O aplikacji kolejowe.ai",
     aboutIntro:
@@ -178,6 +179,7 @@ export const translations = {
     autoMatched: "auto-matched",
     confirmed: "confirmed",
     langToggle: "PL",
+    langToggleAria: "PL – switch language to Polish",
     aboutButton: "About",
     aboutModalTitle: "About kolejowe.ai",
     aboutIntro:

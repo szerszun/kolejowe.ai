@@ -3,7 +3,7 @@ import { useI18n } from "../../i18n/I18nContext";
 import { useTimetableInfo } from "../../hooks/useTimetableInfo";
 import { useLiveMovements } from "../../hooks/useLiveMovements";
 import type { DaysOfOperation, RailwayLine } from "../../types";
-import { getLineColor } from "../../utils/lineColors";
+import { getContrastingTextColor, getLineColor } from "../../utils/lineColors";
 import { applyLiveData, getUpcomingMovements } from "../../utils/departures";
 import { TimetableValidityBanner } from "./TimetableValidityBanner";
 
@@ -86,10 +86,11 @@ export function StationMovementList<T extends MovementEntry>({
             // live view gets neutral styling rather than an implied (fabricated) "on time".
             const showStatus = !effectiveTimetableOnly && movement.isLive;
             const cardStatus = showStatus ? movement.status : "on_time";
+            const badgeColor = line ? getLineColor(line.id) : "#374151";
             return (
               <li key={movement.entry.id} className={`departure-card departure-card--${cardStatus}`}>
                 <div className="departure-card-header">
-                  <span className="line-list-badge" style={{ backgroundColor: line ? getLineColor(line.id) : "#374151" }}>
+                  <span className="line-list-badge" style={{ backgroundColor: badgeColor, color: getContrastingTextColor(badgeColor) }}>
                     {line?.number ?? movement.entry.lineId}
                   </span>
                   <strong className="departure-destination">{placeLabel(movement.entry)}</strong>

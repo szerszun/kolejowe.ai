@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useI18n } from "../../i18n/I18nContext";
 import { useTimetableInfo } from "../../hooks/useTimetableInfo";
 import type { DaysOfOperation, RailwayLine, StationDetails } from "../../types";
-import { getLineColor } from "../../utils/lineColors";
+import { getContrastingTextColor, getLineColor } from "../../utils/lineColors";
 import { normalize } from "../../utils/text";
 import { TimetableValidityBanner } from "./TimetableValidityBanner";
 import { StationDataStatus } from "./StationDataStatus";
@@ -72,10 +72,11 @@ export function StationTimetableTab({ details, lines, loading, error }: StationT
         <ul className="timetable-list">
           {sorted.map((entry) => {
             const line = lineById.get(entry.lineId);
+            const badgeColor = line ? getLineColor(line.id) : "#374151";
             return (
               <li key={entry.id} className="timetable-row">
                 <span className="timetable-time">{entry.time}</span>
-                <span className="line-list-badge" style={{ backgroundColor: line ? getLineColor(line.id) : "#374151" }}>
+                <span className="line-list-badge" style={{ backgroundColor: badgeColor, color: getContrastingTextColor(badgeColor) }}>
                   {line?.number ?? entry.lineId}
                 </span>
                 <span className="timetable-destination">

@@ -27,17 +27,17 @@ test.describe("Internationalization", () => {
     await page.goto("/");
     await expect(page.getByPlaceholder("Search line or station")).toBeVisible({ timeout: 15_000 });
 
-    await page.getByRole("button", { name: /toggle language/i }).click();
+    await page.getByRole("button", { name: /language|język/i }).click();
     await expect(page.getByPlaceholder("Szukaj linii lub stacji")).toBeVisible();
 
-    await page.getByRole("button", { name: /toggle language/i }).click();
+    await page.getByRole("button", { name: /language|język/i }).click();
     await expect(page.getByPlaceholder("Search line or station")).toBeVisible();
   });
 
   test("[MINOR] a chosen language persists across a reload", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByPlaceholder("Search line or station")).toBeVisible({ timeout: 15_000 });
-    await page.getByRole("button", { name: /toggle language/i }).click();
+    await page.getByRole("button", { name: /language|język/i }).click();
     await expect(page.getByPlaceholder("Szukaj linii lub stacji")).toBeVisible();
 
     await page.reload();
