@@ -512,10 +512,36 @@ a {
   font-size: 0.78rem;
   z-index: 5;
 }
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.15rem;
+}
 .legend-title {
   display: block;
-  margin-bottom: 0.15rem;
   color: var(--color-navy);
+}
+.legend-toggle {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-navy);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.legend-toggle:hover {
+  border-color: var(--color-primary);
 }
 .legend-hint {
   margin: 0 0 0.5rem;
