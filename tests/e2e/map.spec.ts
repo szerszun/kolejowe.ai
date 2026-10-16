@@ -89,6 +89,29 @@ test.describe("Interactive map", () => {
     });
   });
 
+  test("[MAJOR] regression: a failed geolocation attempt shows a dismissible error, not silent failure", async ({
+    page,
+    context,
+  }) => {
+    await context.grantPermissions(["geolocation"]);
+    // CDP override with no coordinates -> the browser reports POSITION_UNAVAILABLE, the same
+    // as a real device with location services off or no GPS fix. Confirmed by hand before this
+    // test existed that MapLibre's own button gives zero visible feedback on failure -- no
+    // error text, no state change -- which is exactly the gap this regression test locks in.
+    const client = await context.newCDPSession(page);
+    await client.send("Emulation.setGeolocationOverride", {});
+
+    await page.goto("/");
+    await page.locator(".line-list-header").waitFor({ timeout: 15_000 });
+
+    await page.locator(".maplibregl-ctrl-geolocate").click();
+    const banner = page.getByRole("alert");
+    await expect(banner).toBeVisible({ timeout: 10_000 });
+
+    await banner.getByRole("button", { name: /close/i }).click();
+    await expect(banner).not.toBeVisible();
+  });
+
   test("[MINOR] mobile viewport: selecting a line shows the details panel as a bottom sheet layout", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/line/${SEEDED.line274.number}`);
