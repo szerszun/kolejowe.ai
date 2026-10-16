@@ -162,20 +162,58 @@ jobs:
       FRONTEND_URL: https://kolejoweai.onrender.com
       BACKEND_URL: https://kolejowe-backend.onrender.com
     steps:
+      - uses: actions/checkout@v4
+        with:
+          # Only need enough history to diff this commit against its parent, below.
+          fetch-depth: 2
+
+      # Render's two services each have their own rootDir (backend/ vs .) and skip
+      # rebuilding when a push doesn't touch their own path -- so a frontend-only commit
+      # never changes the backend's deployed commit, and vice versa. Waiting for BOTH
+      # services to report this exact SHA regardless would time out and fail on nearly
+      # every normal commit, since few touch both sides at once (confirmed: this is
+      # exactly what happened to commit 2e083aa, a frontend-only change -- not a real
+      # deploy failure). Only require a match from the service(s) this push actually
+      # touched; the functional checks below still run unconditionally either way.
+      - name: Determine which service(s) this push actually changed
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD || echo "")
+          BACKEND_FILES=$(echo "$CHANGED" | grep '^backend/' || true)
+          NON_BACKEND_FILES=$(echo "$CHANGED" | grep -v '^backend/' || true)
+          # Deliberately two separate single-purpose greps rather than one combining -q
+          # and -v -- that combination gave inconsistent exit codes on at least one real
+          # grep implementation (ugrep) when testing this locally, so it's not trusted
+          # here even though GNU grep (what this runner actually uses) gets it right.
+          [ -n "$BACKEND_FILES" ] && echo "backend=true" >> "$GITHUB_OUTPUT" || echo "backend=false" >> "$GITHUB_OUTPUT"
+          [ -n "$NON_BACKEND_FILES" ] && echo "frontend=true" >> "$GITHUB_OUTPUT" || echo "frontend=false" >> "$GITHUB_OUTPUT"
+
       - name: Wait for Render to finish deploying this commit
+        env:
+          CHECK_FRONTEND: ${{ steps.changed.outputs.frontend }}
+          CHECK_BACKEND: ${{ steps.changed.outputs.backend }}
         run: |
           set -e
+          echo "This push changed -- frontend: $CHECK_FRONTEND, backend: $CHECK_BACKEND"
           for i in $(seq 1 30); do
-            FRONTEND_COMMIT=$(curl -sf "$FRONTEND_URL/version.json" | jq -r .commit 2>/dev/null || echo "")
-            BACKEND_COMMIT=$(curl -sf "$BACKEND_URL/api/health" | jq -r .commit 2>/dev/null || echo "")
-            if [ "$FRONTEND_COMMIT" = "$GITHUB_SHA" ] && [ "$BACKEND_COMMIT" = "$GITHUB_SHA" ]; then
-              echo "Both services are live on $GITHUB_SHA."
+            frontend_ok=true
+            backend_ok=true
+            if [ "$CHECK_FRONTEND" = "true" ]; then
+              FRONTEND_COMMIT=$(curl -sf "$FRONTEND_URL/version.json" | jq -r .commit 2>/dev/null || echo "")
+              [ "$FRONTEND_COMMIT" = "$GITHUB_SHA" ] || frontend_ok=false
+            fi
+            if [ "$CHECK_BACKEND" = "true" ]; then
+              BACKEND_COMMIT=$(curl -sf "$BACKEND_URL/api/health" | jq -r .commit 2>/dev/null || echo "")
+              [ "$BACKEND_COMMIT" = "$GITHUB_SHA" ] || backend_ok=false
+            fi
+            if [ "$frontend_ok" = "true" ] && [ "$backend_ok" = "true" ]; then
+              echo "The service(s) this push changed are live on $GITHUB_SHA."
               exit 0
             fi
-            echo "Attempt $i/30: frontend=$FRONTEND_COMMIT backend=$BACKEND_COMMIT (want $GITHUB_SHA) -- waiting 20s"
+            echo "Attempt $i/30: frontend=${FRONTEND_COMMIT:-(unchanged, not checked)} backend=${BACKEND_COMMIT:-(unchanged, not checked)} (want $GITHUB_SHA) -- waiting 20s"
             sleep 20
           done
-          echo "::error::Timed out waiting for $GITHUB_SHA to go live (frontend=$FRONTEND_COMMIT backend=$BACKEND_COMMIT) -- a Render build likely failed while the previous commit kept serving traffic."
+          echo "::error::Timed out waiting for $GITHUB_SHA to go live (frontend=${FRONTEND_COMMIT:-n/a} backend=${BACKEND_COMMIT:-n/a}) -- a Render build likely failed while the previous commit kept serving traffic."
           exit 1
 
       - name: Backend serves real line data
