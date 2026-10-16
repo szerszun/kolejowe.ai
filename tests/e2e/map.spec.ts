@@ -73,6 +73,22 @@ test.describe("Interactive map", () => {
     await expect(legend.getByText("Active passenger")).toBeVisible();
   });
 
+  test.describe("find-me geolocation control", () => {
+    test.use({ geolocation: { latitude: 51.1079, longitude: 17.0385 }, permissions: ["geolocation"] });
+
+    test("[MAJOR] clicking find-me centers the map on the user's location", async ({ page }) => {
+      await page.goto("/");
+      await page.locator(".line-list-header").waitFor({ timeout: 15_000 });
+
+      await page.locator(".maplibregl-ctrl-geolocate").click();
+
+      // MapLibre's GeolocateControl renders a dot marker at the resolved position once
+      // geolocation succeeds -- the most direct signal available from the DOM that the
+      // fly-to actually completed, without reaching into the map's internal camera state.
+      await expect(page.locator(".maplibregl-user-location-dot")).toBeVisible({ timeout: 10_000 });
+    });
+  });
+
   test("[MINOR] mobile viewport: selecting a line shows the details panel as a bottom sheet layout", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/line/${SEEDED.line274.number}`);
