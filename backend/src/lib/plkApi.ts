@@ -157,3 +157,61 @@ export async function fetchOperationsForStations(stationIds: number[]): Promise<
     withPlanned: true,
   })
 }
+
+export interface PlkDataVersion {
+  dataVersion: string | null
+  /** Changes specifically when the *planned* timetable changes -- the signal sync-timetables.ts polls for. */
+  schedulesVersion: string | null
+  operationsVersion: string | null
+  timestamp: string
+}
+
+/** Cheap poll target: one small response, no quota-relevant payload, to check whether a full schedule re-fetch is worth doing at all. */
+export async function fetchDataVersion(): Promise<PlkDataVersion> {
+  return plkFetch<PlkDataVersion>('/api/v1/data-version', {})
+}
+
+export interface PlkScheduleStop {
+  stationId: number
+  orderNumber: number
+  arrivalTime?: string | null
+  departureTime?: string | null
+  departurePlatform?: string | null
+  departureTrainNumber?: string | null
+  arrivalTrainNumber?: string | null
+}
+
+export interface PlkScheduleRoute {
+  scheduleId: number
+  orderId: number
+  trainOrderId: number
+  name?: string | null
+  carrierCode?: string | null
+  operatingDates: string[]
+  stations: PlkScheduleStop[]
+}
+
+interface PlkSchedulesResponse {
+  generatedAt: string
+  period: { from: string; to: string }
+  routes: PlkScheduleRoute[]
+}
+
+/**
+ * The planned (not real-time) schedule for a batch of stations on one day -- what
+ * sync-timetables.ts diffs against the published data. Batched (comma-separated
+ * `stations`, any-match) rather than one call per station deliberately: with ~340
+ * PLK-matched stations in this project's dataset and only a 100 req/hour quota,
+ * per-station calls would blow the budget in well under an hour. Confirmed live that
+ * a 3-station batch returns all three stations' routes in one response before relying
+ * on it; the caller (syncTimetables.ts) is responsible for chunking the full station
+ * list to a safe batch size.
+ */
+export async function fetchSchedulesForStations(stationIds: number[], date: string): Promise<PlkScheduleRoute[]> {
+  const res = await plkFetch<PlkSchedulesResponse>('/api/v1/schedules', {
+    stations: stationIds.join(','),
+    dateFrom: date,
+    dateTo: date,
+  })
+  return res.routes
+}

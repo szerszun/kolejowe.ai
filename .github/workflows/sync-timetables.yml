@@ -1,0 +1,103 @@
+name: Timetable sync
+
+# Fully cloud, no local machine involved. Two separate steps/emails by design (not one
+# combined "done" email): a cheap version check first, which can email "amendment
+# detected" immediately, before the much slower batch sync (confirmed in testing: a few
+# minutes, not seconds, for ~340 PLK-matched stations) runs as its own later step and
+# sends its own "completed" email once it's actually done.
+on:
+  schedule:
+    - cron: "0 3 * * *" # ~05:00 Warsaw time, before most commuters check
+  workflow_dispatch: {}
+
+env:
+  PAYLOAD_URL: https://kolejowe-backend.onrender.com
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
+
+      # Writes go out as the dedicated admin-role timetable-sync account (see
+      # setupTimetableSyncUser.ts), not the regular agent account every other job uses
+      # -- that's what lets this job publish directly, with no draft/review step, while
+      # every other scheduled job keeps requiring one.
+      - name: Check for a timetable amendment
+        id: check
+        working-directory: backend
+        env:
+          AGENT_API_KEY: ${{ secrets.PROD_TIMETABLE_SYNC_API_KEY }}
+        run: npm run agent:check-timetable-version
+
+      - name: Email -- amendment detected, updating
+        if: steps.check.outputs.changed == 'true'
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai: timetable amendment detected, updating -- ${{ github.run_id }}"
+          to: szerszun@gmail.com
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          body: |
+            PKP PLK's published timetable has changed since the last check.
+            Updating the app's station timetables now -- a second email will confirm once it's done.
+
+            Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}
+
+      - name: Sync timetables
+        id: sync
+        if: steps.check.outputs.changed == 'true'
+        working-directory: backend
+        env:
+          AGENT_API_KEY: ${{ secrets.PROD_TIMETABLE_SYNC_API_KEY }}
+          PLK_API_KEY: ${{ secrets.PLK_API_KEY }}
+        run: npm run agent:sync-timetables
+
+      - name: Email -- update completed
+        if: always() && steps.check.outputs.changed == 'true' && steps.sync.outcome == 'success'
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai: timetable update completed -- ${{ github.run_id }}"
+          to: szerszun@gmail.com
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          body: ${{ steps.sync.outputs.summary_text }}
+
+      - name: Email -- sync failed
+        if: always() && steps.check.outputs.changed == 'true' && steps.sync.outcome == 'failure'
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai: timetable sync FAILED -- ${{ github.run_id }}"
+          to: szerszun@gmail.com
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          body: |
+            An amendment was detected, but the sync job crashed before finishing.
+            Nothing was left half-written (each station write is independent and
+            whatever succeeded before the crash stays applied) -- but check the log.
+
+            Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}

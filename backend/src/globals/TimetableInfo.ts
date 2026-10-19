@@ -25,5 +25,13 @@ export const TimetableInfo: GlobalConfig = {
       type: 'text',
       admin: { description: 'Where this timetable data came from, e.g. a GTFS feed name/URL.' },
     },
+    {
+      name: 'plkSchedulesVersion',
+      type: 'text',
+      admin: {
+        description:
+          "Last-seen value of PKP PLK's own schedulesVersion GUID (from GET /api/v1/data-version) -- used by the sync-timetables job to detect a real amendment without re-fetching every station's schedule on every run.",
+      },
+    },
   ],
 }

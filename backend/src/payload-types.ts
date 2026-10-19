@@ -699,6 +699,10 @@ export interface TimetableInfo {
    * Where this timetable data came from, e.g. a GTFS feed name/URL.
    */
   source?: string | null;
+  /**
+   * Last-seen value of PKP PLK's own schedulesVersion GUID (from GET /api/v1/data-version) -- used by the sync-timetables job to detect a real amendment without re-fetching every station's schedule on every run.
+   */
+  plkSchedulesVersion?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -710,6 +714,7 @@ export interface TimetableInfoSelect<T extends boolean = true> {
   validFrom?: T;
   validTo?: T;
   source?: T;
+  plkSchedulesVersion?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
