@@ -49,6 +49,80 @@ export async function patchLine(
   return (await res.json()) as { doc: Record<string, unknown> }
 }
 
+export async function getStation(id: string): Promise<Record<string, unknown>> {
+  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}`, { headers: authHeaders() })
+  if (!res.ok) throw new Error(`GET /api/stations/${id} -> ${res.status}`)
+  return (await res.json()) as Record<string, unknown>
+}
+
+/**
+ * No `draft` option here, unlike patchLine -- every caller of this is the
+ * timetable-sync job, which authenticates as the dedicated admin-role
+ * sync account (see setupTimetableSyncUser.ts) specifically so its writes
+ * publish directly. requireAdminToPublish only forces drafts back for a
+ * non-admin identity, so this intentionally has no way to request draft
+ * mode; if this function is ever reused by an agent-role job, that job
+ * would need its own explicit `draft: true` the way patchLine does.
+ */
+export async function patchStation(id: string, body: Record<string, unknown>): Promise<{ doc: Record<string, unknown> }> {
+  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) {
+    throw new Error(`PATCH /api/stations/${id} -> ${res.status}: ${await res.text()}`)
+  }
+  return (await res.json()) as { doc: Record<string, unknown> }
+}
+
+export type MovementEntryDoc = {
+  id: string
+  time: string
+  trainNumber?: string
+  platform?: string
+}
+
+export type PlkMatchedStation = {
+  id: string
+  plkStationId: number
+  timetable: MovementEntryDoc[]
+  arrivals: MovementEntryDoc[]
+}
+
+/** Every station with a plkStationId -- limit=0 asks Payload for the whole result set in one response. */
+export async function listPlkMatchedStations(): Promise<PlkMatchedStation[]> {
+  const url = `${PAYLOAD_URL}/api/stations?where[plkStationId][exists]=true&limit=0&depth=0`
+  const res = await fetch(url, { headers: authHeaders() })
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`)
+  const { docs } = (await res.json()) as { docs: PlkMatchedStation[] }
+  return docs
+}
+
+export async function getTimetableInfo(): Promise<Record<string, unknown>> {
+  const res = await fetch(`${PAYLOAD_URL}/api/globals/timetable-info`, { headers: authHeaders() })
+  if (!res.ok) throw new Error(`GET /api/globals/timetable-info -> ${res.status}`)
+  return (await res.json()) as Record<string, unknown>
+}
+
+/**
+ * POST, not PATCH -- Payload's REST API updates a global via POST /api/globals/:slug
+ * (a global is a singleton, so there's no collection-item PATCH-vs-PUT distinction to
+ * make). Confirmed the hard way: PATCH 404s ("Route not found") against a real running
+ * instance before this fix.
+ */
+export async function patchTimetableInfo(body: Record<string, unknown>): Promise<Record<string, unknown>> {
+  const res = await fetch(`${PAYLOAD_URL}/api/globals/timetable-info`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) {
+    throw new Error(`POST /api/globals/timetable-info -> ${res.status}: ${await res.text()}`)
+  }
+  return (await res.json()) as Record<string, unknown>
+}
+
 export type SourceEntry = {
   id?: string
   section: string
