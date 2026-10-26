@@ -12,6 +12,7 @@
 import 'dotenv/config'
 import fs from 'node:fs'
 import { fetchDataVersion } from '../lib/plkApi'
+import { sanitizeForLog } from '../lib/sanitizeForLog'
 import { getTimetableInfo } from './payloadClient'
 
 function setOutput(name: string, value: string) {
@@ -27,8 +28,8 @@ async function run() {
   const version = await fetchDataVersion()
   const changed = Boolean(version.schedulesVersion) && version.schedulesVersion !== lastVersion
 
-  console.log(`Last-seen schedulesVersion: ${lastVersion ?? '(none)'}`)
-  console.log(`Current schedulesVersion:   ${version.schedulesVersion ?? '(unavailable)'}`)
+  console.log(`Last-seen schedulesVersion: ${lastVersion === null ? '(none)' : sanitizeForLog(lastVersion)}`)
+  console.log(`Current schedulesVersion:   ${version.schedulesVersion ? sanitizeForLog(version.schedulesVersion) : '(unavailable)'}`)
   console.log(changed ? 'Amendment detected.' : 'No amendment -- unchanged since the last run.')
 
   setOutput('changed', changed ? 'true' : 'false')

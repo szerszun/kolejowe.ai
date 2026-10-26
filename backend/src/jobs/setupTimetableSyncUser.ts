@@ -22,6 +22,7 @@ import 'dotenv/config'
 import crypto from 'crypto'
 import { getPayload } from 'payload'
 
+import { sanitizeForLog } from '../lib/sanitizeForLog'
 import config from '../payload.config'
 
 const SYNC_EMAIL = process.env.TIMETABLE_SYNC_EMAIL || 'timetable-sync-agent@kolejowe.ai'
@@ -60,7 +61,7 @@ async function run() {
       data: { role: 'admin', enableAPIKey: true, apiKey },
       overrideAccess: true,
     })
-    console.log(`Rotated API key for existing timetable-sync user (${SYNC_EMAIL}).`)
+    console.log(`Rotated API key for existing timetable-sync user (${sanitizeForLog(SYNC_EMAIL)}).`)
   } else {
     await payload.create({
       collection: 'users',
@@ -73,7 +74,7 @@ async function run() {
       },
       overrideAccess: true,
     })
-    console.log(`Created timetable-sync user (${SYNC_EMAIL}), role: admin.`)
+    console.log(`Created timetable-sync user (${sanitizeForLog(SYNC_EMAIL)}), role: admin.`)
   }
 
   console.log(`\nPROD_TIMETABLE_SYNC_API_KEY=${apiKey}\n`)
