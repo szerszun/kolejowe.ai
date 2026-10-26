@@ -37,6 +37,7 @@ jobs:
         working-directory: backend
         env:
           AGENT_API_KEY: ${{ secrets.PROD_TIMETABLE_SYNC_API_KEY }}
+          PLK_API_KEY: ${{ secrets.PLK_API_KEY }}
         run: npm run agent:check-timetable-version
 
       - name: Email -- amendment detected, updating
