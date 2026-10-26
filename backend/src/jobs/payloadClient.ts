@@ -7,6 +7,28 @@
  */
 export const PAYLOAD_URL = process.env.PAYLOAD_URL || 'http://localhost:3000'
 
+/**
+ * For the idempotent writes the timetable sync makes (PATCH a station, POST the
+ * timetable-info global): retries a 5xx with backoff instead of failing outright. Render
+ * answered the final timetable-info write of a ~35-minute sync with a 502 and the whole
+ * run was lost; the backend was healthy again seconds later.
+ */
+const RETRY_DELAYS_MS = [5_000, 15_000, 45_000]
+
+async function fetchRetrying5xx(url: string, init: RequestInit): Promise<Response> {
+  for (const delay of RETRY_DELAYS_MS) {
+    const res = await fetch(url, init)
+    if (res.status < 500) return res
+    await new Promise((resolve) => setTimeout(resolve, delay))
+  }
+  return fetch(url, init)
+}
+
+/** Error bodies can be a whole HTML error page (Render's 502 is ~100KB) -- keep the log/email readable. */
+async function errorBody(res: Response): Promise<string> {
+  return (await res.text()).slice(0, 300)
+}
+
 export function authHeaders(): Record<string, string> {
   const key = process.env.AGENT_API_KEY
   if (!key) {
@@ -65,13 +87,13 @@ export async function getStation(id: string): Promise<Record<string, unknown>> {
  * would need its own explicit `draft: true` the way patchLine does.
  */
 export async function patchStation(id: string, body: Record<string, unknown>): Promise<{ doc: Record<string, unknown> }> {
-  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}`, {
+  const res = await fetchRetrying5xx(`${PAYLOAD_URL}/api/stations/${id}`, {
     method: 'PATCH',
     headers: authHeaders(),
     body: JSON.stringify(body),
   })
   if (!res.ok) {
-    throw new Error(`PATCH /api/stations/${id} -> ${res.status}: ${await res.text()}`)
+    throw new Error(`PATCH /api/stations/${id} -> ${res.status}: ${await errorBody(res)}`)
   }
   return (await res.json()) as { doc: Record<string, unknown> }
 }
@@ -112,13 +134,13 @@ export async function getTimetableInfo(): Promise<Record<string, unknown>> {
  * instance before this fix.
  */
 export async function patchTimetableInfo(body: Record<string, unknown>): Promise<Record<string, unknown>> {
-  const res = await fetch(`${PAYLOAD_URL}/api/globals/timetable-info`, {
+  const res = await fetchRetrying5xx(`${PAYLOAD_URL}/api/globals/timetable-info`, {
     method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify(body),
   })
   if (!res.ok) {
-    throw new Error(`POST /api/globals/timetable-info -> ${res.status}: ${await res.text()}`)
+    throw new Error(`POST /api/globals/timetable-info -> ${res.status}: ${await errorBody(res)}`)
   }
   return (await res.json()) as Record<string, unknown>
 }
