@@ -8,6 +8,7 @@
  */
 import 'dotenv/config'
 import fs from 'node:fs'
+import { sanitizeForLog as s } from '../lib/sanitizeForLog'
 import { syncTimetables } from './syncTimetables'
 
 function setOutput(name: string, value: string) {
@@ -25,16 +26,16 @@ async function run() {
     return
   }
 
-  const updateLines = result.updates.map((u) => `  ${u.stationId} ${u.kind} ${u.trainNumber}: ${u.field} ${u.from ?? '(none)'} -> ${u.to}`)
+  const updateLines = result.updates.map((u) => `  ${s(u.stationId)} ${s(u.kind)} ${s(u.trainNumber)}: ${s(u.field)} ${u.from == null ? '(none)' : s(u.from)} -> ${s(u.to)}`)
   const unmatchedPlkLines = result.unmatchedPlkTrains.map(
-    (t) => `  plkStationId ${t.stationPlkId} ${t.kind} train ${t.trainNumber} -- not in our data`,
+    (t) => `  plkStationId ${s(t.stationPlkId)} ${s(t.kind)} train ${s(t.trainNumber)} -- not in our data`,
   )
   const unmatchedEntryLines = result.unmatchedEntries.map(
-    (e) => `  ${e.stationId} ${e.kind} train ${e.trainNumber} -- not in today's PLK schedule`,
+    (e) => `  ${s(e.stationId)} ${s(e.kind)} train ${s(e.trainNumber)} -- not in today's PLK schedule`,
   )
-  const errorLines = result.errors.map((e) => `  ${e.stationId}: ${e.message}`)
+  const errorLines = result.errors.map((e) => `  ${s(e.stationId)}: ${s(e.message)}`)
 
-  console.log(`Amendment found (schedulesVersion ${result.schedulesVersion}). Checked ${result.stationsChecked} PLK-matched stations.`)
+  console.log(`Amendment found (schedulesVersion ${s(result.schedulesVersion)}). Checked ${result.stationsChecked} PLK-matched stations.`)
   console.log(`${result.updates.length} entries updated.`)
   if (updateLines.length) console.log(updateLines.join('\n'))
   console.log(`${result.unmatchedPlkTrains.length} PLK trains with no matching entry (not created).`)
@@ -71,6 +72,6 @@ run()
   .catch((err) => {
     console.error(err)
     setOutput('changed', 'error')
-    setOutput('summary_text', `The sync job crashed before finishing: ${err instanceof Error ? err.message : String(err)}`)
+    setOutput('summary_text', `The sync job crashed before finishing: ${s(err instanceof Error ? err.message : err)}`)
     process.exit(1)
   })
