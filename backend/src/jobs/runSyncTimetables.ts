@@ -35,7 +35,10 @@ async function run() {
   )
   const errorLines = result.errors.map((e) => `  ${s(e.stationId)}: ${s(e.message)}`)
 
-  console.log(`Amendment found (schedulesVersion ${s(result.schedulesVersion)}). Checked ${result.stationsChecked} PLK-matched stations.`)
+  // schedulesVersion is left out on purpose: it's raw PLK API response data (SonarCloud
+  // tssecurity:S5145 doesn't accept sanitizeForLog as a sanitizer), and the check step
+  // already logs it right before this one runs.
+  console.log(`Amendment found. Checked ${result.stationsChecked} PLK-matched stations.`)
   console.log(`${result.updates.length} entries updated.`)
   if (updateLines.length) console.log(updateLines.join('\n'))
   console.log(`${result.unmatchedPlkTrains.length} PLK trains with no matching entry (not created).`)
