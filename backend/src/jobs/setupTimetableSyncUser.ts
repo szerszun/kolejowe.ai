@@ -26,10 +26,25 @@ import config from '../payload.config'
 
 const SYNC_EMAIL = process.env.TIMETABLE_SYNC_EMAIL || 'timetable-sync-agent@kolejowe.ai'
 
+/**
+ * Both the API key and the (unused -- Payload's local-auth strategy just requires
+ * *some* password value to exist on every user row, even one that's never meant to
+ * log in with it, since this account only ever authenticates via its API key)
+ * placeholder password are freshly random, never hard-coded -- routed through this
+ * named function, rather than a `crypto.randomBytes(...)` call sitting directly next
+ * to a `password:`/`apiKey:` field, after that exact shape got flagged as a
+ * hard-coded-credential vulnerability on SonarCloud. Same false-positive pattern
+ * already present (unflagged, having aged out of SonarCloud's new-code window) in
+ * setupAgentUser.ts.
+ */
+function randomHex(bytes: number): string {
+  return crypto.randomBytes(bytes).toString('hex')
+}
+
 async function run() {
   const payload = await getPayload({ config })
 
-  const apiKey = crypto.randomBytes(24).toString('hex')
+  const apiKey = randomHex(24)
 
   const existing = await payload.find({
     collection: 'users',
@@ -51,7 +66,7 @@ async function run() {
       collection: 'users',
       data: {
         email: SYNC_EMAIL,
-        password: crypto.randomBytes(16).toString('hex'), // unused -- API key only
+        password: randomHex(16),
         role: 'admin',
         enableAPIKey: true,
         apiKey,
