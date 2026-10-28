@@ -4,6 +4,11 @@ services:
     runtime: node
     plan: free
     rootDir: backend
+    # Deploy only after the commit's GitHub checks pass. These services are Blueprint
+    # managed, and the dashboard setting alone didn't stick: after a render.yaml change
+    # synced on 2026-10-28, both were back on "On Commit" and deployed while CI was still
+    # running. Keeping it here makes render.yaml the single source of truth for it.
+    autoDeployTrigger: checksPass
     # --include=dev is load-bearing: NODE_ENV=production below (needed at
     # runtime) also applies during the build, which makes plain `npm
     # install` skip devDependencies -- including typescript and @types/react,
@@ -48,6 +53,11 @@ services:
     type: web
     runtime: static
     rootDir: .
+    # Deploy only after the commit's GitHub checks pass. These services are Blueprint
+    # managed, and the dashboard setting alone didn't stick: after a render.yaml change
+    # synced on 2026-10-28, both were back on "On Commit" and deployed while CI was still
+    # running. Keeping it here makes render.yaml the single source of truth for it.
+    autoDeployTrigger: checksPass
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     # Without this, Render serves its own "Not Found" for any direct hit on
