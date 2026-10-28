@@ -48,7 +48,7 @@
     "eslint-config-next": "16.4.3",
     "prettier": "^3.4.2",
     "tsx": "4.23.15",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "engines": {
     "node": "^24.22.1"
