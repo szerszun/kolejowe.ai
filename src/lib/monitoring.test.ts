@@ -78,4 +78,21 @@ describe("monitoring", () => {
     expect(captureException).toHaveBeenCalledTimes(1);
     expect(captureException).toHaveBeenCalledWith(later);
   });
+
+  it("keeps working without error reporting when the SDK chunk can't load (e.g. an ad blocker)", async () => {
+    vi.doMock("./sentryClient", () => {
+      throw new Error("blocked by client");
+    });
+    const { initMonitoring, reportError } = await loadMonitoring("https://key@sentry.example/1");
+
+    initMonitoring();
+    reportError(new Error("queued before the load failed"));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(init).not.toHaveBeenCalled();
+    expect(captureException).not.toHaveBeenCalled();
+    // The pre-load listeners are gone again, so errors don't pile up in memory forever.
+    expect(() => window.dispatchEvent(Object.assign(new Event("error"), { error: new Error("x") }))).not.toThrow();
+    vi.doMock("./sentryClient", () => ({ init, captureException }));
+  });
 });
