@@ -1,7 +1,7 @@
 /**
  * Deploy-verification endpoint, not an app feature -- used by the CI
- * production-smoke job (.github/workflows/regression.yml) to confirm
- * Render actually finished deploying the commit that was just pushed,
+ * production smoke test (.github/workflows/production-smoke.yml) to confirm
+ * Render actually finished deploying the commit it reported as deployed,
  * not just that *some* version of the backend is up (a failed Render
  * build leaves the previous commit serving traffic with no visible
  * error, which is exactly what happened once this project hit a real

@@ -17,6 +17,7 @@
     "test": "npm run test:unit && npm run test:e2e; npm run test:report"
   },
   "dependencies": {
+    "@sentry/react": "11.9.0",
     "maplibre-gl": "^6.11.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

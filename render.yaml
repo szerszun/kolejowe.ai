@@ -39,6 +39,10 @@ services:
       # for the app to run without it.
       - key: PLK_API_KEY
         sync: false
+      # Sentry error reporting (backend/src/instrumentation.ts). Optional: without it,
+      # nothing is sent. The DSN from Sentry's project settings -> Client Keys.
+      - key: SENTRY_DSN
+        sync: false
 
   - name: kolejoweai
     type: web
@@ -62,3 +66,7 @@ services:
           name: kolejowe-backend
           type: web
           property: host
+      # Sentry error reporting in the browser (src/lib/monitoring.ts). Build-time, like
+      # every VITE_ variable: a change needs a redeploy. Optional; leave unset to disable.
+      - key: VITE_SENTRY_DSN
+        sync: false
