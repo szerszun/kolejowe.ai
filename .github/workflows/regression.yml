@@ -79,7 +79,7 @@ jobs:
         # turn the whole job red when the actual regression suite passed -- that's what
         # the explicit verdict check below is for.
         continue-on-error: true
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v23
         with:
           server_address: smtp.gmail.com
           server_port: 465
