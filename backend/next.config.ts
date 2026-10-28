@@ -1,4 +1,5 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import { withSentryConfig } from '@sentry/nextjs/config'
 import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -28,4 +29,20 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+const config = withPayload(nextConfig, { devBundleServerPackages: false })
+
+// Source maps for Sentry, so server stack traces (src/instrumentation.ts) point at the
+// TypeScript sources. Only when SENTRY_AUTH_TOKEN is set (Render build env, see
+// render.yaml); without it the build is left exactly as it was. The SDK deletes the maps
+// it generated after uploading them.
+export default process.env.SENTRY_AUTH_TOKEN
+  ? withSentryConfig(config, {
+      org: 'ai-manufaktur',
+      project: 'kolejowe-backend',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      // Same release name the SDK reports (src/instrumentation.ts). Commit association
+      // needs a GitHub integration in Sentry, which isn't set up.
+      release: { name: process.env.RENDER_GIT_COMMIT, setCommits: false },
+      telemetry: false,
+    })
+  : config

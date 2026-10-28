@@ -48,6 +48,11 @@ services:
       # nothing is sent. The DSN from Sentry's project settings -> Client Keys.
       - key: SENTRY_DSN
         sync: false
+      # Build-time only: uploads source maps to Sentry (next.config.ts). A Sentry org auth
+      # token (Settings -> Auth Tokens) -- a secret, unlike the DSN. Optional; without it
+      # nothing is uploaded and server stack traces point at compiled code.
+      - key: SENTRY_AUTH_TOKEN
+        sync: false
 
   - name: kolejoweai
     type: web
@@ -79,4 +84,9 @@ services:
       # Sentry error reporting in the browser (src/lib/monitoring.ts). Build-time, like
       # every VITE_ variable: a change needs a redeploy. Optional; leave unset to disable.
       - key: VITE_SENTRY_DSN
+        sync: false
+      # Build-time only: uploads source maps to Sentry and deletes them from dist/ (see
+      # vite.config.ts). Same org auth token as the backend's. Optional; without it browser
+      # stack traces stay minified.
+      - key: SENTRY_AUTH_TOKEN
         sync: false
