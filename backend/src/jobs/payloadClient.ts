@@ -8,8 +8,8 @@
 export const PAYLOAD_URL = process.env.PAYLOAD_URL || 'http://localhost:3000'
 
 /**
- * For the idempotent writes the timetable sync makes (PATCH a station, POST the
- * timetable-info global): retries a 5xx with backoff instead of failing outright. Render
+ * For the small idempotent timetable-info write (see patchStation for why station writes
+ * aren't retried): retries a 5xx with backoff instead of failing outright. Render
  * answered the final timetable-info write of a ~35-minute sync with a 502 and the whole
  * run was lost; the backend was healthy again seconds later.
  */
@@ -24,9 +24,24 @@ async function fetchRetrying5xx(url: string, init: RequestInit): Promise<Respons
   return fetch(url, init)
 }
 
-/** Error bodies can be a whole HTML error page (Render's 502 is ~100KB) -- keep the log/email readable. */
+/**
+ * Error bodies can be a whole HTML error page (Render's 502 is ~100KB, and its first
+ * 300 characters are inline CSS) -- reduce those to their <title>, and anything else to
+ * one line of at most 300 characters, so the log and summary email stay readable.
+ */
+export function summarizeErrorBody(text: string): string {
+  const title = /<title>([^<]*)<\/title>/i.exec(text)
+  const summary = title ? `HTML error page "${title[1].trim()}"` : text
+  return summary.replace(/\s+/g, ' ').trim().slice(0, 300)
+}
+
 async function errorBody(res: Response): Promise<string> {
-  return (await res.text()).slice(0, 300)
+  return summarizeErrorBody(await res.text())
+}
+
+/** An Error carrying the HTTP status, so a caller can tell a 5xx apart from a 4xx. */
+function httpError(message: string, status: number): Error & { status: number } {
+  return Object.assign(new Error(message), { status })
 }
 
 export function authHeaders(): Record<string, string> {
@@ -72,7 +87,7 @@ export async function patchLine(
 }
 
 export async function getStation(id: string): Promise<Record<string, unknown>> {
-  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}`, { headers: authHeaders() })
+  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}?depth=0`, { headers: authHeaders() })
   if (!res.ok) throw new Error(`GET /api/stations/${id} -> ${res.status}`)
   return (await res.json()) as Record<string, unknown>
 }
@@ -85,15 +100,21 @@ export async function getStation(id: string): Promise<Record<string, unknown>> {
  * non-admin identity, so this intentionally has no way to request draft
  * mode; if this function is ever reused by an agent-role job, that job
  * would need its own explicit `draft: true` the way patchLine does.
+ *
+ * Deliberately not retried on a 5xx, unlike patchTimetableInfo: on Render a large
+ * station write regularly outlives the proxy's timeout, so the 502 arrives while the
+ * write still completes -- a blind retry just sends the same heavy write again. The
+ * caller (syncTimetables.ts) reads the station back on a 5xx to see whether it landed.
+ * depth=0 so Payload doesn't populate relationships into a response nobody reads.
  */
 export async function patchStation(id: string, body: Record<string, unknown>): Promise<{ doc: Record<string, unknown> }> {
-  const res = await fetchRetrying5xx(`${PAYLOAD_URL}/api/stations/${id}`, {
+  const res = await fetch(`${PAYLOAD_URL}/api/stations/${id}?depth=0`, {
     method: 'PATCH',
     headers: authHeaders(),
     body: JSON.stringify(body),
   })
   if (!res.ok) {
-    throw new Error(`PATCH /api/stations/${id} -> ${res.status}: ${await errorBody(res)}`)
+    throw httpError(`PATCH /api/stations/${id} -> ${res.status}: ${await errorBody(res)}`, res.status)
   }
   return (await res.json()) as { doc: Record<string, unknown> }
 }
