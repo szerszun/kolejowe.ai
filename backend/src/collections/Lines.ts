@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { adminOrAgentWrite, adminOnly, publicRead, requireAdminToPublish } from '../access/roles'
+import { adminOrAgentWrite, adminOnly, publishedOrEditor, requireAdminToPublish } from '../access/roles'
 
 export const Lines: CollectionConfig = {
   slug: 'lines',
@@ -9,7 +9,7 @@ export const Lines: CollectionConfig = {
     defaultColumns: ['number', 'name', 'status', '_status', 'updatedAt'],
   },
   access: {
-    read: publicRead,
+    read: publishedOrEditor,
     create: adminOrAgentWrite,
     update: adminOrAgentWrite,
     delete: adminOnly,

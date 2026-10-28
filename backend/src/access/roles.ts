@@ -14,6 +14,17 @@ export const adminOnly: Access = ({ req: { user } }) => isAdmin(user as User | n
 export const publicRead: Access = () => true
 
 /**
+ * For collections with drafts: everyone reads published documents; only admins and
+ * agents read drafts. With plain publicRead, `?draft=true` (or a filter on `_status`)
+ * handed anonymous visitors an agent's unreviewed edit before an admin published it.
+ * Returning a query, not false, keeps published documents public. An anonymous
+ * `?draft=true` on a document with a pending draft gets 404 rather than the published
+ * version (the query runs against the latest version) -- the frontend never sends it.
+ */
+export const publishedOrEditor: Access = ({ req: { user } }) =>
+  isAdminOrAgent(user as User | null) || { _status: { equals: 'published' } }
+
+/**
  * Enforces the human-review boundary: only an admin's write can set
  * _status to "published". An agent's write is always forced back to
  * "draft", no matter what it sent -- publishing only happens from the
