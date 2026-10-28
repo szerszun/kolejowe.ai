@@ -31,6 +31,7 @@
     "@payloadcms/db-sqlite": "3.92.1",
     "@payloadcms/next": "3.92.1",
     "@payloadcms/richtext-lexical": "3.92.1",
+    "@sentry/nextjs": "11.9.0",
     "cross-env": "10.1.0",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",

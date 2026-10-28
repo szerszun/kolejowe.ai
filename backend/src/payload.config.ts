@@ -11,6 +11,7 @@ import { Stations } from './collections/Stations'
 import { Lines } from './collections/Lines'
 import { Feedback } from './collections/Feedback'
 import { TimetableInfo } from './globals/TimetableInfo'
+import { reportErrorToSentry } from './hooks/reportErrorToSentry'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -67,4 +68,7 @@ export default buildConfig({
   },
   db,
   sharp,
+  hooks: {
+    afterError: [reportErrorToSentry],
+  },
 })

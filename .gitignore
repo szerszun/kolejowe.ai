@@ -32,3 +32,6 @@ playwright-report/
 blob-report/
 coverage/
 
+# Local PLK data: the station dictionary cache written by backend/src/jobs/matchPlkStations.ts
+# (regenerable, and PLK's data) and a one-off migration output. Not app code.
+backend/src/data/
