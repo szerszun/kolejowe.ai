@@ -6,8 +6,10 @@ import "./index.css";
 import { I18nProvider } from "./i18n/I18nContext";
 import App from "./App.tsx";
 import { initMonitoring, reportError } from "./lib/monitoring";
+import { initAnalytics } from "./lib/analytics";
 
 initMonitoring();
+initAnalytics();
 
 createRoot(document.getElementById("root")!, {
   // React 19 sends render errors here instead of to window.onerror, so Sentry's global
