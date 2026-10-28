@@ -42,7 +42,10 @@ async function run() {
   const versionNote = result.versionSaved
     ? 'PLK version saved -- the next run only syncs again after a new amendment.'
     : `PLK version NOT saved because ${result.errors.length} station(s) failed -- the next run retries them.`
-  console.log(`Amendment found. Checked ${result.stationsChecked} PLK-matched stations against PLK's schedule for ${windowText}.`)
+  // stationsChecked is the length of the station list fetched from our backend: always an
+  // integer, so it can't carry CR/LF. SonarCloud's taint analysis (tssecurity:S5145) still
+  // flags it, and a false-positive mark in the UI is lost whenever this line changes.
+  console.log(`Amendment found. Checked ${result.stationsChecked} PLK-matched stations against PLK's schedule for ${windowText}.`) // NOSONAR
   console.log(`${result.updates.length} entries updated.`)
   if (updateLines.length) console.log(updateLines.join('\n'))
   console.log(`${result.unmatchedPlkTrains.length} PLK trains with no matching entry (not created).`)

@@ -1,0 +1,103 @@
+name: Production smoke test
+
+# Runs when Render reports a deploy as finished, instead of on push. Render's two services
+# report each deploy to GitHub as a deployment ("main - kolejowe-backend" /
+# "main - kolejoweai"). This used to be a job in regression.yml that ran on push and
+# polled until the new commit was live, which deadlocks once Render is set to deploy only
+# "After CI Checks Pass": Render waits for this check, this check waits for Render, and
+# after 10 minutes the check fails and Render skips the deploy.
+#
+# A failed Render build leaves the *previous* commit quietly serving traffic (no
+# downtime, no obvious error), which is why this checks the live commit SHA instead of
+# just "is the site up", and why a failed deploy also sends the failure email.
+on:
+  deployment_status: {}
+
+jobs:
+  production-smoke:
+    if: >-
+      contains(fromJSON('["success", "failure", "error"]'), github.event.deployment_status.state) &&
+      startsWith(github.event.deployment.environment, 'main - ')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FRONTEND_URL: https://kolejoweai.onrender.com
+      BACKEND_URL: https://kolejowe-backend.onrender.com
+      DEPLOY_STATE: ${{ github.event.deployment_status.state }}
+      DEPLOY_ENV: ${{ github.event.deployment.environment }}
+      DEPLOY_SHA: ${{ github.event.deployment.sha }}
+      DEPLOY_LOG: ${{ github.event.deployment_status.log_url }}
+    steps:
+      - name: Render deploy succeeded
+        run: |
+          echo "Render reported '$DEPLOY_STATE' for $DEPLOY_ENV at $DEPLOY_SHA ($DEPLOY_LOG)"
+          [ "$DEPLOY_STATE" = "success" ] || { echo "::error::Render deploy of $DEPLOY_SHA to $DEPLOY_ENV ended in '$DEPLOY_STATE'."; exit 1; }
+
+      # Render marks the deploy successful just before switching traffic over, so allow a
+      # short wait for the new commit to actually answer.
+      - name: The deployed commit is the one serving traffic
+        run: |
+          if [ "$DEPLOY_ENV" = "main - kolejowe-backend" ]; then
+            URL="$BACKEND_URL/api/health"
+          else
+            URL="$FRONTEND_URL/version.json"
+          fi
+          for i in $(seq 1 12); do
+            LIVE=$(curl -sf "$URL" | jq -r .commit 2>/dev/null || echo "")
+            if [ "$LIVE" = "$DEPLOY_SHA" ]; then
+              echo "$DEPLOY_ENV is live on $DEPLOY_SHA."
+              exit 0
+            fi
+            echo "Attempt $i/12: $URL reports ${LIVE:-(nothing)}, want $DEPLOY_SHA -- waiting 10s"
+            sleep 10
+          done
+          echo "::error::$DEPLOY_ENV still isn't serving $DEPLOY_SHA two minutes after Render reported the deploy as successful."
+          exit 1
+
+      - name: Backend serves real line data
+        run: |
+          set -e
+          COUNT=$(curl -sf "$BACKEND_URL/api/lines?limit=1" | jq '.docs | length' 2>/dev/null || echo 0)
+          [ "$COUNT" -ge 1 ] || { echo "::error::$BACKEND_URL/api/lines returned no docs."; exit 1; }
+
+      - name: Frontend serves the app shell
+        run: |
+          set -e
+          curl -sf "$FRONTEND_URL/" | grep -q '<div id="root">' || {
+            echo "::error::$FRONTEND_URL doesn't contain the app's mount point."
+            exit 1
+          }
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ **Production smoke test**: $DEPLOY_ENV is live and healthy on \`$DEPLOY_SHA\`." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "🔴 **Production smoke test FAILED** for $DEPLOY_ENV at \`$DEPLOY_SHA\` -- see the failing step above." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Email on failure
+        if: failure()
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "kolejowe.ai PRODUCTION SMOKE TEST FAILED -- ${{ github.event.deployment.environment }} ${{ github.event.deployment.sha }}"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
+          body: |
+            The post-deploy production smoke test failed.
+
+            Service: ${{ github.event.deployment.environment }}
+            Commit: ${{ github.event.deployment.sha }}
+            Render deploy state: ${{ github.event.deployment_status.state }}
+            Render deploy log: ${{ github.event.deployment_status.log_url }}
+            Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}
+
+            If the deploy itself failed, the previous commit is still serving traffic --
+            check the Render dashboard.
