@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { adminOrAgentWrite, adminOnly, publicRead, requireAdminToPublish } from '../access/roles'
+import { adminOrAgentWrite, adminOnly, publishedOrEditor, requireAdminToPublish } from '../access/roles'
 import { getLiveMovements } from '../lib/liveMovements'
 
 const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields'] => [
@@ -37,7 +37,7 @@ export const Stations: CollectionConfig = {
     defaultColumns: ['name', 'id', '_status', 'updatedAt'],
   },
   access: {
-    read: publicRead,
+    read: publishedOrEditor,
     create: adminOrAgentWrite,
     update: adminOrAgentWrite,
     delete: adminOnly,
