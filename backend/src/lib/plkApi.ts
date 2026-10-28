@@ -198,7 +198,7 @@ interface PlkSchedulesResponse {
 }
 
 /**
- * The planned (not real-time) schedule for a batch of stations on one day -- what
+ * The planned (not real-time) schedule for a batch of stations over a date range -- what
  * sync-timetables.ts diffs against the published data. Batched (comma-separated
  * `stations`, any-match) rather than one call per station deliberately: with ~340
  * PLK-matched stations in this project's dataset and only a 100 req/hour quota,
@@ -207,11 +207,11 @@ interface PlkSchedulesResponse {
  * on it; the caller (syncTimetables.ts) is responsible for chunking the full station
  * list to a safe batch size.
  */
-export async function fetchSchedulesForStations(stationIds: number[], date: string): Promise<PlkScheduleRoute[]> {
+export async function fetchSchedulesForStations(stationIds: number[], dateFrom: string, dateTo: string): Promise<PlkScheduleRoute[]> {
   const res = await plkFetch<PlkSchedulesResponse>('/api/v1/schedules', {
     stations: stationIds.join(','),
-    dateFrom: date,
-    dateTo: date,
+    dateFrom,
+    dateTo,
   })
   return res.routes
 }

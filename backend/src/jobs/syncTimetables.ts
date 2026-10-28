@@ -17,6 +17,7 @@
  */
 import { fetchDataVersion, fetchSchedulesForStations, type PlkScheduleRoute } from '../lib/plkApi'
 import {
+  getStation,
   getTimetableInfo,
   listPlkMatchedStations,
   patchStation,
@@ -30,6 +31,13 @@ import {
 // req/hour quota. 50 is a conservative guess at a safe batch size, not a documented
 // API limit; if PLK's response starts truncating or erroring at this size, lower it.
 const STATION_BATCH_SIZE = 50
+
+// How many days of PLK's schedule each sync looks at, starting today. One day isn't
+// enough: a train that doesn't run on the day the sync happens (weekend-only, selected
+// days) would be reported as missing and never get its time updated. A week covers every
+// weekday pattern; see pickMovement for how a train with different times on different
+// days is resolved.
+const SYNC_WINDOW_DAYS = 7
 
 export interface EntryUpdate {
   stationId: string
@@ -67,10 +75,21 @@ export type SyncResult =
       unmatchedPlkTrains: UnmatchedPlkTrain[]
       unmatchedEntries: UnmatchedEntry[]
       errors: StationError[]
+      /** Station writes that came back 5xx but were confirmed applied by reading the station back. */
+      confirmedAfter5xx: number
+      /**
+       * False when any station errored: the PLK version is then deliberately not saved, so
+       * the next run sees the same amendment again and retries. Stations that already
+       * match are skipped by the diff, so a retry only rewrites what's still out of date.
+       */
+      versionSaved: boolean
+      window: { from: string; to: string }
     }
 
-function today(): string {
-  return new Date().toISOString().slice(0, 10)
+function isoDate(daysFromToday: number): string {
+  const d = new Date()
+  d.setUTCDate(d.getUTCDate() + daysFromToday)
+  return d.toISOString().slice(0, 10)
 }
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -84,10 +103,38 @@ interface PlkMovement {
   platform?: string | null
 }
 
+interface MovementCandidate extends PlkMovement {
+  /** Days within the sync window this route runs on. */
+  days: number
+  firstDate: string
+}
+
+/**
+ * Over a multi-day window the same train number can show up in several routes with
+ * different times (e.g. a weekday and a weekend variant). Keep the one that runs on the
+ * most days in the window -- the regular timetable -- and break ties by the earliest
+ * running date, so the result doesn't depend on the order PLK lists routes in.
+ */
+function pickMovement(current: MovementCandidate | undefined, candidate: MovementCandidate): MovementCandidate {
+  if (!current) return candidate
+  if (candidate.days !== current.days) return candidate.days > current.days ? candidate : current
+  return candidate.firstDate < current.firstDate ? candidate : current
+}
+
+function windowDates(route: PlkScheduleRoute, from: string, to: string): string[] {
+  return (route.operatingDates ?? []).map((d) => d.slice(0, 10)).filter((d) => d >= from && d <= to).sort()
+}
+
 /** routes -> per-station train-number -> movement, for both legs (a through train can depart and arrive at the same stop). */
-function indexRoutesByStation(routes: PlkScheduleRoute[]): Map<number, { departures: Map<string, PlkMovement>; arrivals: Map<string, PlkMovement> }> {
-  const byStation = new Map<number, { departures: Map<string, PlkMovement>; arrivals: Map<string, PlkMovement> }>()
+function indexRoutesByStation(
+  routes: PlkScheduleRoute[],
+  window: { from: string; to: string },
+): Map<number, { departures: Map<string, PlkMovement>; arrivals: Map<string, PlkMovement> }> {
+  const byStation = new Map<number, { departures: Map<string, MovementCandidate>; arrivals: Map<string, MovementCandidate> }>()
   for (const route of routes) {
+    const dates = windowDates(route, window.from, window.to)
+    const days = dates.length
+    const firstDate = dates[0] ?? window.to
     for (const stop of route.stations) {
       let entry = byStation.get(stop.stationId)
       if (!entry) {
@@ -95,10 +142,12 @@ function indexRoutesByStation(routes: PlkScheduleRoute[]): Map<number, { departu
         byStation.set(stop.stationId, entry)
       }
       if (stop.departureTrainNumber && stop.departureTime) {
-        entry.departures.set(stop.departureTrainNumber, { time: stop.departureTime.slice(0, 5), platform: stop.departurePlatform })
+        const candidate = { time: stop.departureTime.slice(0, 5), platform: stop.departurePlatform, days, firstDate }
+        entry.departures.set(stop.departureTrainNumber, pickMovement(entry.departures.get(stop.departureTrainNumber), candidate))
       }
       if (stop.arrivalTrainNumber && stop.arrivalTime) {
-        entry.arrivals.set(stop.arrivalTrainNumber, { time: stop.arrivalTime.slice(0, 5) })
+        const candidate = { time: stop.arrivalTime.slice(0, 5), days, firstDate }
+        entry.arrivals.set(stop.arrivalTrainNumber, pickMovement(entry.arrivals.get(stop.arrivalTrainNumber), candidate))
       }
     }
   }
@@ -158,6 +207,33 @@ function diffEntries(
   return { updatedEntries, updates, unmatchedEntries, matchedTrainNumbers }
 }
 
+function is5xx(err: unknown): boolean {
+  const status = (err as { status?: unknown } | null)?.status
+  return typeof status === 'number' && status >= 500
+}
+
+function sameEntries(actual: unknown, expected: MovementEntryDoc[]): boolean {
+  if (!Array.isArray(actual) || actual.length !== expected.length) return false
+  return expected.every((e, i) => {
+    const a = actual[i] as Partial<MovementEntryDoc> | undefined
+    return a?.trainNumber === e.trainNumber && a?.time === e.time && (a?.platform ?? undefined) === (e.platform ?? undefined)
+  })
+}
+
+/**
+ * A station write that times out at Render's proxy (502/504) usually still completes on
+ * the backend -- confirmed on a real run, where a station reported as a 502 error already
+ * had the new times. Read it back before counting it as a failure.
+ */
+async function writeLandedDespite5xx(stationId: string, timetable: MovementEntryDoc[], arrivals: MovementEntryDoc[]): Promise<boolean> {
+  try {
+    const doc = await getStation(stationId)
+    return sameEntries(doc.timetable, timetable) && sameEntries(doc.arrivals, arrivals)
+  } catch {
+    return false
+  }
+}
+
 export async function syncTimetables(): Promise<SyncResult> {
   const info = await getTimetableInfo()
   const lastVersion = typeof info.plkSchedulesVersion === 'string' ? info.plkSchedulesVersion : null
@@ -168,13 +244,14 @@ export async function syncTimetables(): Promise<SyncResult> {
   }
 
   const stations = await listPlkMatchedStations()
-  const date = today()
+  const window = { from: isoDate(0), to: isoDate(SYNC_WINDOW_DAYS - 1) }
   const batches = chunk(stations, STATION_BATCH_SIZE)
 
   const updates: EntryUpdate[] = []
   const unmatchedEntries: UnmatchedEntry[] = []
   const unmatchedPlkTrains: UnmatchedPlkTrain[] = []
   const errors: StationError[] = []
+  let confirmedAfter5xx = 0
 
   // Each batch can take a while (a 50-station batch can return thousands of routes),
   // and this otherwise produces zero output until the whole run finishes -- confirmed
@@ -186,9 +263,10 @@ export async function syncTimetables(): Promise<SyncResult> {
     try {
       const routes = await fetchSchedulesForStations(
         batch.map((s) => s.plkStationId),
-        date,
+        window.from,
+        window.to,
       )
-      byStation = indexRoutesByStation(routes)
+      byStation = indexRoutesByStation(routes, window)
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err)
       for (const station of batch) errors.push({ stationId: station.id, message })
@@ -213,12 +291,17 @@ export async function syncTimetables(): Promise<SyncResult> {
       try {
         await patchStation(station.id, { timetable: dep.updatedEntries, arrivals: arr.updatedEntries })
       } catch (err) {
+        if (is5xx(err) && (await writeLandedDespite5xx(station.id, dep.updatedEntries, arr.updatedEntries))) {
+          confirmedAfter5xx++
+          continue
+        }
         errors.push({ stationId: station.id, message: err instanceof Error ? err.message : String(err) })
       }
     }
   }
 
-  await patchTimetableInfo({ plkSchedulesVersion: version.schedulesVersion })
+  const versionSaved = errors.length === 0
+  if (versionSaved) await patchTimetableInfo({ plkSchedulesVersion: version.schedulesVersion })
 
   return {
     outcome: 'synced',
@@ -228,5 +311,8 @@ export async function syncTimetables(): Promise<SyncResult> {
     unmatchedPlkTrains,
     unmatchedEntries,
     errors,
+    confirmedAfter5xx,
+    versionSaved,
+    window,
   }
 }

@@ -7,7 +7,9 @@ name: Timetable sync
 # sends its own "completed" email once it's actually done.
 on:
   schedule:
-    - cron: "0 3 * * *" # ~05:00 Warsaw time, before most commuters check
+    # Minute 17, not 0: GitHub delays scheduled runs at the top of the hour the most --
+    # "0 3" actually started between 08:00 and 09:20 UTC. Still not guaranteed to be on time.
+    - cron: "17 3 * * *" # ~04:17-05:17 Warsaw time (CET/CEST), before most commuters check
   workflow_dispatch: {}
 
 env:
@@ -54,7 +56,8 @@ jobs:
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
           body: |
-            PKP PLK's published timetable has changed since the last check.
+            PKP PLK's published timetable has changed since the last check (or the last
+            sync left some stations unsynced, and this run retries them).
             Updating the app's station timetables now -- a second email will confirm once it's done.
 
             Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}
