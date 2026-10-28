@@ -53,6 +53,12 @@ const extraCorsOrigins = (process.env.CORS_ORIGINS || '')
 
 export default buildConfig({
   cors: ['http://localhost:5173', ...extraCorsOrigins],
+  // Lines -> stations -> timetable entries -> lines (with full geometry) is a loop, so
+  // Payload's default depth of 2 multiplies out: an anonymous `/api/lines?limit=0` built a
+  // response past V8's max string length and took the 512MB Render instance down. Nothing
+  // here needs more than depth 1 (the frontend's fetchLines/fetchStationDetails), so
+  // requests asking for more -- or for nothing, i.e. the default -- are capped to it.
+  maxDepth: 1,
   admin: {
     user: Users.slug,
     importMap: {
