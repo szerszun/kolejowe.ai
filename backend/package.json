@@ -24,7 +24,9 @@
     "agent:verify-history:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runVerifyHistory.ts -- --all",
     "agent:setup-timetable-sync": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/setupTimetableSyncUser.ts",
     "agent:check-timetable-version": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/checkTimetableVersion.ts",
-    "agent:sync-timetables": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runSyncTimetables.ts"
+    "agent:sync-timetables": "cross-env NODE_OPTIONS=--no-deprecation tsx src/jobs/runSyncTimetables.ts",
+    "migrate": "cross-env NODE_OPTIONS=--no-deprecation tsx src/db/runMigrations.ts",
+    "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.92.1",

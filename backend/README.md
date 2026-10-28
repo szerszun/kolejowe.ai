@@ -77,6 +77,29 @@ existing data will fail on duplicate ids. `src/seed/verify.ts` does a
 quick sanity read-back afterward (counts, one line, one station) if you
 want to check it worked without opening the admin UI.
 
+## Schema changes (migrations)
+
+Local SQLite still updates its schema automatically (Payload's dev push).
+Production Postgres doesn't: every schema change -- a new, renamed or
+removed field, a new option on a select -- needs a migration file, committed
+with the change:
+
+```bash
+DATABASE_URL=postgres://unused npm run migrate:create -- add_station_wifi
+```
+
+The command needs no database. It compares the config with the latest
+snapshot in `src/migrations/` and writes the SQL for the difference. Read
+it before committing, especially any `DROP`. Render runs `npm run migrate`
+before starting each new version (`src/db/runMigrations.ts`). If the
+migration fails, or the database still differs from the code, the new version
+doesn't start and the old one keeps serving. CI's `migrations` job runs the
+same check against an empty Postgres, so a forgotten migration fails the PR.
+
+Don't point `npm run seed` (or anything else that opens Payload) at the
+production `DATABASE_URL` expecting it to fix the schema: push is off for
+Postgres, so it won't.
+
 ## Scheduled agent job
 
 ```bash

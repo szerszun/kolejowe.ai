@@ -14,7 +14,9 @@ services:
     # install` skip devDependencies -- including typescript and @types/react,
     # which `next build`'s typecheck step needs regardless of NODE_ENV.
     buildCommand: npm install --include=dev && npm run build
-    startCommand: npm start
+    # Migrations first (src/db/runMigrations.ts): if one fails, or the database doesn't
+    # match the schema in code, the new version never starts and the old one keeps serving.
+    startCommand: npm run migrate && npm start
     envVars:
       # Postgres connection string from a Neon project (neon.tech, free
       # tier, no expiry -- unlike Render's own free Postgres, which gets

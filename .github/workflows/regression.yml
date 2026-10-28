@@ -180,3 +180,35 @@ jobs:
 
       - name: Check bundle size budget
         run: node scripts/check-bundle-size.mjs
+
+  # Production runs Postgres with migrations; everything above runs SQLite with schema
+  # push, so a schema change committed without its migration would otherwise only show
+  # up when Render's start command (npm run migrate) refuses to start the new version.
+  # This applies every migration to an empty Postgres and runs the same schema check.
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Apply migrations to an empty database and check for drift
+        working-directory: backend
+        env:
+          NODE_ENV: production
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          PAYLOAD_SECRET: ci-ephemeral-secret-not-used-in-production
+        run: npm run migrate

@@ -21,15 +21,18 @@ const dirname = path.dirname(filename)
 // -- Render's free web service has an ephemeral filesystem, so a local
 // SQLite file there would be wiped on every redeploy/restart.
 const databaseUrl = process.env.DATABASE_URL || 'file:./kolejowe.db'
-// This project has no migration files anywhere (confirmed: `find . -iname
-// "*migrat*"` turns up nothing) -- it has only ever relied on Payload's
-// dev-style schema push, same as the sqlite adapter above. `push` defaults
-// to off once NODE_ENV=production (which Render's build sets), so it's
-// forced on here to keep that same no-migrations workflow working on
-// Postgres. Fine for this project's current scale; a real migration setup
-// would be the more correct long-term answer.
+// Postgres schema changes go through the migration files in src/migrations
+// (`npm run migrate:create`, see backend/README.md), applied by
+// `npm run migrate` in Render's start command before the server starts.
+// push is off: Payload never pushes under NODE_ENV=production anyway, so on
+// Render it only ever ran when a local script (the seed) was pointed at
+// Neon -- where it can drop columns after a y/n prompt. SQLite keeps push.
 const db = databaseUrl.startsWith('postgres')
-  ? postgresAdapter({ pool: { connectionString: databaseUrl }, push: true })
+  ? postgresAdapter({
+      pool: { connectionString: databaseUrl },
+      push: false,
+      migrationDir: path.resolve(dirname, 'migrations'),
+    })
   : sqliteAdapter({ client: { url: databaseUrl } })
 
 const payloadSecret = process.env.PAYLOAD_SECRET
