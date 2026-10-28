@@ -13,6 +13,13 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    ignore:
+      # Only ever pulled in by @payloadcms/richtext-lexical (via @lexical/headless). Its
+      # open advisories have no patched release yet, so every Dependabot security-update
+      # run for it failed -- and that failed check landed on the latest main commit, which
+      # blocks a Render deploy set to "After CI Checks Pass". Remove this once a fixed
+      # version exists (check `npm audit` in backend/), or once Payload ships one.
+      - dependency-name: "happy-dom"
 
   # Keep the regression/CI workflow's actions (checkout, setup-node, the
   # SonarCloud scan action, etc.) current -- these don't get bumped by the

@@ -122,7 +122,7 @@ function pickMovement(current: MovementCandidate | undefined, candidate: Movemen
 }
 
 function windowDates(route: PlkScheduleRoute, from: string, to: string): string[] {
-  return (route.operatingDates ?? []).map((d) => d.slice(0, 10)).filter((d) => d >= from && d <= to).sort()
+  return (route.operatingDates ?? []).map((d) => d.slice(0, 10)).filter((d) => d >= from && d <= to).sort((a, b) => a.localeCompare(b))
 }
 
 /** routes -> per-station train-number -> movement, for both legs (a through train can depart and arrive at the same stop). */
