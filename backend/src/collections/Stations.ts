@@ -5,7 +5,10 @@ import { getLiveMovements } from '../lib/liveMovements'
 
 const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields'] => [
   { name: 'time', type: 'text', required: true, admin: { description: 'HH:mm, 24h' } },
-  { name: 'lineId', type: 'relationship', relationTo: 'lines', required: true },
+  // maxDepth 0: never populated. Every timetable entry would otherwise embed its whole
+  // line, geometry included, at depth 1 -- `/api/stations?limit=0&depth=1` ran out of
+  // memory that way. The frontend only reads the id (relId in src/lib/payloadClient.ts).
+  { name: 'lineId', type: 'relationship', relationTo: 'lines', required: true, maxDepth: 0 },
   { name: 'operator', type: 'text' },
   { name: 'platform', type: 'text' },
   { name: 'trainNumber', type: 'text', admin: { description: 'e.g. "66139" or "6128/9"' } },
