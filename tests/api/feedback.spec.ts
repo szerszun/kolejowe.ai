@@ -18,6 +18,13 @@ test.describe("POST /api/feedback", () => {
     expect(res.ok()).toBe(true);
   });
 
+  test("[MAJOR] rejects a message longer than the form allows", async ({ request }) => {
+    const res = await request.post(`${API}/api/feedback`, {
+      data: { message: "a".repeat(2001), page: "/test" },
+    });
+    expect(res.status()).toBe(400);
+  });
+
   test("[MAJOR] rejects a submission with no message", async ({ request }) => {
     const res = await request.post(`${API}/api/feedback`, {
       data: { page: "/test", language: "en" },

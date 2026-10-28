@@ -67,6 +67,7 @@ export function FeedbackButton() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
+                  maxLength={2000}
                   autoFocus
                   disabled={state === "sending"}
                 />
