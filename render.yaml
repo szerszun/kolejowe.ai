@@ -87,6 +87,11 @@ services:
       # every VITE_ variable: a change needs a redeploy. Optional; leave unset to disable.
       - key: VITE_SENTRY_DSN
         sync: false
+      # Visitor analytics (src/lib/analytics.ts): the Website ID from Umami Cloud's
+      # Settings -> Websites. Not a secret -- it ends up in the page. Build-time like every
+      # VITE_ variable, so a change needs a redeploy. Optional; leave unset to disable.
+      - key: VITE_UMAMI_WEBSITE_ID
+        sync: false
       # Build-time only: uploads source maps to Sentry and deletes them from dist/ (see
       # vite.config.ts). Same org auth token as the backend's. Optional; without it browser
       # stack traces stay minified.
