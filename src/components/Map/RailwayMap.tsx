@@ -251,6 +251,10 @@ export function RailwayMap({
         minzoom: 11,
         layout: {
           "text-field": ["get", "name"],
+          // A font the OpenFreeMap style actually serves. Without one MapLibre asks for its
+          // default "Open Sans Regular,Arial Unicode MS Regular", which OpenFreeMap 404s,
+          // and then draws station names with whatever font the visitor's device has.
+          "text-font": ["Noto Sans Regular"],
           "text-size": 11,
           "text-offset": [0, 1.1],
           "text-anchor": "top",

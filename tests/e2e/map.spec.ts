@@ -73,6 +73,24 @@ test.describe("Interactive map", () => {
     await expect(legend.getByText("Active passenger")).toBeVisible();
   });
 
+  // Regression: the station-name layer set no text-font, so MapLibre asked OpenFreeMap
+  // for its default "Open Sans Regular,Arial Unicode MS Regular" -- a 404 on every load,
+  // then station names drawn in a local fallback font that doesn't match the map's.
+  // A station deep link zooms past the labels' minzoom (11).
+  test("[MAJOR] regression: every map font the page asks for exists", async ({ page }) => {
+    const missingFonts: string[] = [];
+    page.on("response", (res) => {
+      if (res.url().includes("/fonts/") && res.status() >= 400) missingFonts.push(decodeURIComponent(res.url()));
+    });
+
+    await page.goto(`/station/${SEEDED.wroclawGlowny.id}`);
+    await expect(page.locator("aside.details-panel")).toBeVisible({ timeout: 15_000 });
+    await page.waitForResponse((res) => res.url().includes("/fonts/"), { timeout: 15_000 });
+    await page.waitForLoadState("networkidle");
+
+    expect(missingFonts).toEqual([]);
+  });
+
   test.describe("find-me geolocation control", () => {
     test.use({ geolocation: { latitude: 51.1079, longitude: 17.0385 }, permissions: ["geolocation"] });
 
