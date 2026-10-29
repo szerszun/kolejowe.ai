@@ -3,7 +3,8 @@
 Interactive map for exploring railway lines in the Dolnośląskie voivodeship,
 backed by a real Payload CMS backend and live PKP PLK arrivals/departures
 data. Deployed at kolejoweai.onrender.com (frontend) and
-kolejowe-backend.onrender.com (API).
+kolejowe-backend-eu.onrender.com (API, Render Frankfurt -- next to the Neon
+database in eu-central-1).
 
 ## Stack
 

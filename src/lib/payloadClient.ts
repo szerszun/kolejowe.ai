@@ -17,7 +17,7 @@ import type {
 // Base URL of the Payload backend (see backend/README.md). Configurable via
 // VITE_PAYLOAD_URL for anything other than the default local dev setup, or
 // via VITE_PAYLOAD_HOST (just the bare Render service name, e.g.
-// "kolejowe-backend" -- confirmed empirically: Render's `fromService`
+// "kolejowe-backend-eu" -- confirmed empirically: Render's `fromService`
 // `property: host` does NOT return a full hostname, just the service's own
 // name, so ".onrender.com" has to be appended here) when the only thing
 // that varies between environments is which Render service to hit.

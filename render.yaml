@@ -129,7 +129,7 @@ services:
         value: >-
           default-src 'self';
           script-src 'self' https://cloud.umami.is;
-          connect-src 'self' https://kolejowe-backend.onrender.com https://tiles.openfreemap.org https://gateway.umami.is https://cloud.umami.is https://*.ingest.de.sentry.io;
+          connect-src 'self' https://kolejowe-backend-eu.onrender.com https://tiles.openfreemap.org https://gateway.umami.is https://cloud.umami.is https://*.ingest.de.sentry.io;
           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
           font-src 'self' https://fonts.gstatic.com;
           img-src 'self' data: blob: https:;
@@ -154,7 +154,7 @@ services:
       # auto-wiring idea as CORS_HOST above, just in the other direction.
       - key: VITE_PAYLOAD_HOST
         fromService:
-          name: kolejowe-backend
+          name: kolejowe-backend-eu
           type: web
           property: host
       # Sentry error reporting in the browser (src/lib/monitoring.ts). Build-time, like

@@ -1,7 +1,7 @@
 name: Production smoke test
 
 # Runs when Render reports a deploy as finished, instead of on push. Render's two services
-# report each deploy to GitHub as a deployment ("main - kolejowe-backend" /
+# report each deploy to GitHub as a deployment ("main - kolejowe-backend-eu" /
 # "main - kolejoweai"). This used to be a job in regression.yml that ran on push and
 # polled until the new commit was live, which deadlocks once Render is set to deploy only
 # "After CI Checks Pass": Render waits for this check, this check waits for Render, and
@@ -22,7 +22,9 @@ jobs:
     timeout-minutes: 10
     env:
       FRONTEND_URL: https://kolejoweai.onrender.com
-      BACKEND_URL: https://kolejowe-backend.onrender.com
+      BACKEND_URL: https://kolejowe-backend-eu.onrender.com
+      # The Oregon backend, until it is deleted after the move to Frankfurt.
+      OLD_BACKEND_URL: https://kolejowe-backend.onrender.com
       DEPLOY_STATE: ${{ github.event.deployment_status.state }}
       DEPLOY_ENV: ${{ github.event.deployment.environment }}
       DEPLOY_SHA: ${{ github.event.deployment.sha }}
@@ -37,11 +39,11 @@ jobs:
       # short wait for the new commit to actually answer.
       - name: The deployed commit is the one serving traffic
         run: |
-          if [ "$DEPLOY_ENV" = "main - kolejowe-backend" ]; then
-            URL="$BACKEND_URL/api/health"
-          else
-            URL="$FRONTEND_URL/version.json"
-          fi
+          case "$DEPLOY_ENV" in
+            "main - kolejowe-backend-eu") URL="$BACKEND_URL/api/health" ;;
+            "main - kolejowe-backend") URL="$OLD_BACKEND_URL/api/health" ;;
+            *) URL="$FRONTEND_URL/version.json" ;;
+          esac
           for i in $(seq 1 12); do
             LIVE=$(curl -sf "$URL" | jq -r .commit 2>/dev/null || echo "")
             if [ "$LIVE" = "$DEPLOY_SHA" ]; then
