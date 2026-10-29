@@ -22,6 +22,39 @@ export const Lines: CollectionConfig = {
   hooks: {
     beforeChange: [requireAdminToPublish],
   },
+  endpoints: [
+    {
+      // Every line for the map (src/lib/payloadClient.ts fetchLines), with each station
+      // cut down to what the map draws. `/api/lines?limit=0&depth=1` embeds every
+      // station's full timetable instead: 8.9 MB and ~20 s per home page load on Render.
+      //
+      // Not a `populate` query parameter on the REST call, because SQLite (local dev, CI)
+      // drops point fields whenever a select is active -- Payload's drizzle adapter skips
+      // `point` for SQLite in find/traverseFields -- so stations would lose coordinates.
+      // There the stations are read in full and trimmed here; the local data is small.
+      path: '/map',
+      method: 'get',
+      handler: async (req) => {
+        const lines = await req.payload.find({
+          collection: 'lines',
+          depth: 1,
+          limit: 0,
+          req,
+          overrideAccess: false,
+          populate:
+            req.payload.db.name === 'sqlite' ? undefined : { stations: { name: true, coordinates: true } },
+        })
+        const docs = lines.docs.map((line) => ({
+          ...line,
+          // A station the caller can't read (unpublished) stays a bare id, as in the REST API.
+          stations: (line.stations ?? []).map((s) =>
+            typeof s === 'string' ? s : { id: s.id, name: s.name, coordinates: s.coordinates },
+          ),
+        }))
+        return Response.json({ ...lines, docs })
+      },
+    },
+  ],
   fields: [
     {
       name: 'id',
