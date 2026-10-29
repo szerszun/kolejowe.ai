@@ -147,6 +147,9 @@ a {
   padding: 1.25rem;
   width: 100%;
   max-width: 420px;
+  /* The About dialog (with its privacy section) is taller than a phone screen. */
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
 }
 
 .feedback-modal h3 {
@@ -225,6 +228,12 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+}
+
+.about-privacy-text {
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+  color: var(--color-text);
 }
 
 .about-disclaimer {

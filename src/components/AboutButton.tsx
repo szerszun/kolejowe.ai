@@ -35,6 +35,16 @@ export function AboutButton() {
 
             <p className="about-disclaimer">{t("aboutDisclaimer")}</p>
 
+            <h4 className="about-section-title">{t("aboutPrivacyTitle")}</h4>
+            <p className="about-privacy-text">{t("aboutPrivacyIntro")}</p>
+            <ul className="about-feature-list">
+              <li>{t("aboutPrivacy1")}</li>
+              <li>{t("aboutPrivacy2")}</li>
+              <li>{t("aboutPrivacy3")}</li>
+              <li>{t("aboutPrivacy4")}</li>
+            </ul>
+            <p className="about-privacy-text">{t("aboutPrivacyContact")}</p>
+
             <div className="feedback-modal-actions">
               <button type="button" className="feedback-cancel" onClick={close}>
                 {t("aboutClose")}
