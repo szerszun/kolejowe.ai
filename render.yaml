@@ -75,6 +75,42 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+    # Render already sends HSTS and nosniff for static sites. The CSP lists every origin the
+    # page talks to, as observed on the live site:
+    # - scripts: the bundle, and Umami's tracker (src/lib/analytics.ts);
+    # - connect: the backend, map tiles (openfreemap), Umami's event endpoint, Sentry's EU ingest;
+    # - styles: Google Fonts' CSS (index.css); 'unsafe-inline' only because libraries set
+    #   style attributes;
+    # - images: any https host, since station and line photos link out to Wikimedia and others;
+    # - workers: blob:, which MapLibre uses for its tile workers.
+    # The backend host is hard-coded (headers can't use fromService); a custom domain for
+    # the backend needs adding here.
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: >-
+          default-src 'self';
+          script-src 'self' https://cloud.umami.is;
+          connect-src 'self' https://kolejowe-backend.onrender.com https://tiles.openfreemap.org https://gateway.umami.is https://cloud.umami.is https://*.ingest.de.sentry.io;
+          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+          font-src 'self' https://fonts.gstatic.com;
+          img-src 'self' data: blob: https:;
+          worker-src 'self' blob:;
+          child-src blob:;
+          frame-ancestors 'none';
+          base-uri 'self';
+          object-src 'none';
+          form-action 'self'
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        # geolocation stays allowed for the site itself: the map's locate-me button.
+        value: camera=(), microphone=(), geolocation=(self), payment=()
     envVars:
       # See VITE_PAYLOAD_HOST handling in src/lib/payloadClient.ts -- same
       # auto-wiring idea as CORS_HOST above, just in the other direction.

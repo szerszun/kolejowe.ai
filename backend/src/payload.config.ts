@@ -62,6 +62,10 @@ export default buildConfig({
   // here needs more than depth 1 (the frontend's fetchLines/fetchStationDetails), so
   // requests asking for more -- or for nothing, i.e. the default -- are capped to it.
   maxDepth: 1,
+  // Nothing uses GraphQL (the frontend, jobs and admin UI all use REST), and leaving it on
+  // keeps a second public query surface open, with schema introspection, plus the
+  // graphql-scalars ReDoS advisory that comes with Payload's GraphQL package.
+  graphQL: { disable: true },
   admin: {
     user: Users.slug,
     importMap: {

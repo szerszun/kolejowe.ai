@@ -176,9 +176,9 @@ function toSource(s: PayloadSourceDoc): SourceRef {
 
 function toStation(s: PayloadStationDoc | string): Station {
   if (typeof s === "string") {
-    // Unpopulated relationship (depth 0) -- shouldn't normally happen given
-    // how fetchLines requests depth=1, but fail soft with a placeholder
-    // rather than crashing the whole line.
+    // Unpopulated relationship -- /api/lines/map leaves a station the visitor
+    // can't read (unpublished) as a bare id. Shouldn't happen for published
+    // lines, but fail soft with a placeholder rather than crashing the line.
     return { id: s, name: s, coordinates: [0, 0] };
   }
   return { id: s.id, name: s.name, coordinates: s.coordinates };
@@ -228,7 +228,8 @@ export function toRailwayLine(doc: PayloadLineDoc): RailwayLine {
 }
 
 export async function fetchLines(): Promise<RailwayLine[]> {
-  const data = await payloadFetch<{ docs: PayloadLineDoc[] }>("/api/lines?limit=0&depth=1");
+  // Every line, each station cut down to id/name/coordinates (backend Lines.ts, /map endpoint).
+  const data = await payloadFetch<{ docs: PayloadLineDoc[] }>("/api/lines/map");
   return data.docs.map(toRailwayLine);
 }
 

@@ -69,6 +69,17 @@ export const translations = {
     aboutFeature4: "Historia linii oraz lista otwartych przetargów kolejowych",
     aboutDisclaimer:
       "Dane w aplikacji są generowane i porządkowane z pomocą sztucznej inteligencji i mogą zawierać błędy lub nieścisłości — nie traktuj ich jako oficjalnego, w pełni wiarygodnego źródła informacji.",
+    aboutPrivacyTitle: "Prywatność",
+    aboutPrivacyIntro: "Nie zakładasz konta, a strona nie używa plików cookie. Co jest przetwarzane:",
+    aboutPrivacy1:
+      "Statystyki odwiedzin (Umami Cloud, region UE): odwiedzone strony, strona odsyłająca, przeglądarka, system, typ urządzenia oraz kraj i miasto ustalone na podstawie adresu IP. Umami nie zapisuje adresu IP ani nie używa plików cookie.",
+    aboutPrivacy2:
+      "Raporty błędów (Sentry, region UE): gdy coś przestanie działać — opis błędu, strona i przeglądarka. Bez plików cookie i treści formularzy.",
+    aboutPrivacy3:
+      "Formularz „Opinia”: treść wiadomości, strona, język i identyfikator przeglądarki (user agent), zapisywane w bazie danych aplikacji.",
+    aboutPrivacy4:
+      "Mapa i czcionki: podkłady mapy z OpenFreeMap i czcionki z Google Fonts są pobierane bezpośrednio przez Twoją przeglądarkę, więc te serwisy widzą Twój adres IP. Wybrany język jest zapisywany tylko w Twojej przeglądarce.",
+    aboutPrivacyContact: "Pytania lub prośby dotyczące danych? Napisz przez przycisk „Opinia”.",
     aboutClose: "Zamknij",
     feedbackButton: "Opinia",
     feedbackModalTitle: "Zgłoś uwagę lub błąd",
@@ -199,6 +210,17 @@ export const translations = {
     aboutFeature4: "Line history and a list of open railway tenders",
     aboutDisclaimer:
       "The data in this app is generated and curated with the help of AI and may contain errors or inaccuracies — please don't treat it as an official, fully reliable source of information.",
+    aboutPrivacyTitle: "Privacy",
+    aboutPrivacyIntro: "There are no accounts and the site sets no cookies. What is processed:",
+    aboutPrivacy1:
+      "Visit statistics (Umami Cloud, EU region): pages viewed, referring site, browser, OS, device type, and country and city derived from your IP address. Umami doesn't store the IP address or use cookies.",
+    aboutPrivacy2:
+      "Error reports (Sentry, EU region): when something breaks — the error, the page and the browser. No cookies and no form contents.",
+    aboutPrivacy3:
+      "The Feedback form: your message, the page, the language and your browser's user agent, stored in the app's database.",
+    aboutPrivacy4:
+      "Map and fonts: map tiles from OpenFreeMap and fonts from Google Fonts are loaded directly by your browser, so those services see your IP address. Your language choice is stored only in your browser.",
+    aboutPrivacyContact: "Questions or requests about your data? Use the Feedback button.",
     aboutClose: "Close",
     feedbackButton: "Feedback",
     feedbackModalTitle: "Report a bug or share feedback",

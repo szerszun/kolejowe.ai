@@ -27,3 +27,31 @@ test.describe("GET /api/lines", () => {
     expect(docs[0].stations.length).toBeGreaterThan(0);
   });
 });
+
+// What the home page map loads (fetchLines). The plain `?limit=0&depth=1` embeds every
+// station's whole timetable -- 8.9 MB and ~20 s per page load in production.
+test.describe("GET /api/lines/map", () => {
+  test("[CRITICAL] returns every line with stations cut down to id, name and coordinates", async ({ request }) => {
+    const res = await request.get(`${API}/api/lines/map`);
+    expect(res.ok()).toBe(true);
+    const { docs } = await res.json();
+    expect(docs.length).toBeGreaterThan(50);
+
+    const line = docs.find((d: { id: string }) => d.id === SEEDED.line274.id);
+    expect(line.name).toBe(SEEDED.line274.name);
+    expect(line.geometry).toBeTruthy();
+    expect(line.stations.length).toBeGreaterThan(0);
+    for (const station of line.stations) {
+      expect(Object.keys(station).sort()).toEqual(["coordinates", "id", "name"]);
+      expect(station.coordinates).toHaveLength(2);
+    }
+  });
+
+  // An absolute bound rather than a comparison with the full list: fetching that 8.7 MB
+  // response too slowed the shared dev backend enough to time out other tests. The seeded
+  // data comes to ~1.2 MB trimmed vs ~8.7 MB with full stations.
+  test("[MAJOR] stays far smaller than the fully populated list", async ({ request }) => {
+    const res = await request.get(`${API}/api/lines/map`);
+    expect((await res.body()).length).toBeLessThan(3_000_000);
+  });
+});

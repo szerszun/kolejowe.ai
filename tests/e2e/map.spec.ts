@@ -138,6 +138,21 @@ test.describe("Interactive map", () => {
       }
     });
 
+    // The About dialog carries the privacy notice, which makes it taller than a phone
+    // screen -- the dialog has to scroll so its Close button stays reachable.
+    test("[MAJOR] the About dialog shows the privacy notice and Close stays reachable", async ({ page }) => {
+      await page.goto("/");
+      await page.getByRole("button", { name: /about/i }).click();
+      const dialog = page.getByRole("dialog", { name: /about/i });
+      await expect(dialog.getByRole("heading", { name: "Privacy" })).toBeVisible();
+      await expect(dialog).toContainText("Umami");
+      const close = dialog.getByRole("button", { name: "Close" });
+      await close.scrollIntoViewIfNeeded();
+      await expect(close).toBeInViewport();
+      await close.click();
+      await expect(dialog).toBeHidden();
+    });
+
     // Regression: the explorer panel (search/filters/list) used to occupy a fixed 40vh
     // row above the map, but the search box and filter chips alone filled nearly all of
     // that budget -- the actual scrollable list measured ~23px tall, under one row, so
