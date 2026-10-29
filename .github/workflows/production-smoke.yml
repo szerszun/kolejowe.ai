@@ -23,8 +23,6 @@ jobs:
     env:
       FRONTEND_URL: https://kolejoweai.onrender.com
       BACKEND_URL: https://kolejowe-backend-eu.onrender.com
-      # The Oregon backend, until it is deleted after the move to Frankfurt.
-      OLD_BACKEND_URL: https://kolejowe-backend.onrender.com
       DEPLOY_STATE: ${{ github.event.deployment_status.state }}
       DEPLOY_ENV: ${{ github.event.deployment.environment }}
       DEPLOY_SHA: ${{ github.event.deployment.sha }}
@@ -41,7 +39,6 @@ jobs:
         run: |
           case "$DEPLOY_ENV" in
             "main - kolejowe-backend-eu") URL="$BACKEND_URL/api/health" ;;
-            "main - kolejowe-backend") URL="$OLD_BACKEND_URL/api/health" ;;
             *) URL="$FRONTEND_URL/version.json" ;;
           esac
           for i in $(seq 1 12); do

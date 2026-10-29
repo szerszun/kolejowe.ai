@@ -1,10 +1,10 @@
 name: Timetable sync
 
-# Fully cloud, no local machine involved. Two separate steps/emails by design (not one
-# combined "done" email): a cheap version check first, which can email "amendment
-# detected" immediately, before the much slower batch sync (confirmed in testing: a few
-# minutes, not seconds, for ~340 PLK-matched stations) runs as its own later step and
-# sends its own "completed" email once it's actually done.
+# Fully cloud, no local machine involved. A cheap version check first; only when PLK has
+# published a new schedule version does the batch sync run (~2 minutes for ~340 stations).
+# One email afterwards, and only if the sync changed an entry or a station failed: PLK
+# publishes new versions often without touching anything we store, and an "amendment
+# detected" email before every such run was noise.
 on:
   schedule:
     # Minute 17, not 0: GitHub delays scheduled runs at the top of the hour the most --
@@ -42,26 +42,6 @@ jobs:
           PLK_API_KEY: ${{ secrets.PLK_API_KEY }}
         run: npm run agent:check-timetable-version
 
-      - name: Email -- amendment detected, updating
-        if: steps.check.outputs.changed == 'true'
-        continue-on-error: true
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.GMAIL_USERNAME }}
-          password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          subject: "kolejowe.ai: timetable amendment detected, updating -- ${{ github.run_id }}"
-          to: ${{ secrets.NOTIFY_EMAIL }}
-          from: kolejowe.ai CI <${{ secrets.GMAIL_USERNAME }}>
-          body: |
-            PKP PLK's published timetable has changed since the last check (or the last
-            sync left some stations unsynced, and this run retries them).
-            Updating the app's station timetables now -- a second email will confirm once it's done.
-
-            Run: https://github.com/szerszun/kolejowe.ai/actions/runs/${{ github.run_id }}
-
       - name: Sync timetables
         id: sync
         if: steps.check.outputs.changed == 'true'
@@ -72,7 +52,7 @@ jobs:
         run: npm run agent:sync-timetables
 
       - name: Email -- update completed
-        if: always() && steps.check.outputs.changed == 'true' && steps.sync.outcome == 'success'
+        if: always() && steps.check.outputs.changed == 'true' && steps.sync.outcome == 'success' && steps.sync.outputs.notify == 'true'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:

@@ -1,8 +1,13 @@
 services:
-  - name: kolejowe-backend
+  - name: kolejowe-backend-eu
     type: web
     runtime: node
     plan: free
+    # Next to the Neon database (AWS eu-central-1). The backend used to run in Oregon,
+    # where every query crossed the Atlantic and a single station took ~1 s. Render can't
+    # change a service's region, hence the -eu name: the move on 2026-10-29 was a new
+    # service, and the Oregon one was deleted afterwards.
+    region: frankfurt
     rootDir: backend
     # Deploy only after the commit's GitHub checks pass. These services are Blueprint
     # managed, and the dashboard setting alone didn't stick: after a render.yaml change
@@ -25,8 +30,11 @@ services:
       # driver picks up automatically.
       - key: DATABASE_URL
         sync: false
+      # Entered by hand, never generated: Payload derives API-key lookups and login
+      # tokens from it, so a new value breaks the timetable-sync key and signs everyone
+      # out. Any replacement service must get the current service's value.
       - key: PAYLOAD_SECRET
-        generateValue: true
+        sync: false
       - key: NODE_ENV
         value: production
       # Lets the backend allow requests from the frontend's Render-assigned
@@ -53,44 +61,6 @@ services:
       # Build-time only: uploads source maps to Sentry (next.config.ts). A Sentry org auth
       # token (Settings -> Auth Tokens) -- a secret, unlike the DSN. Optional; without it
       # nothing is uploaded and server stack traces point at compiled code.
-      - key: SENTRY_AUTH_TOKEN
-        sync: false
-
-  # The backend's move to Frankfurt (eu-central-1), next to the Neon database: in Oregon
-  # every query crossed the Atlantic, and a single station took ~1 s. Render can't change
-  # an existing service's region, so this is a new service; it runs alongside
-  # kolejowe-backend until the frontend and workflows are switched over, then the Oregon
-  # one is deleted. Same settings as above -- see the comments there.
-  - name: kolejowe-backend-eu
-    type: web
-    runtime: node
-    plan: free
-    region: frankfurt
-    rootDir: backend
-    autoDeployTrigger: checksPass
-    buildCommand: npm install --include=dev && npm run build
-    startCommand: npm run migrate && npm start
-    envVars:
-      - key: DATABASE_URL
-        sync: false
-      # Must be the same value as kolejowe-backend's, not a generated one: Payload derives
-      # API-key lookups and login tokens from it, so a new secret would break the
-      # timetable-sync key and sign everyone out. Copy it from that service's Environment.
-      - key: PAYLOAD_SECRET
-        sync: false
-      - key: NODE_ENV
-        value: production
-      - key: CORS_HOST
-        fromService:
-          name: kolejoweai
-          type: web
-          property: host
-      - key: CORS_ORIGINS
-        value: ''
-      - key: PLK_API_KEY
-        sync: false
-      - key: SENTRY_DSN
-        sync: false
       - key: SENTRY_AUTH_TOKEN
         sync: false
 
