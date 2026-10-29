@@ -20,6 +20,11 @@ updates:
       # blocks a Render deploy set to "After CI Checks Pass". Remove this once a fixed
       # version exists (check `npm audit` in backend/), or once Payload ships one.
       - dependency-name: "happy-dom"
+      # Same failure mode, seen 2026-10-29: only pulled in by @payloadcms/graphql (via
+      # @payloadcms/next), and its ReDoS advisory (PhoneNumber scalar) has no patched
+      # release. Not reachable here -- GraphQL is disabled in payload.config.ts -- but the
+      # failing run blocked the deploys of #51 and #52. Remove once a fix is published.
+      - dependency-name: "graphql-scalars"
 
   # Keep the regression/CI workflow's actions (checkout, setup-node, the
   # SonarCloud scan action, etc.) current -- these don't get bumped by the
