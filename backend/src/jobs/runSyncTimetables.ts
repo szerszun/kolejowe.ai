@@ -60,6 +60,9 @@ async function run() {
   console.log(versionNote)
 
   setOutput('changed', 'true')
+  // PLK publishes new schedule versions often without touching anything we store, so a
+  // run that changed nothing and hit no errors doesn't email.
+  setOutput('notify', result.updates.length > 0 || result.errors.length > 0 ? 'true' : 'false')
   setOutput(
     'summary_text',
     [
