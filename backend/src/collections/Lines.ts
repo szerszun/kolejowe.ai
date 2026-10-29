@@ -1,6 +1,39 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Payload, PayloadRequest } from 'payload'
 
 import { adminOrAgentWrite, adminOnly, publishedOrEditor, requireAdminToPublish } from '../access/roles'
+import { cachedValue } from '../lib/cachedValue'
+
+/** Without `req`, access is checked as a logged-out visitor: published lines and stations only. */
+async function buildMapResponse(payload: Payload, req?: PayloadRequest) {
+  const lines = await payload.find({
+    collection: 'lines',
+    depth: 1,
+    limit: 0,
+    req,
+    overrideAccess: false,
+    populate: payload.db.name === 'sqlite' ? undefined : { stations: { name: true, coordinates: true } },
+  })
+  const docs = lines.docs.map((line) => ({
+    ...line,
+    // A station the caller can't read (unpublished) stays a bare id, as in the REST API.
+    stations: (line.stations ?? []).map((s) =>
+      typeof s === 'string' ? s : { id: s.id, name: s.name, coordinates: s.coordinates },
+    ),
+  }))
+  return JSON.stringify({ ...lines, docs })
+}
+
+/**
+ * The public (logged-out) /api/lines/map response, which every visitor's first page load
+ * fetches. Building it takes 1.5-3.5 s on Render's free CPU, while the data only changes
+ * when a line or station is saved -- by an editor or the timetable sync. Cleared by the
+ * afterChange/afterDelete hooks here and in Stations.ts. Editors bypass it: they can see
+ * drafts, which the public response mustn't include.
+ */
+let publicMap: ReturnType<typeof cachedValue<string>> | undefined
+export function invalidateMapCache(): void {
+  publicMap?.invalidate()
+}
 
 export const Lines: CollectionConfig = {
   slug: 'lines',
@@ -21,6 +54,8 @@ export const Lines: CollectionConfig = {
   },
   hooks: {
     beforeChange: [requireAdminToPublish],
+    afterChange: [invalidateMapCache],
+    afterDelete: [invalidateMapCache],
   },
   endpoints: [
     {
@@ -35,23 +70,15 @@ export const Lines: CollectionConfig = {
       path: '/map',
       method: 'get',
       handler: async (req) => {
-        const lines = await req.payload.find({
-          collection: 'lines',
-          depth: 1,
-          limit: 0,
-          req,
-          overrideAccess: false,
-          populate:
-            req.payload.db.name === 'sqlite' ? undefined : { stations: { name: true, coordinates: true } },
+        if (req.user) {
+          return new Response(await buildMapResponse(req.payload, req), { headers: { 'Content-Type': 'application/json' } })
+        }
+        // No req: a cached build must not hold on to the request that happened to start it.
+        const { payload } = req
+        publicMap ??= cachedValue(() => buildMapResponse(payload))
+        return new Response(await publicMap.get(), {
+          headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
         })
-        const docs = lines.docs.map((line) => ({
-          ...line,
-          // A station the caller can't read (unpublished) stays a bare id, as in the REST API.
-          stations: (line.stations ?? []).map((s) =>
-            typeof s === 'string' ? s : { id: s.id, name: s.name, coordinates: s.coordinates },
-          ),
-        }))
-        return Response.json({ ...lines, docs })
       },
     },
   ],

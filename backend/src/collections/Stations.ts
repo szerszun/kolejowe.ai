@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { adminOrAgentWrite, adminOnly, publishedOrEditor, requireAdminToPublish } from '../access/roles'
 import { getLiveMovements } from '../lib/liveMovements'
+import { invalidateMapCache } from './Lines'
 
 const movementFields = (kind: 'departure' | 'arrival'): CollectionConfig['fields'] => [
   { name: 'time', type: 'text', required: true, admin: { description: 'HH:mm, 24h' } },
@@ -49,6 +50,9 @@ export const Stations: CollectionConfig = {
   },
   hooks: {
     beforeChange: [requireAdminToPublish],
+    // Station names and coordinates are part of the cached map response (Lines.ts).
+    afterChange: [invalidateMapCache],
+    afterDelete: [invalidateMapCache],
   },
   endpoints: [
     {
