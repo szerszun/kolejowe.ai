@@ -103,10 +103,9 @@ interface PlkMovement {
   platform?: string | null
 }
 
-interface MovementCandidate extends PlkMovement {
-  /** Days within the sync window this route runs on. */
-  days: number
-  firstDate: string
+interface MovementVariant extends PlkMovement {
+  /** Dates within the sync window this time/platform runs on, across every route that has it. */
+  dates: Set<string>
 }
 
 /**
@@ -114,15 +113,51 @@ interface MovementCandidate extends PlkMovement {
  * different times (e.g. a weekday and a weekend variant). Keep the one that runs on the
  * most days in the window -- the regular timetable -- and break ties by the earliest
  * running date, so the result doesn't depend on the order PLK lists routes in.
+ *
+ * Days are counted per time/platform, not per route: PLK often splits one unchanged
+ * timetable across several routes (e.g. 2 + 1 + 2 days). Counted per route, a variant
+ * running 3 days in one piece beat one running 5 days in pieces, and which one won
+ * flipped as the window moved a day -- seen live on 2026-10-29 at Nysa and Szklarska
+ * Poręba Górna.
  */
-function pickMovement(current: MovementCandidate | undefined, candidate: MovementCandidate): MovementCandidate {
-  if (!current) return candidate
-  if (candidate.days !== current.days) return candidate.days > current.days ? candidate : current
-  return candidate.firstDate < current.firstDate ? candidate : current
+function pickMovement(variants: Iterable<MovementVariant>): PlkMovement | undefined {
+  let best: { variant: MovementVariant; days: number; firstDate: string } | undefined
+  for (const variant of variants) {
+    const days = variant.dates.size
+    const firstDate = [...variant.dates].sort((a, b) => a.localeCompare(b))[0] ?? '9999-12-31'
+    if (!best || days > best.days || (days === best.days && firstDate < best.firstDate)) best = { variant, days, firstDate }
+  }
+  return best && { time: best.variant.time, platform: best.variant.platform }
 }
 
 function windowDates(route: PlkScheduleRoute, from: string, to: string): string[] {
-  return (route.operatingDates ?? []).map((d) => d.slice(0, 10)).filter((d) => d >= from && d <= to).sort((a, b) => a.localeCompare(b))
+  return (route.operatingDates ?? []).map((d) => d.slice(0, 10)).filter((d) => d >= from && d <= to)
+}
+
+type VariantsByTrain = Map<string, Map<string, MovementVariant>>
+
+function addVariant(byTrain: VariantsByTrain, trainNumber: string, movement: PlkMovement, dates: string[]): void {
+  let variants = byTrain.get(trainNumber)
+  if (!variants) {
+    variants = new Map()
+    byTrain.set(trainNumber, variants)
+  }
+  const key = `${movement.time}|${movement.platform ?? ''}`
+  let variant = variants.get(key)
+  if (!variant) {
+    variant = { ...movement, dates: new Set() }
+    variants.set(key, variant)
+  }
+  for (const d of dates) variant.dates.add(d)
+}
+
+function resolveVariants(byTrain: VariantsByTrain): Map<string, PlkMovement> {
+  const resolved = new Map<string, PlkMovement>()
+  for (const [trainNumber, variants] of byTrain) {
+    const movement = pickMovement(variants.values())
+    if (movement) resolved.set(trainNumber, movement)
+  }
+  return resolved
 }
 
 /** routes -> per-station train-number -> movement, for both legs (a through train can depart and arrive at the same stop). */
@@ -130,11 +165,9 @@ function indexRoutesByStation(
   routes: PlkScheduleRoute[],
   window: { from: string; to: string },
 ): Map<number, { departures: Map<string, PlkMovement>; arrivals: Map<string, PlkMovement> }> {
-  const byStation = new Map<number, { departures: Map<string, MovementCandidate>; arrivals: Map<string, MovementCandidate> }>()
+  const byStation = new Map<number, { departures: VariantsByTrain; arrivals: VariantsByTrain }>()
   for (const route of routes) {
     const dates = windowDates(route, window.from, window.to)
-    const days = dates.length
-    const firstDate = dates[0] ?? window.to
     for (const stop of route.stations) {
       let entry = byStation.get(stop.stationId)
       if (!entry) {
@@ -142,16 +175,18 @@ function indexRoutesByStation(
         byStation.set(stop.stationId, entry)
       }
       if (stop.departureTrainNumber && stop.departureTime) {
-        const candidate = { time: stop.departureTime.slice(0, 5), platform: stop.departurePlatform, days, firstDate }
-        entry.departures.set(stop.departureTrainNumber, pickMovement(entry.departures.get(stop.departureTrainNumber), candidate))
+        addVariant(entry.departures, stop.departureTrainNumber, { time: stop.departureTime.slice(0, 5), platform: stop.departurePlatform }, dates)
       }
       if (stop.arrivalTrainNumber && stop.arrivalTime) {
-        const candidate = { time: stop.arrivalTime.slice(0, 5), days, firstDate }
-        entry.arrivals.set(stop.arrivalTrainNumber, pickMovement(entry.arrivals.get(stop.arrivalTrainNumber), candidate))
+        addVariant(entry.arrivals, stop.arrivalTrainNumber, { time: stop.arrivalTime.slice(0, 5) }, dates)
       }
     }
   }
-  return byStation
+  const resolved = new Map<number, { departures: Map<string, PlkMovement>; arrivals: Map<string, PlkMovement> }>()
+  for (const [stationId, entry] of byStation) {
+    resolved.set(stationId, { departures: resolveVariants(entry.departures), arrivals: resolveVariants(entry.arrivals) })
+  }
+  return resolved
 }
 
 /**

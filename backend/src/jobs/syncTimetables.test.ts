@@ -286,6 +286,36 @@ describe("syncTimetables", () => {
       if (result.outcome !== "synced") throw new Error("unreachable");
       expect(result.updates.map((u) => u.to)).toEqual(["08:10"]);
     });
+
+    // Seen live on 2026-10-29 (Szklarska Poręba Górna, train 61170): PLK split the new
+    // 20:18 timetable across routes of 1, 3 and 1 days, so the old 19:56 route (3 days)
+    // tied the biggest piece and won on the earlier date despite running on fewer days.
+    it("regression: adds up the days of one time split across several routes", async () => {
+      fetchSchedulesForStations.mockResolvedValue([
+        route(100, { departureTrainNumber: "12345", departureTime: "08:00:00" }, days(0, 1, 2)),
+        route(100, { departureTrainNumber: "12345", departureTime: "08:20:00" }, days(3)),
+        route(100, { departureTrainNumber: "12345", departureTime: "08:20:00" }, days(4, 5)),
+        route(100, { departureTrainNumber: "12345", departureTime: "08:20:00" }, days(6)),
+      ]);
+
+      const result = await syncTimetables();
+
+      if (result.outcome !== "synced") throw new Error("unreachable");
+      expect(result.updates.map((u) => u.to)).toEqual(["08:20"]);
+    });
+
+    it("counts a day once when two routes with the same time both run on it", async () => {
+      fetchSchedulesForStations.mockResolvedValue([
+        route(100, { departureTrainNumber: "12345", departureTime: "08:20:00" }, days(0, 1)),
+        route(100, { departureTrainNumber: "12345", departureTime: "08:20:00" }, days(0, 1)),
+        route(100, { departureTrainNumber: "12345", departureTime: "08:10:00" }, days(2, 3, 4)),
+      ]);
+
+      const result = await syncTimetables();
+
+      if (result.outcome !== "synced") throw new Error("unreachable");
+      expect(result.updates.map((u) => u.to)).toEqual(["08:10"]);
+    });
   });
 
   it("regression: a slash-notation train number (e.g. \"17206/7\") matches PLK's single directional number", async () => {
