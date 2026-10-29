@@ -179,6 +179,11 @@ export interface PlkScheduleStop {
   departurePlatform?: string | null
   departureTrainNumber?: string | null
   arrivalTrainNumber?: string | null
+  arrivalPlatform?: string | null
+  arrivalTrack?: string | null
+  departureTrack?: string | null
+  arrivalCommercialCategory?: string | null
+  departureCommercialCategory?: string | null
 }
 
 export interface PlkScheduleRoute {
@@ -187,6 +192,8 @@ export interface PlkScheduleRoute {
   trainOrderId: number
   name?: string | null
   carrierCode?: string | null
+  nationalNumber?: string | null
+  commercialCategorySymbol?: string | null
   operatingDates: string[]
   stations: PlkScheduleStop[]
 }
@@ -214,4 +221,28 @@ export async function fetchSchedulesForStations(stationIds: number[], dateFrom: 
     dateTo,
   })
   return res.routes
+}
+
+export interface PlkSchedulesWithRoutes {
+  routes: PlkScheduleRoute[]
+  /** PLK station id -> name, for every stop on the returned routes. */
+  stationNames: Map<number, string>
+}
+
+/**
+ * Like fetchSchedulesForStations, but every route comes with all its stops (`fullRoute`),
+ * not just the requested stations, plus PLK's station-name dictionary for them -- what a
+ * station timetable needs for each train's origin, destination and calling points.
+ */
+export async function fetchSchedulesWithRoutes(stationIds: number[], dateFrom: string, dateTo: string): Promise<PlkSchedulesWithRoutes> {
+  const res = await plkFetch<PlkSchedulesResponse & { dictionaries?: { stations?: Record<string, PlkStationDto> } }>('/api/v1/schedules', {
+    stations: stationIds.join(','),
+    dateFrom,
+    dateTo,
+    fullRoute: true,
+    dictionaries: true,
+  })
+  const stationNames = new Map<number, string>()
+  for (const station of Object.values(res.dictionaries?.stations ?? {})) stationNames.set(station.id, station.name)
+  return { routes: res.routes, stationNames }
 }
