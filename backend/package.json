@@ -29,7 +29,7 @@
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "3.92.1",
+    "@payloadcms/db-postgres": "3.93.0",
     "@payloadcms/db-sqlite": "3.92.1",
     "@payloadcms/next": "3.92.1",
     "@payloadcms/richtext-lexical": "3.92.1",
